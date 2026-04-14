@@ -410,6 +410,8 @@ FodyWeavers.xsd
 
 # Built Visual Studio Code Extensions
 *.vsix
+*.vsidx
+*.cache
 
 # Windows Installer files from build outputs
 *.cab
