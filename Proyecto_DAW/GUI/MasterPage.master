@@ -1,0 +1,95 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="Estilos/EstilosMaestro.css" rel="stylesheet" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <!-- ===== NAVBAR ===== -->
+            <div class="navbar">
+                <div class="container">
+                    <div class="navbar-header">
+                        <!--Falta estos botones -->
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="Más opciones">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" runat="server" href="~/">&#x1F43E; Refugio del Oeste</a>
+                    </div>
+
+                    <div class="navbar-collapse collapse">
+
+                        <!-- Links principales -->
+                        <ul class="nav navbar-nav">
+
+                            <li runat="server" id="liInicio">
+                                <a runat="server" href="~/">Inicio</a>
+                            </li>
+
+                            <!-- Animales -->
+                            <li class="dropdown" runat="server" id="liAnimales">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Animales <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a runat="server" href="~/Animales/Listado">Ver animales</a></li>
+                                    <li><a runat="server" href="~/Animales/Registrar">Registrar animal</a></li>
+                                    <li><a runat="server" href="~/Animales/FichasMedicas">Fichas médicas</a></li>
+                                    <li><a runat="server" href="~/Animales/FichasIngreso">Fichas de ingreso</a></li>
+                                </ul>
+                            </li>
+
+                            <!-- Adopciones -->
+                            <li class="dropdown" runat="server" id="liAdopciones">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Adopciones <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a runat="server" href="~/Adopciones/Solicitudes">Solicitudes</a></li>
+                                    <li><a runat="server" href="~/Adopciones/Certificados">Certificados</a></li>
+                                    <li><a runat="server" href="~/Adopciones/Adoptantes">Adoptantes</a></li>
+                                </ul>
+                            </li>
+
+                            <!--  Administración (solo admin / webmaster) -->
+                            <asp:LoginView runat="server" ViewStateMode="Disabled">
+                                <LoggedInTemplate>
+                                    <!-- Mostrar este menú solo si el rol lo permite desde code-behind -->
+                                    <li class="dropdown" runat="server" id="liAdministracion" visible="false">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a runat="server" href="~/Admin/Usuarios">Usuarios</a></li>
+                                            <li><a runat="server" href="~/Admin/Bitacora">Bitácora</a></li>
+                                            <li class="divider"></li>
+                                            <li><a runat="server" href="~/Admin/BackupRestore">Backup &amp; Restore</a></li>
+                                        </ul>
+                                    </li>
+                                </LoggedInTemplate>
+                            </asp:LoginView>
+
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+
+        </div>
+        <div id="footer">
+            <span>contacto@refugio.com</span>
+            <span>Whatsapp +54 11 1111 1111</span>
+            <span>www.refugioDAW.com</span>
+        </div>
+    </form>
+</body>
+</html>

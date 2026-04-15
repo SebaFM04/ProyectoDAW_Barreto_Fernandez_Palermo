@@ -3,28 +3,20 @@
   "WorkspaceRootPath": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|f:\\!proyectodaw\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\menumaestro.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\menumaestro.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+      "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|f:\\!proyectodaw\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|f:\\!proyectodaw\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\masterpage.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
+      "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\masterpage.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|f:\\!proyectodaw\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\estilos\\estilosmaestro.css||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\estilos\\estilosmaestro.css||{8B382828-6202-11D1-8870-0000F87579D2}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|f:\\!proyectodaw\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5241AA1D-ACF4-4833-9F1E-1F7B5EC662CD}|DAL\\DAL.csproj|F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\dal\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5241AA1D-ACF4-4833-9F1E-1F7B5EC662CD}|DAL\\DAL.csproj|solutionrelative:dal\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B0162088-7B60-42F2-9E87-17AD13A91A60}|SERVICIOS\\SERVICIOS.csproj|F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\servicios\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B0162088-7B60-42F2-9E87-17AD13A91A60}|SERVICIOS\\SERVICIOS.csproj|solutionrelative:servicios\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66A24E6B-F723-4A0C-B413-69492948E182}|BLL\\BLL.csproj|F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\bll\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66A24E6B-F723-4A0C-B413-69492948E182}|BLL\\BLL.csproj|solutionrelative:bll\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C60CC9F-5937-4A87-9593-59252DA3A876}|BE\\BE.csproj|F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\be\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8C60CC9F-5937-4A87-9593-59252DA3A876}|BE\\BE.csproj|solutionrelative:be\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,81 +26,59 @@
       "DocumentGroups": [
         {
           "DockedWidth": 160,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EstilosMaestro.css",
+              "DocumentMoniker": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Estilos\\EstilosMaestro.css",
+              "RelativeDocumentMoniker": "GUI\\Estilos\\EstilosMaestro.css",
+              "ToolTip": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Estilos\\EstilosMaestro.css",
+              "RelativeToolTip": "GUI\\Estilos\\EstilosMaestro.css",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAAAEcAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-04-15T04:33:33.159Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MenuMaestro.aspx",
-              "DocumentMoniker": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\MenuMaestro.aspx",
-              "RelativeDocumentMoniker": "GUI\\MenuMaestro.aspx",
-              "ToolTip": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\MenuMaestro.aspx",
-              "RelativeToolTip": "GUI\\MenuMaestro.aspx",
+              "Title": "Default.aspx",
+              "DocumentMoniker": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Default.aspx",
+              "RelativeDocumentMoniker": "GUI\\Default.aspx",
+              "ToolTip": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Default.aspx",
+              "RelativeToolTip": "GUI\\Default.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2026-04-14T19:43:36.005Z",
+              "WhenOpened": "2026-04-15T04:20:42.328Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "MasterPage.master",
+              "DocumentMoniker": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\MasterPage.master",
+              "RelativeDocumentMoniker": "GUI\\MasterPage.master",
+              "ToolTip": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\MasterPage.master",
+              "RelativeToolTip": "GUI\\MasterPage.master",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-04-14T20:29:59.01Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Web.config",
               "DocumentMoniker": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Web.config",
               "RelativeDocumentMoniker": "GUI\\Web.config",
               "ToolTip": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Web.config",
               "RelativeToolTip": "GUI\\Web.config",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
               "WhenOpened": "2026-04-14T18:53:25.826Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Class1.cs",
-              "DocumentMoniker": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\DAL\\Class1.cs",
-              "RelativeDocumentMoniker": "DAL\\Class1.cs",
-              "ToolTip": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\DAL\\Class1.cs",
-              "RelativeToolTip": "DAL\\Class1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T18:52:34.828Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Class1.cs",
-              "DocumentMoniker": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\SERVICIOS\\Class1.cs",
-              "RelativeDocumentMoniker": "SERVICIOS\\Class1.cs",
-              "ToolTip": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\SERVICIOS\\Class1.cs",
-              "RelativeToolTip": "SERVICIOS\\Class1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T18:52:19.392Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Class1.cs",
-              "DocumentMoniker": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\BLL\\Class1.cs",
-              "RelativeDocumentMoniker": "BLL\\Class1.cs",
-              "ToolTip": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\BLL\\Class1.cs",
-              "RelativeToolTip": "BLL\\Class1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T18:52:05.492Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Class1.cs",
-              "DocumentMoniker": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\BE\\Class1.cs",
-              "RelativeDocumentMoniker": "BE\\Class1.cs",
-              "ToolTip": "F:\\!ProyectoDAW\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\BE\\Class1.cs",
-              "RelativeToolTip": "BE\\Class1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T18:51:51.132Z"
             }
           ]
         }
