@@ -1,0 +1,213 @@
+﻿/* Contenedor principal que centra la tarjeta */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px 16px 60px;
+    flex: 1; /* ocupa el espacio entre navbar y footer */
+}
+
+/* Tarjeta del formulario */
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid #c5c5c5;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+/* Encabezado */
+.login-card-header {
+    background-color: darkolivegreen;
+    padding: 28px 28px 22px;
+    text-align: center;
+}
+
+.login-icon-circle {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background-color: #4a7c2f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    font-size: 26px;
+    line-height: 1;
+}
+
+.login-title {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 0 4px;
+    font-family: Arial, sans-serif;
+}
+
+.login-subtitle {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 13px;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Cuerpo del formulario */
+.login-card-body {
+    padding: 26px 28px 32px;
+}
+
+/* Campos individuales */
+.login-field {
+    margin-bottom: 18px;
+}
+
+.login-label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: #444444;
+    margin-bottom: 6px;
+}
+
+.login-input {
+    width: 100%;
+    height: 38px;
+    border: 1px solid #b0b0b0;
+    border-radius: 5px;
+    padding: 0 38px 0 10px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    color: #222222;
+    background-color: #fafafa;
+    box-sizing: border-box;
+    transition: border-color 0.15s;
+}
+
+    .login-input:focus {
+        border-color: darkolivegreen;
+        outline: none;
+        background-color: #ffffff;
+    }
+
+    .login-input:disabled {
+        background-color: #e9e9e9;
+        color: #888888;
+        cursor: not-allowed;
+    }
+
+
+/* Wrapper contraseña */
+.login-pass-wrap {
+    position: relative;
+}
+
+.login-btn-ojo {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 4px;
+    color: #666666;
+}
+
+.login-btn-ojo:hover {
+    color: darkolivegreen;
+}
+
+/* Mensajes de validación */
+.login-validacion {
+    display: block;
+    font-size: 12px;
+    color: #8b0000;
+    margin-top: 4px;
+    font-family: Arial, sans-serif;
+}
+
+/* Alertas */
+.login-alert {
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+}
+
+/* Error */
+.login-alert-error {
+    background-color: #fdecea;
+    border: 1px solid #f5aeae;
+    color: #7b1c1c;
+}
+
+/* Cuenta bloqueada */
+.login-alert-bloqueado {
+    background-color: #fdecea;
+    border: 1px solid #e24b4a;
+    color: #5a0f0f;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Aviso de intentos */
+.login-alert-intentos {
+    background-color: #fff8e1;
+    border: 1px solid #ffe082;
+    color: #5d4037;
+}
+
+/* Indicadores de intentos */
+.login-dots-fila {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.login-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #cccccc;
+    display: inline-block;
+}
+
+.login-dot-lleno {
+    background-color: darkolivegreen;
+}
+
+/* Botón principal */
+.login-btn-primary {
+    width: 100%;
+    height: 40px;
+    background-color: darkolivegreen;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    margin-top: 4px;
+}
+
+.login-btn-primary:hover {
+    background-color: #4a7c2f;
+}
+
+.login-btn-primary:active {
+    background-color: #3a6020;
+}
+
+.login-btn-primary:disabled {
+    background-color: #aaaaaa;
+    cursor: not-allowed;
+}

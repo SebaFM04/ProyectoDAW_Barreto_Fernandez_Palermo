@@ -6,29 +6,31 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
+
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+
     <link href="Estilos/EstilosMaestro.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
+
             <!-- ===== NAVBAR ===== -->
             <div class="navbar">
                 <div class="container">
+
                     <div class="navbar-header">
-                        <!--Falta estos botones -->
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="Más opciones">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
+
                         <a class="navbar-brand" runat="server" href="~/">&#x1F43E; Refugio del Oeste</a>
                     </div>
 
                     <div class="navbar-collapse collapse">
 
-                        <!-- Links principales -->
                         <ul class="nav navbar-nav">
 
                             <li runat="server" id="liInicio">
@@ -37,7 +39,8 @@
 
                             <!-- Animales -->
                             <li class="dropdown" runat="server" id="liAnimales">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Animales <span class="caret"></span>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Animales <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a runat="server" href="~/Animales/Listado">Ver animales</a></li>
@@ -49,7 +52,8 @@
 
                             <!-- Adopciones -->
                             <li class="dropdown" runat="server" id="liAdopciones">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Adopciones <span class="caret"></span>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Adopciones <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a runat="server" href="~/Adopciones/Solicitudes">Solicitudes</a></li>
@@ -58,22 +62,27 @@
                                 </ul>
                             </li>
 
-                            <!--  Administración (solo admin / webmaster) -->
-                            <asp:LoginView runat="server" ViewStateMode="Disabled">
-                                <LoggedInTemplate>
-                                    <!-- Mostrar este menú solo si el rol lo permite desde code-behind -->
-                                    <li class="dropdown" runat="server" id="liAdministracion" visible="false">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a runat="server" href="~/Admin/Usuarios">Usuarios</a></li>
-                                            <li><a runat="server" href="~/Admin/Bitacora">Bitácora</a></li>
-                                            <li class="divider"></li>
-                                            <li><a runat="server" href="~/Admin/BackupRestore">Backup &amp; Restore</a></li>
-                                        </ul>
-                                    </li>
-                                </LoggedInTemplate>
-                            </asp:LoginView>
+                            <!-- Administración -->
+                            <li class="dropdown" runat="server" id="liAdministracion">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Administración <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a runat="server" href="~/Admin/Usuarios">Usuarios</a></li>
+                                    <li><a runat="server" href="~/Admin/Bitacora">Bitácora</a></li>
+                                    <li class="divider"></li>
+                                    <li><a runat="server" href="~/Admin/BackupRestore">Backup &amp; Restore</a></li>
+                                </ul>
+                            </li>
+
+                            <!-- Login / Logout -->
+                            <li runat="server" id="liLogin">
+                                <a runat="server" href="~/Login.aspx">Iniciar Sesión</a>
+                            </li>
+
+                            <li runat="server" id="liLogout">
+                                <a runat="server" href="~/Logout.aspx">Cerrar Sesión</a>
+                            </li>
 
                         </ul>
 
@@ -81,10 +90,10 @@
                 </div>
             </div>
 
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
 
         </div>
+
         <div id="footer">
             <span>contacto@refugio.com</span>
             <span>Whatsapp +54 11 1111 1111</span>
