@@ -6,8 +6,8 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
 
     <link href="Estilos/EstilosMaestro.css" rel="stylesheet" />
 </head>
@@ -34,7 +34,7 @@
                         <ul class="nav navbar-nav">
 
                             <li runat="server" id="liInicio">
-                                <a runat="server" href="~/">Inicio</a>
+                                <a runat="server" href="~/MenuPrincipal.aspx">Inicio</a>
                             </li>
 
                             <!-- Animales -->
