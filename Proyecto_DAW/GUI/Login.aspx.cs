@@ -105,7 +105,6 @@ public partial class Login : System.Web.UI.Page
         pnlErrorLogin.Visible = false;
         pnlBloqueado.Visible = false;
         pnlIntentos.Visible = false;
-        pnlDots.Visible = false;
     }
 
     private void MostrarErrorGenerico()
@@ -128,14 +127,12 @@ public partial class Login : System.Web.UI.Page
         );
 
         // Puntitos indicadores
-        pnlDots.Visible = true;
         StringBuilder dots = new StringBuilder();
         for (int i = 1; i <= MAX_INTENTOS; i++)
         {
             string css = i <= intentos ? "login-dot login-dot-lleno" : "login-dot";
             dots.AppendFormat("<span class=\"{0}\"></span>", css);
         }
-        litDots.Text = dots.ToString();
     }
 
     private void MostrarBloqueado()

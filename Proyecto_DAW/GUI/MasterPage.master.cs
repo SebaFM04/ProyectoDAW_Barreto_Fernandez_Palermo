@@ -9,45 +9,28 @@ public partial class MasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
-        {
-            ControlarLogin();
-            ControlarRoles();
-        }
+        ControlarLogin();
+        ControlarRoles();
     }
 
     private void ControlarLogin()
     {
-        if (Session["Usuario"] != null)
-        {
-            liLogin.Visible = false;
-            liLogout.Visible = true;
-        }
-        else
-        {
-            liLogin.Visible = true;
-            liLogout.Visible = false;
-        }
+        bool haySesion = Session["UsuarioActual"] != null;
+
+        liLogin.Visible = !haySesion;
+        liLogout.Visible = haySesion;
     }
 
     private void ControlarRoles()
     {
-        if (Session["Rol"] != null)
-        {
-            string rol = Session["Rol"].ToString();
-
-            if (rol == "Admin" || rol == "Webmaster")
-            {
-                liAdministracion.Visible = true;
-            }
-            else
-            {
-                liAdministracion.Visible = false;
-            }
-        }
-        else
+        if (Session["Rol"] == null)
         {
             liAdministracion.Visible = false;
+            return;
         }
+
+        string rol = Session["Rol"].ToString().ToLower();
+
+        liAdministracion.Visible = (rol == "admin" || rol == "webmaster");
     }
 }

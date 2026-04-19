@@ -3,32 +3,24 @@
   "WorkspaceRootPath": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|d:\\documents\\programas\\repositorios de github\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+      "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|d:\\documents\\programas\\repositorios de github\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\login.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\login.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|d:\\documents\\programas\\repositorios de github\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\estilos\\estiloslogin.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\estilos\\estiloslogin.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|d:\\documents\\programas\\repositorios de github\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\masterpage.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
-      "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\masterpage.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}"
+      "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|d:\\documents\\programas\\repositorios de github\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\scripts\\scriptlogin.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\scripts\\scriptlogin.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|d:\\documents\\programas\\repositorios de github\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\global.asax||{4D30FDB3-AB3E-4810-B6F2-64627BCCA384}",
-      "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\global.asax||{4D30FDB3-AB3E-4810-B6F2-64627BCCA384}"
+      "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|d:\\documents\\programas\\repositorios de github\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|d:\\documents\\programas\\repositorios de github\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\masterpage.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\masterpage.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C60CC9F-5937-4A87-9593-59252DA3A876}|BE\\BE.csproj|d:\\documents\\programas\\repositorios de github\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\be\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8C60CC9F-5937-4A87-9593-59252DA3A876}|BE\\BE.csproj|solutionrelative:be\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|d:\\documents\\programas\\repositorios de github\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\estilos\\estilosmaestro.css||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\estilos\\estilosmaestro.css||{8B382828-6202-11D1-8870-0000F87579D2}|"
+      "AbsoluteMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|d:\\documents\\programas\\repositorios de github\\proyectodaw_barreto_fernandez_palermo\\proyecto_daw\\gui\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{49760FB8-2856-9F9B-D44C-3777971CB0EC}|D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI|solutionrelative:gui\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,33 +30,47 @@
       "DocumentGroups": [
         {
           "DockedWidth": 160,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "EstilosMaestro.css",
-              "DocumentMoniker": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Estilos\\EstilosMaestro.css",
-              "RelativeDocumentMoniker": "GUI\\Estilos\\EstilosMaestro.css",
-              "ToolTip": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Estilos\\EstilosMaestro.css",
-              "RelativeToolTip": "GUI\\Estilos\\EstilosMaestro.css",
-              "ViewState": "AgIAAIEAAAAAAAAAAAAAAJQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-04-17T17:21:56.48Z",
+              "DocumentIndex": 4,
+              "Title": "Web.config",
+              "DocumentMoniker": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Web.config",
+              "RelativeDocumentMoniker": "GUI\\Web.config",
+              "ToolTip": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Web.config",
+              "RelativeToolTip": "GUI\\Web.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2026-04-19T14:03:31.113Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MasterPage.master",
-              "DocumentMoniker": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\MasterPage.master",
-              "RelativeDocumentMoniker": "GUI\\MasterPage.master",
-              "ToolTip": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\MasterPage.master",
-              "RelativeToolTip": "GUI\\MasterPage.master",
+              "DocumentIndex": 3,
+              "Title": "Login.aspx",
+              "DocumentMoniker": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Login.aspx",
+              "RelativeDocumentMoniker": "GUI\\Login.aspx",
+              "ToolTip": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Login.aspx",
+              "RelativeToolTip": "GUI\\Login.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2026-04-17T17:20:49.438Z",
+              "WhenOpened": "2026-04-19T13:56:09.312Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Login.aspx.cs",
+              "DocumentMoniker": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Login.aspx.cs",
+              "RelativeDocumentMoniker": "GUI\\Login.aspx.cs",
+              "ToolTip": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Login.aspx.cs",
+              "RelativeToolTip": "GUI\\Login.aspx.cs",
+              "ViewState": "AgIAAG4AAAAAAAAAAAAIwFgAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-19T14:45:10.989Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
@@ -76,51 +82,9 @@
               "RelativeDocumentMoniker": "GUI\\Estilos\\EstilosLogin.css",
               "ToolTip": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Estilos\\EstilosLogin.css",
               "RelativeToolTip": "GUI\\Estilos\\EstilosLogin.css",
-              "ViewState": "AgIAALEAAAAAAAAAAAAAAM0AAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAM4AAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-04-17T17:47:17.745Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Login.aspx",
-              "DocumentMoniker": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Login.aspx",
-              "RelativeDocumentMoniker": "GUI\\Login.aspx",
-              "ToolTip": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Login.aspx*",
-              "RelativeToolTip": "GUI\\Login.aspx*",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2026-04-17T17:46:39.337Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MasterPage.master.cs",
-              "DocumentMoniker": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\MasterPage.master.cs",
-              "RelativeDocumentMoniker": "GUI\\MasterPage.master.cs",
-              "ToolTip": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\MasterPage.master.cs",
-              "RelativeToolTip": "GUI\\MasterPage.master.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T18:16:19.28Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Usuario.cs",
-              "DocumentMoniker": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\BE\\Usuario.cs",
-              "RelativeDocumentMoniker": "BE\\Usuario.cs",
-              "ToolTip": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\BE\\Usuario.cs",
-              "RelativeToolTip": "BE\\Usuario.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T18:00:16.495Z",
+              "WhenOpened": "2026-04-19T14:45:16.383Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
@@ -134,15 +98,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Global.asax",
-              "DocumentMoniker": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Global.asax",
-              "RelativeDocumentMoniker": "GUI\\Global.asax",
-              "ToolTip": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Global.asax",
-              "RelativeToolTip": "GUI\\Global.asax",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000179|",
-              "WhenOpened": "2026-04-17T18:36:05.745Z",
+              "DocumentIndex": 2,
+              "Title": "ScriptLogin.js",
+              "DocumentMoniker": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Scripts\\ScriptLogin.js",
+              "RelativeDocumentMoniker": "GUI\\Scripts\\ScriptLogin.js",
+              "ToolTip": "D:\\Documents\\PROGRAMAS\\Repositorios de Github\\ProyectoDAW_Barreto_Fernandez_Palermo\\Proyecto_DAW\\GUI\\Scripts\\ScriptLogin.js",
+              "RelativeToolTip": "GUI\\Scripts\\ScriptLogin.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-04-19T14:51:18.731Z",
               "EditorCaption": ""
             }
           ]

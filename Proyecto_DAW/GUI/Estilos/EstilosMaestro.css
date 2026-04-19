@@ -1,166 +1,156 @@
-﻿* {
+﻿/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: Arial;
 }
 
-body {
-    font-family: Arial;
-    margin: 0; /* Quitar margen por defecto del body */
-}
-
-/* Configuramos el formulario principal para usar flexbox y ocupar toda la altura */
+/* LAYOUT GENERAL */
 form#form1 {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-
-
-#footer {
-    background-color: dimgrey;
-    color: white;
-    /* Cambiar a relative y emujar abajo en vez de usar absolute */
-    position: relative;
-    /* margin-top: auto lo empuja al final usando el espacio sobrante (funciona por el flex del form) */
-    margin-top: auto;
-    width: 100%;
-    text-align: center;
-    font-size: x-large;
+/* NAVBAR */
+.navbar {
+    background-color: darkolivegreen;
 }
-
-#footer span {
-    padding-left: 40px;
-}
-
-
-b {
-    color: green;
-}
-
-/* === Clases del MasterPage (Navegación) === */
 
 .container {
-    width: 100%;
-    max-width: auto;
-    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: darkolivegreen;
+    padding: 10px;
 }
 
 .navbar-header {
     display: flex;
-    align-items: center;
+    align-content: center;
+    justify-content: space-between;
 }
 
+/* BRAND */
 .navbar-brand {
-    font-size: 1.5em;
-    font-weight: bold;
     color: white;
+    font-size: 1.5em;
     text-decoration: none;
+    font-weight: bold;
 }
 
-.navbar-toggle {
-    display: none; /* Se oculta por defecto en pantallas grandes */
-    background: transparent;
-    border: 1px solid white;
-    padding: 8px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.icon-bar {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background-color: white;
-    margin: 4px 0;
+/* MENU */
+.navbar-menu {
+    display: flex;
 }
 
 .nav {
     display: flex;
     list-style: none;
-    margin: 0;
-    padding: 0;
 }
 
-.nav.navbar-nav {
-    flex-direction: row;
-    align-items: center;
-}
-
-.dropdown {
+.nav li {
     position: relative;
 }
 
-.dropdown-toggle {
+.nav li a {
+    color: white;
+    padding: 10px 15px;
     display: block;
-    cursor: pointer;
+    text-decoration: none;
+    border-radius: 5px;
 }
 
-.caret {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    vertical-align: middle;
-    border-top: 4px dashed;
-    border-right: 4px solid transparent;
-    border-left: 4px solid transparent;
+.nav li a:hover {
+background-color: rgba(255,255,255,0.2);
 }
 
+/* DROPDOWN */
 .dropdown-menu {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: white;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    background-color: #ffffff;
+    min-width: 200px;
+    border-radius: 8px;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
     list-style: none;
-    padding: 0;
-    margin: 0;
+    padding: 5px 0;
+    margin: 5px 0 0 0;
 }
 
 .dropdown-menu li {
-    padding: 0;
     width: 100%;
 }
 
 .dropdown-menu li a {
-    color: black !important;
-    padding: 12px 16px !important;
     display: block;
+    padding: 10px 15px;
+    color: #333 !important;
     text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s;
 }
 
 .dropdown-menu li a:hover {
-    background-color: #f1f1f1 !important;
+    background-color: #f5f5f5;
     color: black !important;
 }
 
-/* Mostrar menú al hacer hover (opcional, o necesita JS para el click) */
-.dropdown:hover .dropdown-menu {
+.dropdown.open .dropdown-menu {
     display: block;
 }
 
+/* DIVIDER */
 .divider {
     height: 1px;
-    margin: 9px 0;
-    overflow: hidden;
-    background-color: #e5e5e5;
+    background-color: #ccc;
+    margin: 5px 0;
 }
 
-.navbar-nav li a {
+/* BOTON DESPLEGABLE */
+.navbar-toggle {
+    display: none;
+    background: none;
+    border: 1px solid white;
+    padding: 5px;
+}
+
+.icon-bar {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: white;
+    margin: 3px 0;
+}
+
+/* FOOTER */
+#footer {
+    margin-top: auto;
+    background-color: dimgrey;
     color: white;
-    text-decoration: none; /* ❌ saca el subrayado */
-    padding: 10px 18px; /* 🔥 espacio interno (forma de botón) */
-    border-radius: 6px; /* bordes redondeados */
-    transition: 0.3s;
+    text-align: center;
+    padding: 10px;
 }
 
-.navbar-nav li a:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* efecto botón */
-    text-decoration: none;
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .navbar-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar-menu.active {
+        display: flex;
+    }
+
+    .nav {
+        flex-direction: column;
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
 }

@@ -4,101 +4,101 @@
 
 <html>
 <head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
+    <meta charset="utf-8" />
+    <title>Refugio del Oeste</title>
+
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
 
     <link href="Estilos/EstilosMaestro.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
 
-            <!-- ===== NAVBAR ===== -->
-            <div class="navbar">
-                <div class="container">
+        <!-- ===== NAVBAR ===== -->
+        <nav class="navbar">
+            <div class="container">
 
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="Más opciones">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
+                <div class="navbar-header">
+                    <a class="navbar-brand" runat="server" href="~/MenuPrincipal.aspx">
+                        🐾 Refugio del Oeste
+                    </a>
 
-                        <a class="navbar-brand" runat="server" href="~/">&#x1F43E; Refugio del Oeste</a>
-                    </div>
+                    <button type="button" class="navbar-toggle" id="btnToggleMenu">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
 
-                    <div class="navbar-collapse collapse">
+                <div class="navbar-menu" id="navbarMenu">
 
-                        <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav">
 
-                            <li runat="server" id="liInicio">
-                                <a runat="server" href="~/MenuPrincipal.aspx">Inicio</a>
-                            </li>
+                        <li runat="server" id="liInicio">
+                            <a runat="server" href="~/MenuPrincipal.aspx">Inicio</a>
+                        </li>
 
-                            <!-- Animales -->
-                            <li class="dropdown" runat="server" id="liAnimales">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Animales <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a runat="server" href="~/Animales/Listado">Ver animales</a></li>
-                                    <li><a runat="server" href="~/Animales/Registrar">Registrar animal</a></li>
-                                    <li><a runat="server" href="~/Animales/FichasMedicas">Fichas médicas</a></li>
-                                    <li><a runat="server" href="~/Animales/FichasIngreso">Fichas de ingreso</a></li>
-                                </ul>
-                            </li>
+                        <!-- Animales -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle">Animales</a>
+                            <ul class="dropdown-menu">
+                                <li><a runat="server" href="~/Animales/Listado">Ver animales</a></li>
+                                <li><a runat="server" href="~/Animales/Registrar">Registrar animal</a></li>
+                                <li><a runat="server" href="~/Animales/FichasMedicas">Fichas médicas</a></li>
+                                <li><a runat="server" href="~/Animales/FichasIngreso">Fichas de ingreso</a></li>
+                            </ul>
+                        </li>
 
-                            <!-- Adopciones -->
-                            <li class="dropdown" runat="server" id="liAdopciones">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Adopciones <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a runat="server" href="~/Adopciones/Solicitudes">Solicitudes</a></li>
-                                    <li><a runat="server" href="~/Adopciones/Certificados">Certificados</a></li>
-                                    <li><a runat="server" href="~/Adopciones/Adoptantes">Adoptantes</a></li>
-                                </ul>
-                            </li>
+                        <!-- Adopciones -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle">Adopciones</a>
+                            <ul class="dropdown-menu">
+                                <li><a runat="server" href="~/Adopciones/Solicitudes">Solicitudes</a></li>
+                                <li><a runat="server" href="~/Adopciones/Certificados">Certificados</a></li>
+                                <li><a runat="server" href="~/Adopciones/Adoptantes">Adoptantes</a></li>
+                            </ul>
+                        </li>
 
-                            <!-- Administración -->
-                            <li class="dropdown" runat="server" id="liAdministracion">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Administración <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a runat="server" href="~/Admin/Usuarios">Usuarios</a></li>
-                                    <li><a runat="server" href="~/Admin/Bitacora">Bitácora</a></li>
-                                    <li class="divider"></li>
-                                    <li><a runat="server" href="~/Admin/BackupRestore">Backup &amp; Restore</a></li>
-                                </ul>
-                            </li>
+                        <!-- Administración -->
+                        <li class="dropdown" runat="server" id="liAdministracion">
+                            <a href="#" class="dropdown-toggle">Administración</a>
+                            <ul class="dropdown-menu">
+                                <li><a runat="server" href="~/Admin/Usuarios">Usuarios</a></li>
+                                <li><a runat="server" href="~/Admin/Bitacora">Bitácora</a></li>
+                                <li class="divider"></li>
+                                <li><a runat="server" href="~/Admin/BackupRestore">Backup &amp; Restore</a></li>
+                            </ul>
+                        </li>
 
-                            <!-- Login / Logout -->
-                            <li runat="server" id="liLogin">
-                                <a runat="server" href="~/Login.aspx">Iniciar Sesión</a>
-                            </li>
+                        <!-- Login / Logout -->
+                        <li runat="server" id="liLogin">
+                            <a runat="server" href="~/Login.aspx">Iniciar Sesión</a>
+                        </li>
 
-                            <li runat="server" id="liLogout">
-                                <a runat="server" href="~/Logout.aspx">Cerrar Sesión</a>
-                            </li>
+                        <li runat="server" id="liLogout">
+                            <a runat="server" href="~/Logout.aspx">Cerrar Sesión</a>
+                        </li>
 
-                        </ul>
+                    </ul>
 
-                    </div>
                 </div>
             </div>
+        </nav>
 
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+        <!-- CONTENIDO -->
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
 
-        </div>
-
-        <div id="footer">
+        <!-- FOOTER -->
+        <footer id="footer">
             <span>contacto@refugio.com</span>
             <span>Whatsapp +54 11 1111 1111</span>
             <span>www.refugioDAW.com</span>
-        </div>
+        </footer>
+
     </form>
+
+    <!-- JS -->
+    <script src="Scripts/ScriptMaster.js"></script>
+
 </body>
 </html>
