@@ -1,0 +1,156 @@
+﻿/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial;
+}
+
+/* LAYOUT GENERAL */
+form#form1 {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* NAVBAR */
+.navbar {
+    background-color: darkolivegreen;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.navbar-header {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+}
+
+/* BRAND */
+.navbar-brand {
+    color: white;
+    font-size: 1.5em;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* MENU */
+.navbar-menu {
+    display: flex;
+}
+
+.nav {
+    display: flex;
+    list-style: none;
+}
+
+.nav li {
+    position: relative;
+}
+
+.nav li a {
+    color: white;
+    padding: 10px 15px;
+    display: block;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.nav li a:hover {
+background-color: rgba(255,255,255,0.2);
+}
+
+/* DROPDOWN */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    min-width: 200px;
+    border-radius: 8px;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
+    list-style: none;
+    padding: 5px 0;
+    margin: 5px 0 0 0;
+}
+
+.dropdown-menu li {
+    width: 100%;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 10px 15px;
+    color: #333 !important;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f5f5f5;
+    color: black !important;
+}
+
+.dropdown.open .dropdown-menu {
+    display: block;
+}
+
+/* DIVIDER */
+.divider {
+    height: 1px;
+    background-color: #ccc;
+    margin: 5px 0;
+}
+
+/* BOTON DESPLEGABLE */
+.navbar-toggle {
+    display: none;
+    background: none;
+    border: 1px solid white;
+    padding: 5px;
+}
+
+.icon-bar {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: white;
+    margin: 3px 0;
+}
+
+/* FOOTER */
+#footer {
+    margin-top: auto;
+    background-color: dimgrey;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .navbar-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar-menu.active {
+        display: flex;
+    }
+
+    .nav {
+        flex-direction: column;
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
+}

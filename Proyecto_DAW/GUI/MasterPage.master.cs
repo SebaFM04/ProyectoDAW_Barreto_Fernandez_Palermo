@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class MasterPage : System.Web.UI.MasterPage
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        ControlarLogin();
+        ControlarRoles();
+    }
+
+    private void ControlarLogin()
+    {
+        bool haySesion = Session["UsuarioActual"] != null;
+
+        liLogin.Visible = !haySesion;
+        liLogout.Visible = haySesion;
+    }
+
+    private void ControlarRoles()
+    {
+        if (Session["Rol"] == null)
+        {
+            liAdministracion.Visible = false;
+            return;
+        }
+
+        string rol = Session["Rol"].ToString().ToLower();
+
+        liAdministracion.Visible = (rol == "admin" || rol == "webmaster");
+    }
+}
