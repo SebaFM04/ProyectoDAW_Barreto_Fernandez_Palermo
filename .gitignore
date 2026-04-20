@@ -419,3 +419,13 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+*.vsidx
+/Proyecto_DAW/.vs
+/Proyecto_DAW/.vs
+/Proyecto_DAW/.vs
+Proyecto_DAW/.vs/Proyecto_DAW/v17/.suo
+Proyecto_DAW/.vs/Proyecto_DAW/v17/DocumentLayout.backup.json
+Proyecto_DAW/.vs/Proyecto_DAW/v17/DocumentLayout.json
+Proyecto_DAW/.vs/Proyecto_DAW/config/applicationhost.config
+/Proyecto_DAW/BE/obj/Debug
+/Proyecto_DAW/SERVICIOS/obj/Debug
