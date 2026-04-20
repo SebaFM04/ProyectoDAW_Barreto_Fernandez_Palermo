@@ -37,7 +37,7 @@
                 <!-- Usuario -->
                 <div class="login-field">
                     <label class="login-label">Nombre de usuario</label>
-                    <asp:TextBox ID="txtUsuario" runat="server" CssClass="login-input" MaxLength="50" />
+                    <asp:TextBox ID="txtNombreUsuario" runat="server" CssClass="login-input" MaxLength="50" />
                 </div>
 
                 <!-- Password -->
@@ -46,7 +46,7 @@
 
                     <div class="login-pass-wrap">
                         <asp:TextBox
-                            ID="txtPassword"
+                            ID="txtContraseñaUsuario"
                             runat="server"
                             CssClass="login-input"
                             TextMode="Password"
@@ -74,6 +74,6 @@
 
     <!-- JS -->
     <script src="Scripts/ScriptLogin.js"></script>
-
+    <script src="Scripts/Alertas.js"></script>
 </asp:Content>
 

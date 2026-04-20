@@ -1,4 +1,6 @@
 ﻿using BE;
+using SERVICIOS;
+using BLL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +12,112 @@ using System.Web.UI.WebControls;
 
 public partial class Login : System.Web.UI.Page
 {
-    private const int MAX_INTENTOS = 3;
+    private const int MAXINTENTOS = 3;
 
-    protected void Page_Load(object sender, EventArgs e)
+    protected void PageLoad(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            txtUsuario.Focus();
+            txtNombreUsuario.Focus();
         }
     }
 
-    protected void btnIngresar_Click(object sender, EventArgs e)
+    protected void btnIngresarClick(object sender, EventArgs e)
     {
+        try
+        {
+            if (txtNombreUsuario.Text == "" || txtContraseñaUsuario.Text == "") throw new Exception("Faltan ingresar datos");
+            if (sessionManager.Gestor.RetornarUsuarioSession() != null) throw new Exception("Ya hay una sesión iniciada");
+            else
+            {
+                if (bllUsuario.ValidarExistenciaNombreUsuario(txtNombreUsuario.Text.Trim()))
+                {
+                    Usuario usuario = bllUsuario.RetornarUsuarios().Find(x => x.nombreUsuario == txtNombreUsuario.Text);
+                    if (bllUsuario.UsuarioActivo(usuario))
+                    {
+                        if (!(bllUsuario.UsuarioBloqueado(usuario)))
+                        {
+                            if (bllUsuario.ValidarContraseñaActual(usuario.nombreUsuario, txtContraseñaUsuario.Text))
+                            {
+                                bllUsuario.ReiniciarIntentos(usuario);
+
+                                sessionManager.Gestor.SetUsuario(usuario);
+                                if (bllDigitoVerificador.Deteccion())
+                                {
+                                    if (usuario.rol == "Administrador")
+                                    {
+                                        digitoVerificador.ShowDialog();
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("No se puede iniciar el sistema. Por favor, contactese con un administrador");
+                                        sessionManager.Gestor.UnsetUsuario();
+                                    }
+                                }
+                                else
+                                {
+                                    if (bllUsuario.VerificarContraseñaNoSeaDNIyApellido(sessionManager.Gestor.RetornarUsuarioSession().contraseña))
+                                    {
+                                        MessageBox.Show("Primer inicio de sesión. Debe cambiar su contraseña", "CAMBIO DE CONTRASEÑA REQUERIDO", MessageBoxButtons.OK);
+                                        formularioCambiarContraseña.ShowDialog();
+                                    }
+                                    sessionManager.Gestor.Idioma = usuario.lenguaje;
+                                    TraductorSubject.Instancia.Notificar(usuario.lenguaje);
+                                    var usuario = sessionManager.Gestor.RetornarUsuarioSession();
+                                    var perfilNombre = usuario.rol;
+                                    var permisosSimples = bllUsuario.ObtenerPermisosSimplesDeUsuario(perfilNombre);
+
+                                    sessionManager.Gestor.SetPermisosUsuario(permisosSimples);
+                                    bllBitacoraEvento.Alta(sessionManager.Gestor.RetornarUsuarioSession().nombreUsuario, "Iniciar sesión", "Incio de sesión de usuario", 1);
+                                    GestorFormulario.gestorFormSG.DefinirEstado(new EstadoMenu());
+                                }
+                            }
+                            else
+                            {
+                                if (bllUsuario.AumentarIntentos(usuario) == 3)
+                                {
+                                    MessageBox.Show("Usted a sido bloqueado");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Contraseña incorrecta");
+                                }
+                            }
+                        }
+                        else
+                        {
+
+                            MessageBox.Show("Usuario bloqueado");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Usuario inactivo");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Usuario no encontrado");
+                }
+            }
+        }
+        catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+
+
+
+
+
+
+
+
+
+
         // Limpiar paneles de mensajes anteriores
         LimpiarAlertas();
 
-        string nombreUsuario = txtUsuario.Text.Trim();
-        string passwordIngresada = txtPassword.Text;
+        string nombreUsuario = txtNombreUsuario.Text.Trim();
+        string passwordIngresada = txtContraseñaUsuario.Text;
 
         // Aplicar hash SHA-256 a la contraseña ingresada antes de comparar
         string hashIngresado = HashSHA256(passwordIngresada);
@@ -60,7 +151,7 @@ public partial class Login : System.Web.UI.Page
             // Actualizar intentos en BLL
             // usuarioBLL.ActualizarIntentos(usuario.DNI, intentosActualizados);
 
-            if (intentosActualizados >= MAX_INTENTOS)
+            if (intentosActualizados >= MAXINTENTOS)
             {
                 // Bloquear usuario en BLL 
                 // usuarioBLL.BloquearUsuario(usuario.DNI);
@@ -98,6 +189,8 @@ public partial class Login : System.Web.UI.Page
         }
     }
 
+
+
     #region Métodos de UI para mostrar estados de error
 
     private void LimpiarAlertas()
@@ -123,12 +216,12 @@ public partial class Login : System.Web.UI.Page
         pnlIntentos.Visible = true;
         litIntentos.Text = string.Format(
             "Intento {0} de {1}. Tu cuenta se bloqueará al tercer intento fallido.",
-            intentos, MAX_INTENTOS
+            intentos, MAXINTENTOS
         );
 
         // Puntitos indicadores
         StringBuilder dots = new StringBuilder();
-        for (int i = 1; i <= MAX_INTENTOS; i++)
+        for (int i = 1; i <= MAXINTENTOS; i++)
         {
             string css = i <= intentos ? "login-dot login-dot-lleno" : "login-dot";
             dots.AppendFormat("<span class=\"{0}\"></span>", css);
@@ -140,25 +233,10 @@ public partial class Login : System.Web.UI.Page
         LimpiarAlertas();
         pnlBloqueado.Visible = true;
         btnIngresar.Enabled = false;
-        txtUsuario.Enabled = false;
-        txtPassword.Enabled = false;
+        txtNombreUsuario.Enabled = false;
+        txtContraseñaUsuario.Enabled = false;
     }
 
     #endregion
 
-    #region Encriptación SHA-256
-
-    public static string HashSHA256(string input)
-    {
-        using (SHA256 sha = SHA256.Create())
-        {
-            byte[] bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(input));
-            StringBuilder sb = new StringBuilder();
-            foreach (byte b in bytes)
-                sb.Append(b.ToString("x2"));
-            return sb.ToString();
-        }
-    }
-
-    #endregion
 }
