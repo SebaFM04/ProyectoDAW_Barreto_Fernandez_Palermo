@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SERVICIOS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -32,5 +33,14 @@ public partial class MasterPage : System.Web.UI.MasterPage
         string rol = Session["Rol"].ToString().ToLower();
 
         liAdministracion.Visible = (rol == "admin" || rol == "webmaster");
+    }
+
+    protected void btnCerrarSesion_Click(object sender, EventArgs e)
+    {
+        // 1. Borramos todos los datos guardados en la sesión (Usuario, Rol, etc.)
+        claseSession.Gestor.UnsetUsuario();
+
+        // 3. Redirigimos al usuario a la pantalla de Login (o al Inicio, donde prefieras)
+        Response.Redirect("Login.aspx");
     }
 }

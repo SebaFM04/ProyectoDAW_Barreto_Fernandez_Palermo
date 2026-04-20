@@ -36,7 +36,7 @@ namespace BLL
         public bool VerificarContraseñaNoSeaDNIyApellido(string contraseña)
         {
             bool coincide = false;
-            string contraseñaVieja = HashearContraseña(sessionManager.Gestor.RetornarUsuarioSession().dni + sessionManager.Gestor.RetornarUsuarioSession().apellido);
+            string contraseñaVieja = HashearContraseña(claseSession.Gestor.RetornarUsuarioSession().dni + claseSession.Gestor.RetornarUsuarioSession().apellido);
             if (contraseña == contraseñaVieja)
             {
                 coincide = true;
@@ -72,9 +72,9 @@ namespace BLL
             return dal.ValidarDni(dni);
         }
 
-        public int AumentarIntentos(Usuario nombreUsuario)
+        public int Intentos(Usuario nombreUsuario)
         {
-            return dal.AumentarIntentos(nombreUsuario);
+            return dal.Intentos(nombreUsuario);
         }
 
         //public void Modificar(string dni, string rol, string email)
@@ -185,7 +185,7 @@ namespace BLL
         {
             usuario.contraseña = HashearContraseña(contraseñaNueva);
             dal.Modificar(usuario);
-            sessionManager.Gestor.SetUsuario(usuario);
+            claseSession.Gestor.SetUsuario(usuario);
             //bllBitacoraEventos.Alta(sessionManager.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Modificar contraseña usuario", 1);
         }
 

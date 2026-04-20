@@ -76,7 +76,7 @@
                         </li>
 
                         <li runat="server" id="liLogout">
-                            <a runat="server" href="~/Logout.aspx">Cerrar Sesión</a>
+                            <asp:LinkButton ID="btnCerrarSesion" runat="server" OnClick="btnCerrarSesion_Click">Cerrar Sesión</asp:LinkButton>
                         </li>
 
                     </ul>

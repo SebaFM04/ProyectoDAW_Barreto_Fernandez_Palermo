@@ -107,7 +107,7 @@ namespace DAL
 
         //si el usuario ingresa mal la contraseña, se le incrementa + 1 los intentos
         // intentos > 3 --> usuario bloqueado
-        public int AumentarIntentos(Usuario usuario)
+        public int Intentos(Usuario usuario)
         {
             usuario.intentos++;
             string query;
