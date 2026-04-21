@@ -42,8 +42,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle">Animales</a>
                             <ul class="dropdown-menu">
-                                <li><a runat="server" href="~/Animales/Listado">Ver animales</a></li>
-                                <li><a runat="server" href="~/Animales/Registrar">Registrar animal</a></li>
+                                <li><a runat="server" href="~/RegistroAnimales.aspx">Registrar animales</a></li>
                                 <li><a runat="server" href="~/Animales/FichasMedicas">Fichas médicas</a></li>
                                 <li><a runat="server" href="~/Animales/FichasIngreso">Fichas de ingreso</a></li>
                             </ul>

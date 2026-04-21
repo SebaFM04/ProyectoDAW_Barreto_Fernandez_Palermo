@@ -1,0 +1,94 @@
+﻿.page-container {
+    padding: 20px;
+}
+
+.titulo {
+    margin-bottom: 20px;
+    color: darkolivegreen;
+}
+
+/* LAYOUT PRINCIPAL */
+.layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* GRID IZQUIERDA */
+.grid-container {
+    flex: 2; 
+    border: 2px solid #3a7d44; /*Se pude borrar despues es para ver como queda los limites del contenedor*/
+    padding: 15px;
+}
+
+/* GRID estilo */
+.grid {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.grid th {
+    background-color: darkolivegreen;
+    color: white;
+    padding: 10px;
+}
+
+.grid td {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+/* FORM DERECHA */
+.form-box {
+    flex: 1;
+    border: 2px solid #3a7d44; /*Se pude borrar despues es para ver como queda los limites del contenedor*/
+    padding: 15px;
+    display: flex;
+    gap: 20px;
+}
+
+/* Inputs */
+.form-left {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-left label {
+    margin-top: 10px;
+}
+
+.input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Botones */
+.form-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.btn {
+    padding: 10px;
+    background-color: darkolivegreen;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: olive;
+}
+
+.secundario {
+    background-color: gray;
+}
+
+.salir {
+    background-color: crimson;
+}
