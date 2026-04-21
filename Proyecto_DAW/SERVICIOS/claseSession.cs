@@ -42,10 +42,15 @@ namespace SERVICIOS
             return HttpContext.Current.Session["UsuarioActual"] != null;
         }
 
-
         public void SetUsuario(Usuario usuario)
         {
             HttpContext.Current.Session["UsuarioActual"] = usuario;
+            HttpContext.Current.Session["Rol"] = usuario.rol;
+        }
+
+        public string RetornarRol()
+        {
+            return HttpContext.Current.Session["Rol"].ToString();
         }
 
         public void UnsetUsuario()

@@ -13,7 +13,18 @@ using System.Web.UI.WebControls;
 public partial class Login : System.Web.UI.Page
 {
     bllUsuario bllU;
+    bllBitacora bllBitacora;
 
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+        bllU = new bllUsuario();
+        bllBitacora = new bllBitacora();
+        if (!IsPostBack)
+        {
+            txtNombreUsuario.Focus();
+        }
+    }
 
     protected void btnIngresar_Click(object sender, EventArgs e)
     {
@@ -46,8 +57,8 @@ public partial class Login : System.Web.UI.Page
                             claseSession.Gestor.SetUsuario(usuario);
                             var usuario1 = claseSession.Gestor.RetornarUsuarioSession();
                             var perfilNombre = usuario1.rol;
+                            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Usuario", "Inicio de sesión de usuario", 1);
                             Response.Redirect("MenuPrincipal.aspx");
-                            //bllBitacoraEvento.Alta(sessionManager.Gestor.RetornarUsuarioSession().nombreUsuario, "Iniciar sesión", "Incio de sesión de usuario", 1);
                         }
                         else
                         {
@@ -103,13 +114,4 @@ public partial class Login : System.Web.UI.Page
         pnlAlerta.Visible = true;
     }
 
-    protected void Page_Load(object sender, EventArgs e)
-    {
-
-        bllU = new bllUsuario();
-        if (!IsPostBack)
-        {
-            txtNombreUsuario.Focus();
-        }
-    }
 }

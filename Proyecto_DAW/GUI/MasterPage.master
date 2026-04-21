@@ -64,7 +64,9 @@
                             <a href="#" class="dropdown-toggle">Administración</a>
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/Admin/Usuarios">Usuarios</a></li>
-                                <li><a runat="server" href="~/Admin/Bitacora">Bitácora</a></li>
+                                <li runat="server" id="liBitacora">
+                                    <asp:LinkButton ID="btnBitacora" runat="server" OnClick="btnBitacora_Click">Bitácora</asp:LinkButton>
+                                </li>
                                 <li class="divider"></li>
                                 <li><a runat="server" href="~/Admin/BackupRestore">Backup &amp; Restore</a></li>
                             </ul>
