@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="bllAnimal.cs" />
     <Compile Include="bllBitacora.cs" />
     <Compile Include="bllUsuario.cs" />
+    <Compile Include="bllVacuna.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
