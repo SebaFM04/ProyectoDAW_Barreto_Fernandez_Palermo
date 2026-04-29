@@ -21,8 +21,8 @@ namespace DAL
         public void Alta(Vacuna vacuna)
         {
             string query = "INSERT INTO Vacuna " +
-                         "(codigoVacuna, codigoAnimal, nombreVacuna, fechaAplicacion, fechaProximaAplicacion) " +
-                         "VALUES (@codigoVacuna, @codigoAnimal, @nombreVacuna, @fechaAplicacion, @fechaProximaAplicacion)";
+                         "(codigoAnimal, nombreVacuna, fechaAplicacion, fechaProximaAplicacion) " +
+                         "VALUES (@codigoAnimal, @nombreVacuna, @fechaAplicacion, @fechaProximaAplicacion)";
             EjecutarQueryConEntidad(vacuna, query);
         }
 

@@ -20,11 +20,11 @@ namespace BLL
             bllBitacora = new bllBitacora();
         }
 
-        public void AltaVacuna(int codigoVacuna, int codigoAnimal, string nombreVacuna, DateTime fechaAplicacion, DateTime fechaProximaAplicacion)
+        public void AltaVacuna(int codigoAnimal, string nombreVacuna, DateTime fechaAplicacion, DateTime fechaProximaAplicacion)
         {
-            Vacuna vacuna = new Vacuna(codigoVacuna, codigoAnimal, nombreVacuna, fechaAplicacion, fechaProximaAplicacion);
+            Vacuna vacuna = new Vacuna(codigoAnimal, nombreVacuna, fechaAplicacion, fechaProximaAplicacion);
             dal.Alta(vacuna);
-            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion Vacunaes", "Vacuna dada de alta", 2);
+            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion Vacunas", "Vacuna dada de alta", 2);
         }
 
         public void Modificar(int codigoVacuna, DateTime fechaAplicacion, DateTime fechaProximaApliacion , string nombreVacuna = null)

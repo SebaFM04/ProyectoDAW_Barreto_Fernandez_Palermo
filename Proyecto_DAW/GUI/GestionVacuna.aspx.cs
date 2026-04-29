@@ -25,7 +25,12 @@ public partial class GestionVacuna : System.Web.UI.Page
 
     protected void gvAnimales_SelectedIndexChanged(object sender, EventArgs e)
     {
-        ViewState["CodigoAnimal"] = gvAnimales.SelectedRow.Cells[0].Text;
+        ViewState["CodigoAnimal"] = gvAnimales.SelectedDataKey.Value.ToString();
+    }
+
+    protected void gvVacunas_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        ViewState["CodigoVacuna"] = gvVacunas.SelectedDataKey.Value.ToString();
     }
 
     protected void btnAlta_Click(object sender, EventArgs e)
@@ -34,13 +39,15 @@ public partial class GestionVacuna : System.Web.UI.Page
         lbMensaje.Text = "";
 
         if (!ValidarCampos()) return;
-        if (!ConvertirCampos(out int codigoVacuna, out DateTime fechaAplicacion, out DateTime fechaProxima)) return;
+        if (!ConvertirCampos(out DateTime fechaAplicacion, out DateTime fechaProxima)) return;
 
         try
         {
             int codigoAnimal = int.Parse(ViewState["CodigoAnimal"].ToString());
-            bllvacuna.AltaVacuna(codigoVacuna, codigoAnimal, txtNombreVacuna.Text, fechaAplicacion, fechaProxima);
+            bllvacuna.AltaVacuna(codigoAnimal, txtNombreVacuna.Text, fechaAplicacion, fechaProxima);
+            pnlAlerta.Visible = true;
             lbMensaje.Text = "Vacuna registrada exitosamente.";
+            CargarGrillaVacunas();
         }
         catch (Exception ex)
         {
@@ -54,24 +61,34 @@ public partial class GestionVacuna : System.Web.UI.Page
         lbMensaje.Text = "";
 
         if (!ValidarCampos()) return;
-        if (!ConvertirCampos(out int codigoVacuna, out DateTime fechaAplicacion, out DateTime fechaProxima)) return;
+        if (!ConvertirCampos(out DateTime fechaAplicacion, out DateTime fechaProxima)) return;
+
+        if (ViewState["CodigoVacuna"] == null)
+        {
+            pnlAlerta.Visible = true;
+            pnlAlerta.CssClass = "alert alert-error";
+            lbMensaje.Text = "Por favor, seleccione una vacuna de la lista.";
+            return;
+        }
 
         try
         {
+            int codigoVacuna = int.Parse(ViewState["CodigoVacuna"].ToString());
             bllvacuna.Modificar(codigoVacuna, fechaAplicacion, fechaProxima, txtNombreVacuna.Text);
-            pnlAlerta.CssClass = "alert alert-exito";
+            pnlAlerta.Visible = true;
             lbMensaje.Text = "Vacuna modificada exitosamente.";
+            CargarGrillaVacunas();
         }
         catch (Exception ex)
         {
             lbMensaje.Text = "Error: " + ex.Message;
         }
+
     }
 
     private bool ValidarCampos()
     {
         if (string.IsNullOrWhiteSpace(txtNombreVacuna.Text) ||
-            string.IsNullOrWhiteSpace(txtCodigoVacuna.Text) ||
             string.IsNullOrWhiteSpace(txtFechaAplicacion.Text) ||
             string.IsNullOrWhiteSpace(txtFechaAplicacionProxima.Text))
         {
@@ -95,18 +112,11 @@ public partial class GestionVacuna : System.Web.UI.Page
         return true;
     }
 
-    private bool ConvertirCampos(out int codigoVacuna, out DateTime fechaAplicacion, out DateTime fechaProxima)
+    private bool ConvertirCampos(out DateTime fechaAplicacion, out DateTime fechaProxima)
     {
         fechaAplicacion = DateTime.MinValue; 
         fechaProxima = DateTime.MinValue;
         pnlAlerta.CssClass = "alert alert-exito";
-        if (!int.TryParse(txtCodigoVacuna.Text, out codigoVacuna))
-        {
-            pnlAlerta.Visible = true;           
-            pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "El código de vacuna debe ser un número.";
-            return false;
-        }
         if (!DateTime.TryParse(txtFechaAplicacion.Text, out fechaAplicacion))
         {
             pnlAlerta.Visible = true;

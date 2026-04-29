@@ -9,16 +9,18 @@
 
     <%-- GRILLA VACUNAS --%>
     <p class="seccion-titulo">Vacunas registradas</p>
-    <asp:GridView ID="gvVacunas" runat="server"
+    <asp:GridView ID="gvVacunas" runat="server" DataKeyNames="codigoVacuna"
         CssClass="table"
         AutoGenerateColumns="False"
+        AutoGenerateSelectButton="True"
+        OnSelectedIndexChanged="gvVacunas_SelectedIndexChanged"
         EmptyDataText="No hay datos para mostrar">
         <Columns>
             <asp:BoundField DataField="codigoVacuna" HeaderText="Código vacuna" />
             <asp:BoundField DataField="codigoAnimal" HeaderText="Código animal" />
             <asp:BoundField DataField="nombreVacuna" HeaderText="Nombre de vacuna" />
             <asp:BoundField DataField="fechaAplicacion" HeaderText="Fecha de aplicación" DataFormatString="{0:dd/MM/yyyy}" />
-            <asp:BoundField DataField="fechaAplicacionProxima" HeaderText="Próxima aplicación" DataFormatString="{0:dd/MM/yyyy}" />
+            <asp:BoundField DataField="fechaProximaAplicacion" HeaderText="Próxima aplicación" DataFormatString="{0:dd/MM/yyyy}" />
         </Columns>
     </asp:GridView>
 
@@ -26,7 +28,7 @@
 
     <%-- GRILLA ANIMALES --%>
     <p class="seccion-titulo">Seleccionar animal</p>
-    <asp:GridView ID="gvAnimales" runat="server"
+    <asp:GridView ID="gvAnimales" runat="server" DataKeyNames="codigoAnimal"
         CssClass="table"
         AutoGenerateColumns="False"
         AutoGenerateSelectButton="True"
@@ -50,8 +52,6 @@
     <div style="padding: 0 10px;">
         <div class="fila-form">
             <div class="campo-grupo">
-                <asp:Label runat="server" Text="Código vacuna:" />
-                <asp:TextBox ID="txtCodigoVacuna" runat="server" CssClass="ctrl" Width="150px" />
             </div>
             <div class="campo-grupo">
                 <asp:Label runat="server" Text="Nombre:" />
