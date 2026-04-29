@@ -43,7 +43,9 @@
                             <a href="#" class="dropdown-toggle">Animales</a>
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/Animales/Listado">Ver animales</a></li>
-                                <li><a runat="server" href="~/Animales/Registrar">Registrar animal</a></li>
+                                <li runat="server" id="liRegistrar">
+                                    <asp:LinkButton ID="btnRegistrar" runat="server" OnClick="btnRegistrar_Click">Registrar animal</asp:LinkButton>
+                                </li>
                                 <li><a runat="server" href="~/Animales/FichasMedicas">Fichas médicas</a></li>
                                 <li><a runat="server" href="~/Animales/FichasIngreso">Fichas de ingreso</a></li>
                             </ul>

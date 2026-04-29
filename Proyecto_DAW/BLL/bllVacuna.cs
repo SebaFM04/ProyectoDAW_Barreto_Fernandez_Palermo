@@ -27,9 +27,9 @@ namespace BLL
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion Vacunaes", "Vacuna dada de alta", 2);
         }
 
-        public void Modificar(string codigoVacuna, DateTime fechaAplicacion, DateTime fechaProximaApliacion , string nombreVacuna = null)
+        public void Modificar(int codigoVacuna, DateTime fechaAplicacion, DateTime fechaProximaApliacion , string nombreVacuna = null)
         {
-            Vacuna Vacuna = BuscarVacunaPorCodigo(codigoVacuna);
+            Vacuna Vacuna = BuscarVacunaPorCodigo(codigoVacuna.ToString());
             if (Vacuna == null)
             {
                 throw new Exception("No se encontró una vacuna con el código proporcionado.");
@@ -54,7 +54,7 @@ namespace BLL
             return dal.ObtenerVacuna(codigo);
         }
 
-        public List<Vacuna> RetornarVacunaes()
+        public List<Vacuna> RetornarVacunas()
         {
             return dal.RetornarVacunas();
         }

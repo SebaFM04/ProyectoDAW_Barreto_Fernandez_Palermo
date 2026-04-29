@@ -1,42 +1,85 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="GestionVacuna.aspx.cs" Inherits="GestionVacuna" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="GestionVacuna.aspx.cs" Inherits="GestionVacuna" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <link href="Estilos/EstilosVacunas.css" rel="stylesheet" />
+</asp:Content>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<div class="vacuna-wrapper">
+
+    <%-- GRILLA VACUNAS --%>
+    <p class="seccion-titulo">Vacunas registradas</p>
+    <asp:GridView ID="gvVacunas" runat="server"
+        CssClass="table"
+        AutoGenerateColumns="False"
+        EmptyDataText="No hay datos para mostrar">
+        <Columns>
+            <asp:BoundField DataField="codigoVacuna" HeaderText="Código vacuna" />
+            <asp:BoundField DataField="codigoAnimal" HeaderText="Código animal" />
+            <asp:BoundField DataField="nombreVacuna" HeaderText="Nombre de vacuna" />
+            <asp:BoundField DataField="fechaAplicacion" HeaderText="Fecha de aplicación" DataFormatString="{0:dd/MM/yyyy}" />
+            <asp:BoundField DataField="fechaAplicacionProxima" HeaderText="Próxima aplicación" DataFormatString="{0:dd/MM/yyyy}" />
+        </Columns>
+    </asp:GridView>
+
+    <hr />
+
+    <%-- GRILLA ANIMALES --%>
+    <p class="seccion-titulo">Seleccionar animal</p>
+    <asp:GridView ID="gvAnimales" runat="server"
+        CssClass="table"
+        AutoGenerateColumns="False"
+        AutoGenerateSelectButton="True"
+        OnSelectedIndexChanged="gvAnimales_SelectedIndexChanged"
+        EmptyDataText="No hay datos para mostrar">
+        <Columns>
+            <asp:BoundField DataField="codigoAnimal" HeaderText="Código animal" />
+            <asp:BoundField DataField="especie" HeaderText="Especie" />
+            <asp:BoundField DataField="raza" HeaderText="Raza" />
+            <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+            <asp:BoundField DataField="tamaño" HeaderText="Tamaño" />
+            <asp:BoundField DataField="estadoAdopcion" HeaderText="Estado de adopción" />
+            <asp:BoundField DataField="vivo" HeaderText="Vivo" />
+        </Columns>
+    </asp:GridView>
+
+    <hr />
+
+    <%-- FORMULARIO --%>
+    <p class="seccion-titulo">Datos de la vacuna</p>
+    <div style="padding: 0 10px;">
+        <div class="fila-form">
+            <div class="campo-grupo">
+                <asp:Label runat="server" Text="Código vacuna:" />
+                <asp:TextBox ID="txtCodigoVacuna" runat="server" CssClass="ctrl" Width="150px" />
+            </div>
+            <div class="campo-grupo">
+                <asp:Label runat="server" Text="Nombre:" />
+                <asp:TextBox ID="txtNombreVacuna" runat="server" CssClass="ctrl" Width="200px" />
+            </div>
         </div>
-        <asp:GridView ID="gvVacunas" runat="server">
-            <Columns>
-                 <asp:BoundField DataField="codigoVacuna" HeaderText="Código vacuna" />
-                 <asp:BoundField DataField="codigoAnimal" HeaderText="Código animal" />
-                 <asp:BoundField DataField="nombreVacuna" HeaderText="Nombre de vacuna" />
-                 <asp:BoundField DataField="fechaAplicacion" HeaderText="Fecha de aplicación" DataFormatString="{0:dd:MM:yyyy}" />
-                 <asp:BoundField DataField="fechaAplicacionProxima" HeaderText="Proxima aplicación" DataFormatString="{0:dd:MM:yyyy}" />
-            </Columns>
-        </asp:GridView>
-        <asp:GridView ID="gvAnimales" runat="server">
-            <Columns>
-                <asp:BoundField DataField="codigoAnimal" HeaderText="Código animal" />
-                <asp:BoundField DataField="especie" HeaderText="Especie" />
-                <asp:BoundField DataField="raza" HeaderText="Raza" />
-                <asp:BoundField DataField="nombre" HeaderText="Nombre" />
-                <asp:BoundField DataField="tamaño" HeaderText="Tamaño" />
-                <asp:BoundField DataField="estadoAdopcion" HeaderText="Estado de adopción" />
-                <asp:BoundField DataField="vivo" HeaderText="Vivo" />
-            </Columns>
-        </asp:GridView>
-        <asp:Button ID="btnAlta" runat="server" Text="Alta" />
-        <asp:TextBox ID="txtFechaAplicacionProxima" runat="server"></asp:TextBox>
-        <asp:TextBox ID="txtFechaAplicacion" runat="server"></asp:TextBox>
-        <asp:TextBox ID="txtNombreVacuna" runat="server"></asp:TextBox>
-        <asp:TextBox ID="txtCodigoVacuna" runat="server"></asp:TextBox>
-        <asp:Button ID="btnBaja" runat="server" Text="Baja" />
-    </form>
-</body>
-</html>
+        <div class="fila-form">
+            <div class="campo-grupo">
+                <asp:Label runat="server" Text="Fecha aplicación:" />
+                <asp:TextBox ID="txtFechaAplicacion" runat="server" CssClass="ctrl" TextMode="Date" Width="175px" />
+            </div>
+            <div class="campo-grupo">
+                <asp:Label runat="server" Text="Próxima aplicación:" />
+                <asp:TextBox ID="txtFechaAplicacionProxima" runat="server" CssClass="ctrl" TextMode="Date" Width="175px" />
+            </div>
+        </div>
+    </div>
+
+    <%-- BOTONES --%>
+    <div class="botones-fila">
+        <asp:Button ID="btnAlta" runat="server" Text="Alta" CssClass="btn-verde" OnClick="btnAlta_Click" />
+        <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn-verde" OnClick="btnModificar_Click" />
+    </div>
+
+    <%-- MENSAJE --%>
+    <asp:Panel ID="pnlAlerta" runat="server" Visible="false" CssClass="alert">
+        <asp:Label ID="lbMensaje" runat="server" Text=""></asp:Label>
+    </asp:Panel>
+
+</div>
+</asp:Content>
