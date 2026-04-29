@@ -20,14 +20,14 @@ namespace BLL
             bllBitacora = new bllBitacora();
         }
 
-        public void AltaVacuna(int codigoAnimal, string nombreVacuna, DateTime fechaAplicacion, DateTime fechaProximaAplicacion)
+        public void AltaVacuna(string codigoVacuna, string nombreVacuna)
         {
-            Vacuna vacuna = new Vacuna(codigoAnimal, nombreVacuna, fechaAplicacion, fechaProximaAplicacion);
+            Vacuna vacuna = new Vacuna(codigoVacuna,nombreVacuna);
             dal.Alta(vacuna);
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion Vacunas", "Vacuna dada de alta", 2);
         }
 
-        public void Modificar(int codigoVacuna, DateTime fechaAplicacion, DateTime fechaProximaApliacion , string nombreVacuna = null)
+        public void Modificar(int codigoVacuna, string nombreVacuna = null)
         {
             Vacuna Vacuna = BuscarVacunaPorCodigo(codigoVacuna.ToString());
             if (Vacuna == null)
@@ -36,8 +36,6 @@ namespace BLL
             }
 
             if (nombreVacuna != null) Vacuna.nombreVacuna = nombreVacuna;
-            if (fechaAplicacion != null) Vacuna.fechaAplicacion = fechaAplicacion;
-            if (fechaProximaApliacion != null) Vacuna.fechaProximaAplicacion = fechaProximaApliacion;
             
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion Vacunas", "Vacuna modificada", 2);
 

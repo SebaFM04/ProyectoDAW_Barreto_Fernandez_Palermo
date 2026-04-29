@@ -17,22 +17,21 @@ namespace DAL
             dal = new Acceso();
         }
 
-
         public void Alta(Vacuna vacuna)
         {
             string query = "INSERT INTO Vacuna " +
-                         "(codigoAnimal, nombreVacuna, fechaAplicacion, fechaProximaAplicacion) " +
-                         "VALUES (@codigoAnimal, @nombreVacuna, @fechaAplicacion, @fechaProximaAplicacion)";
+                         "(codigoVacuna, nombreVacuna) " +
+                         "VALUES (@codigoVacuna, @nombreVacuna)";
             EjecutarQueryConEntidad(vacuna, query);
         }
 
         public void Modificar(Vacuna vacuna)
         {
-            string query = "UPDATE Vacuna SET codigoAnimal = @codigoAnimal, nombreVacuna = @nombreVacuna, fechaAplicacion = @fechaAplicacion, fechaProximaAplicacion = @fechaProximaAplicacion WHERE codigoVacuna = @codigoVacuna";
+            string query = "UPDATE Vacuna SET  nombreVacuna = @nombreVacuna WHERE codigoVacuna = @codigoVacuna";
            
             var props = new List<string>
             {
-                "codigoAnimal", "nombreVacuna", "fechaAplicacion", "fechaProximaAplicacion", "codigoVacuna"
+                "nombreVacuna", "codigoVacuna"
             };      
             EjecutarQueryConEntidad(vacuna, query, props);
         }
@@ -43,12 +42,12 @@ namespace DAL
             dal.Query(query, parametros);
         }
 
-        public bool ValidarVacuna(string dni)
+        public bool ValidarVacuna(string codigoVacuna)
         {
-            string query = "SELECT COUNT(*) FROM Usuario WHERE dni = @dni";
+            string query = "SELECT COUNT(*) FROM Vacuna WHERE codigoVacuna = @codigoVacuna";
             var parametros = new Dictionary<string, object>
             {
-                { "@dni", dni }
+                { "@codigoVacuna", codigoVacuna }
             };
             int count = Convert.ToInt32(dal.EjecutarEscalar(query, parametros));
             return count > 0;
@@ -74,11 +73,8 @@ namespace DAL
         private Vacuna MapearVacuna(SqlDataReader reader)
         {
             return new Vacuna(
-                Convert.ToInt32(reader["codigoVacuna"]),
-                Convert.ToInt32(reader["codigoAnimal"]),
-                reader["nombreVacuna"].ToString(),
-                Convert.ToDateTime(reader["fechaAplicacion"]),
-                Convert.ToDateTime(reader["fechaProximaAplicacion"])
+                reader["codigoVacuna"].ToString(),
+                reader["nombreVacuna"].ToString()
             );
         }
     }

@@ -14,6 +14,6 @@ public partial class GestionAnimal : System.Web.UI.Page
 
     protected void btnVacunas_Click(object sender, EventArgs e)
     {
-        Response.Redirect("GestionVacuna.aspx");
+        Response.Redirect("GestionIntermediaVacunaAnimal.aspx");
     }
 }

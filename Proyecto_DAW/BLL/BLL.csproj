@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="bllAnimal.cs" />
     <Compile Include="bllBitacora.cs" />
+    <Compile Include="bllIntermediaVacunaAnimal.cs" />
     <Compile Include="bllUsuario.cs" />
     <Compile Include="bllVacuna.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
