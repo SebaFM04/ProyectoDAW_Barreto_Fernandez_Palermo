@@ -1,17 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="GestionAnimal.aspx.cs" Inherits="GestionAnimal" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="GestionAnimal.aspx.cs" Inherits="GestionAnimal" MasterPageFile="~/MasterPage.master" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<asp:Content ID="ContentHead" ContentPlaceHolderID="head" runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
-        </div>
-        <asp:Button ID="btnVacunas" runat="server" OnClick="btnVacunas_Click" Text="Agregar vacunas" />
-    </form>
-</body>
-</html>
+</asp:Content>
+
+<asp:Content ID="ContentMain" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div>
+    </div>
+    <asp:Button ID="btnVacunas" runat="server" OnClick="btnVacunas_Click" Text="Agregar vacunas" />
+</asp:Content>
