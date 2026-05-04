@@ -8,13 +8,15 @@ namespace BE
 {
     public class Vacuna
     {
-        public Vacuna(string pCodigo, string pNombre)
+        public Vacuna(string pCodigo, string pNombre, bool pActivo = true)
         {
             codigoVacuna = pCodigo;
             nombreVacuna = pNombre;
+            activo = pActivo;
         }        
 
         public string codigoVacuna { get; set; }
         public string nombreVacuna { get; set; }
+        public bool activo { get; set; }
     }
 }

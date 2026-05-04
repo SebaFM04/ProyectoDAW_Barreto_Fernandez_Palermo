@@ -20,18 +20,37 @@ namespace DAL
         public void Alta(Vacuna vacuna)
         {
             string query = "INSERT INTO Vacuna " +
-                         "(codigoVacuna, nombreVacuna) " +
-                         "VALUES (@codigoVacuna, @nombreVacuna)";
-            EjecutarQueryConEntidad(vacuna, query);
+                   "(codigoVacuna, nombreVacuna, activo) " +
+                   "VALUES (@codigoVacuna, @nombreVacuna, @activo)";
+
+            var parametros = new Dictionary<string, object>
+            {
+                { "@codigoVacuna", vacuna.codigoVacuna },
+                { "@nombreVacuna", vacuna.nombreVacuna },
+                { "@activo", vacuna.activo }
+            };
+
+            dal.Query(query, parametros);
+        }
+
+        public bool ValidarNombreVacuna(string nombreVacuna)
+        {
+            string query = "SELECT COUNT(*) FROM Vacuna WHERE nombreVacuna = @nombreVacuna";
+            var parametros = new Dictionary<string, object>
+            {
+                { "@nombreVacuna", nombreVacuna }
+            };
+            int count = Convert.ToInt32(dal.EjecutarEscalar(query, parametros));
+            return count > 0;
         }
 
         public void Modificar(Vacuna vacuna)
         {
-            string query = "UPDATE Vacuna SET  nombreVacuna = @nombreVacuna WHERE codigoVacuna = @codigoVacuna";
+            string query = "UPDATE Vacuna SET  nombreVacuna = @nombreVacuna, activo = @activo WHERE codigoVacuna = @codigoVacuna";
            
             var props = new List<string>
             {
-                "nombreVacuna", "codigoVacuna"
+                "nombreVacuna","activo","codigoVacuna"
             };      
             EjecutarQueryConEntidad(vacuna, query, props);
         }
@@ -74,7 +93,8 @@ namespace DAL
         {
             return new Vacuna(
                 reader["codigoVacuna"].ToString(),
-                reader["nombreVacuna"].ToString()
+                reader["nombreVacuna"].ToString(),
+                reader["activo"] == DBNull.Value ? true : Convert.ToBoolean(reader["activo"])
             );
         }
     }

@@ -5,7 +5,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<div class="vacuna-wrapper">
+    <div class="vacuna-wrapper">
 
     <%-- GRILLA VACUNAS --%>
     <p class="seccion-titulo">Vacunas registradas</p>
@@ -21,6 +21,9 @@
             <asp:BoundField DataField="nombreVacuna" HeaderText="Nombre de vacuna" />
         </Columns>
     </asp:GridView>
+
+    <asp:Button ID="btnGestionarVacunas" runat="server" Text="Gestionar vacunas" CssClass="btn-verde" OnClick="btnGestionarVacunas_Click"/>
+
 
     <hr />
 
@@ -47,6 +50,7 @@
     <hr />
 
     <%-- GRILLA INTERMEDIA --%>
+     <p class="seccion-titulo">Vacunas asignadas</p>
     <asp:GridView ID="gvIntermedia" runat="server" 
         CssClass="table"
         AutoGenerateColumns="False"

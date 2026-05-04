@@ -22,9 +22,20 @@ namespace BLL
 
         public void Alta(string codigoVacuna, int codigoAnimal, string nombreVacuna, DateTime fechaAplicacion, DateTime fechaProximaAplicacion)
         {
-            IntermediaVacunaAnimal intermedia = new IntermediaVacunaAnimal(codigoVacuna,codigoAnimal, nombreVacuna, fechaAplicacion, fechaProximaAplicacion);
+            List<IntermediaVacunaAnimal> asignaciones = dal.RetornarIntermediaVacunaAnimal();
+
+            bool tieneVigente = asignaciones.Any(a =>
+                a.codigoAnimal == codigoAnimal &&
+                a.codigoVacuna == codigoVacuna &&
+                a.fechaProximaAplicacion >= fechaAplicacion 
+            );
+
+            if (tieneVigente)
+                throw new Exception("La fecha de aplicación debe ser mayor a la fecha de próxima aplicación de la vacuna ya registrada.");
+
+            IntermediaVacunaAnimal intermedia = new IntermediaVacunaAnimal(codigoVacuna, codigoAnimal, nombreVacuna, fechaAplicacion, fechaProximaAplicacion);
             dal.Alta(intermedia);
-            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion vacuna-animal", "intermedia asignada a animal", 3);
+            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion vacuna-animal", "vacuna asignada a animal", 3);
         }
 
         public void Modificar(int codigo, DateTime fechaAplicacion, DateTime fechaProximaApliacion)

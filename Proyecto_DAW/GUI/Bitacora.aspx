@@ -7,9 +7,22 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div class="bitacora-wrapper">
         <%-- GRILLA --%>
-        <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="true"
+        <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="false"
             CssClass="table table-bordered"
             EmptyDataText="No hay datos para mostrar">
+            <Columns>
+                 <asp:BoundField DataField="codigo" HeaderText="Código" />
+                 <asp:BoundField DataField="login" HeaderText="Login" />
+                 <asp:BoundField DataField="fecha" HeaderText="Fecha" DataFormatString="{0:dd:MM:yyyy}" />
+                 <asp:TemplateField HeaderText="Hora">
+                    <ItemTemplate>
+                        <%# ((TimeSpan)Eval("hora")).ToString(@"hh\:mm\:ss") %>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:BoundField DataField="modulo" HeaderText="Modulo" />
+                <asp:BoundField DataField="evento" HeaderText="Evento" />
+                <asp:BoundField DataField="criticidad" HeaderText="Criticidad" />
+            </Columns>
         </asp:GridView>
 
         <hr />

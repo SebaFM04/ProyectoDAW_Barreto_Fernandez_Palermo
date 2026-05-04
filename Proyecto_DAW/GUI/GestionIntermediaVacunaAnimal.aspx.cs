@@ -108,7 +108,7 @@ public partial class GestionIntermediaVacunaAnimal : System.Web.UI.Page
             pnlAlerta.CssClass = "alert alert-exito";
             lbMensaje.Text = "Fechas modificadas exitosamente.";
 
-            ViewState["CodigoIntermedia"] = null; // limpiar selección
+            ViewState["CodigoIntermedia"] = null; 
             CargarGrillaIntermedia();
         }
         catch (Exception ex)
@@ -184,7 +184,10 @@ public partial class GestionIntermediaVacunaAnimal : System.Web.UI.Page
 
     private void CargarGrillaVacunas()
     {
-        gvVacunas.DataSource = bllvacuna.RetornarVacunas();
+        List<Vacuna> todasLasVacunas = bllvacuna.RetornarVacunas();
+        List<Vacuna> soloActivas = todasLasVacunas.Where(v => v.activo).ToList();
+
+        gvVacunas.DataSource = soloActivas;
         gvVacunas.DataBind();
 
         if (ViewState["CodigoVacuna"] != null)
@@ -235,4 +238,11 @@ public partial class GestionIntermediaVacunaAnimal : System.Web.UI.Page
             }
         }
     }
+
+    protected void btnGestionarVacunas_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("GestionVacuna.aspx");
+    }
+
+    
 }

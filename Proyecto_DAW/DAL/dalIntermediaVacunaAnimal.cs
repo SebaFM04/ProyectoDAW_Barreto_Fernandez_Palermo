@@ -63,7 +63,7 @@ namespace DAL
         {
             return new IntermediaVacunaAnimal(
                 int.Parse(reader["codigo"].ToString()),
-                reader["codigo"].ToString(),
+                reader["codigoVacuna"].ToString(),
                 Convert.ToInt32(reader["codigoAnimal"]),
                 reader["nombreVacuna"].ToString(),
                 Convert.ToDateTime(reader["fechaAplicacion"]),
