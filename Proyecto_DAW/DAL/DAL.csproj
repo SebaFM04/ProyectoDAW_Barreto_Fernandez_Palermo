@@ -42,8 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acceso.cs" />
+    <Compile Include="dalAnimal.cs" />
     <Compile Include="dalBitacora.cs" />
+    <Compile Include="dalIntermediaVacunaAnimal.cs" />
     <Compile Include="dalUsuario.cs" />
+    <Compile Include="dalVacuna.cs" />
     <Compile Include="ParametroHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
