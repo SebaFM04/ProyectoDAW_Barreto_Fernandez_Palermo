@@ -68,5 +68,73 @@ namespace DAL
                 }
             }
         }
+
+        public void RestaurarBaseDatos(string rutaBackup)
+        {
+            const string miBase = "dawRefugio";
+
+            var builder = new SqlConnectionStringBuilder(conn)
+            {
+                InitialCatalog = "master"
+            };
+            string connectionStringMaster_941lp = builder.ConnectionString;
+
+            using (SqlConnection connection_941lp = new SqlConnection(connectionStringMaster_941lp))
+            {
+                connection_941lp.Open();
+
+                // 1. Verificar metadata del backup
+                using (SqlCommand checkCmd = new SqlCommand("RESTORE HEADERONLY FROM DISK = @ruta", connection_941lp))
+                {
+                    checkCmd.Parameters.AddWithValue("@ruta", rutaBackup);
+
+                    using (SqlDataReader reader = checkCmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            string dbName = reader["DatabaseName"].ToString();
+
+                            if (!string.Equals(dbName, miBase, StringComparison.OrdinalIgnoreCase))
+                            {
+                                throw new InvalidOperationException(
+                                    $"El backup corresponde a la base '{dbName}', pero solo se permite restaurar '{miBase}'.");
+                            }
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("No se pudo leer la cabecera del backup.");
+                        }
+                    }
+                }
+
+                using (SqlCommand cmd_941lp = connection_941lp.CreateCommand())
+                {
+                    // 2. Matar conexiones abiertas
+                    cmd_941lp.CommandText = $@"
+                    DECLARE @kill varchar(8000) = '';
+                    SELECT @kill = @kill + 'KILL ' + CONVERT(varchar(5), session_id) + ';'
+                    FROM sys.dm_exec_sessions
+                    WHERE database_id = DB_ID('{miBase}') AND session_id <> @@SPID;
+                    EXEC(@kill);";
+                    cmd_941lp.ExecuteNonQuery();
+
+                    // 3. Single user
+                    cmd_941lp.CommandText = $@"ALTER DATABASE [{miBase}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;";
+                    cmd_941lp.ExecuteNonQuery();
+
+                    // 4. Restaurar
+                    cmd_941lp.CommandText = $@"RESTORE DATABASE [{miBase}] 
+                                       FROM DISK = @ruta 
+                                       WITH REPLACE;";
+                    cmd_941lp.Parameters.AddWithValue("@ruta", rutaBackup);
+                    cmd_941lp.ExecuteNonQuery();
+
+                    // 5. Multi user
+                    cmd_941lp.Parameters.Clear();
+                    cmd_941lp.CommandText = $@"ALTER DATABASE [{miBase}] SET MULTI_USER;";
+                    cmd_941lp.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

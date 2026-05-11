@@ -70,7 +70,7 @@
                                     <asp:LinkButton ID="btnBitacora" runat="server" OnClick="btnBitacora_Click">Bitácora</asp:LinkButton>
                                 </li>
                                 <li class="divider"></li>
-                                <li><a runat="server" href="~/Admin/BackupRestore">Backup &amp; Restore</a></li>
+                                <li><a runat="server" href="~/BackupRestore.aspx">Backup &amp; Restore</a></li>
                             </ul>
                         </li>
 
