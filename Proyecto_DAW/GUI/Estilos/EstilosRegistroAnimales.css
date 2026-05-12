@@ -48,13 +48,13 @@
 }
 
 /* Inputs */
-.form-left {
+.form-inputs {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.form-left label {
+.form-inputs label {
     margin-top: 10px;
 }
 
@@ -65,11 +65,12 @@
 }
 
 /* Botones */
-.form-right {
+.form-buttons {
     display: flex;
     flex-direction: column;
     gap: 10px;
     justify-content: flex-start;
+    margin-top: 20px;
 }
 
 .btn {
@@ -91,4 +92,19 @@
 
 .salir {
     background-color: crimson;
+}
+
+/* ALERTA */
+
+.alert {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.alert-error {
+    color: darkred;
+}
+
+.alert-success{
+    color: forestgreen;
 }

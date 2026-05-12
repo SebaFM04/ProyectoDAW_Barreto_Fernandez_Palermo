@@ -12,22 +12,26 @@
 
     <div class="layout">
 
-        <!-- IZQUIERDA: GRID -->
+        <!-- GRID -->
         <div class="grid-container">
-            <asp:GridView ID="gvAnimales" runat="server" CssClass="grid" AutoGenerateColumns="false">
+            <asp:GridView ID="gvAnimales" runat="server" CssClass="grid" AutoGenerateColumns="false" AutoGenerateSelectButton="true" DataKeyNames="codigoAnimal" OnSelectedIndexChanged="gvAnimales_SelectedIndexChanged" EmptyDataText="No hay Animales para mostrar">
                 <Columns>
-                    <asp:BoundField DataField="Codigo" HeaderText="Código" />
-                    <asp:BoundField DataField="Especie" HeaderText="Especie" />
-                    <asp:BoundField DataField="Raza" HeaderText="Raza" />
-                    <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                    <asp:BoundField DataField="codigoAnimal" HeaderText="Código" />
+                    <asp:BoundField DataField="especie" HeaderText="Especie" />
+                    <asp:BoundField DataField="raza" HeaderText="Raza" />
+                    <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+                    <asp:BoundField DataField="tamaño" HeaderText="Tamaño" />
+                    <asp:BoundField DataField="sexo" HeaderText="sexo" />
+                    <asp:BoundField DataField="estadoAdopcion" HeaderText="Estado Adopcion" />
+                    <asp:BoundField DataField="vivo" HeaderText="Vivo" />
                 </Columns>
             </asp:GridView>
         </div>
 
-        <!-- DERECHA: FORM -->
+        <!-- INPUTS -->
         <div class="form-box">
 
-            <div class="form-left">
+            <div class="form-inputs">
 
                 <label>Especie</label>
                 <asp:TextBox ID="txtEspecie" runat="server" CssClass="input" />
@@ -53,22 +57,25 @@
 
                 <label>Estado</label>
                 <asp:DropDownList ID="ddlEstado" runat="server" CssClass="input">
-                    <asp:ListItem Text="Disponible" />
+                    <asp:ListItem Text="En Adopcion"/>
                     <asp:ListItem Text="Adoptado" />
                 </asp:DropDownList>
-
+                
+                <asp:Panel ID="pnlAlerta" runat="server" Visible="false" CssClass="alert">
+                    <asp:Label ID="lbMensaje" runat="server" Text=""></asp:Label>
+                </asp:Panel>
             </div>
 
             <!-- BOTONES -->
-            <div class="form-right">
-                <button type="button" class="btn" onclick="alta()">Alta</button>
-                <button type="button" class="btn" onclick="modificar()">Modificar</button>
-                <button type="button" class="btn" onclick="baja()">Baja</button>
+            <div class="form-buttons">
+                <asp:button ID="btnAlta" runat="server" Text="Alta" CssClass="btn" OnClick="btnAlta_Click"/>
+                <asp:button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn" OnClick="btnModificar_Click"/>
+                <asp:button ID="btnBaja" runat="server" Text="Baja" CssClass="btn" OnClientClick="return confirmarBaja();" OnClick="btnBaja_Click"/>
 
                 <hr />
 
-                <button type="button" class="btn secundario" onclick="limpiar()">Limpiar</button>
-                <button type="button" class="btn salir" onclick="salir()">Salir</button>
+                <asp:button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn secundario" OnClientClick="limpiarFormulario(); ocultarAlerta(true); return false;"/>
+                <asp:button ID="btnSalir" runat="server" Text="Salir" CssClass="btn salir" OnClientClick="salir(); return false;"/>
             </div>
 
         </div>
@@ -77,6 +84,17 @@
 
 </div>
 
+<script>
+    var ids = {
+        especie: '<%= txtEspecie.ClientID %>',
+        raza: '<%= txtRaza.ClientID %>',
+        nombre: '<%= txtNombre.ClientID %>',
+        tamano: '<%= ddlTamano.ClientID %>',
+        sexo: '<%= ddlSexo.ClientID %>',
+        estado: '<%= ddlEstado.ClientID %>',
+        alerta: '<%= pnlAlerta.ClientID %>'
+    };
+</script>
 <script src="Scripts/ScriptRegistroAnimales.js"></script>
 
 </asp:Content>
