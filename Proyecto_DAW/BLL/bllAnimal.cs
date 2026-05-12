@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,39 +20,52 @@ namespace BLL
             bllBitacora = new bllBitacora();
         }
 
-        public void AltaAnimal(string especie, string raza, string nombre, string tañamo, string sexo, string estadoDeAdopcion, bool vivo)
+        public void AltaAnimal(string especie, string raza, string nombre, string tamano, string sexo, string estadoDeAdopcion, bool vivo)
         {
+            if (string.IsNullOrWhiteSpace(especie)) throw new Exception("Ingrese la especie");
+            if (string.IsNullOrWhiteSpace(raza)) throw new Exception("Ingrese la raza");
+            if (string.IsNullOrWhiteSpace(nombre)) throw new Exception("Ingrese el nombre");
+            if (string.IsNullOrWhiteSpace(tamano)) throw new Exception("Ingrese el tamaño");
+            if (string.IsNullOrWhiteSpace(sexo)) throw new Exception("Ingrese el sexo");
+            if (string.IsNullOrWhiteSpace(estadoDeAdopcion)) throw new Exception("Ingrese el estado");
+
             int codigoAnimal = dal.GenerarCodigoAnimalUnico();
-            Animal animal = new Animal(codigoAnimal, especie, raza, nombre, tañamo, sexo, estadoDeAdopcion, vivo);
+            Animal animal = new Animal(codigoAnimal, especie, raza, nombre, tamano, sexo, estadoDeAdopcion, vivo);
             dal.Alta(animal);
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion animales", "Animal dado de alta", 2);
         }
 
-        public void Modificar(string codigo, string especie = null, string raza = null, string nombre = null, string tamaño = null, string sexo = null, string estadoDeAdopcion = null, bool? vivo = null)
+        public void Modificar(string codigo, string especie = null, string raza = null, string nombre = null, string tamano = null, string sexo = null, string estadoDeAdopcion = null, bool? vivo = null)
         {
-            Animal animal = BuscarAnimalPorCodigo(codigo);
-            if (animal == null)
-            {
-                throw new Exception("No se encontró un animal con el código proporcionado.");
-            }
+            if (string.IsNullOrWhiteSpace(especie)) throw new Exception("Ingrese la especie");
+            if (string.IsNullOrWhiteSpace(raza)) throw new Exception("Ingrese la raza");
+            if (string.IsNullOrWhiteSpace(nombre)) throw new Exception("Ingrese el nombre");
+            if (string.IsNullOrWhiteSpace(tamano)) throw new Exception("Ingrese el tamaño");
+            if (string.IsNullOrWhiteSpace(sexo)) throw new Exception("Ingrese el sexo");
+            if (string.IsNullOrWhiteSpace(estadoDeAdopcion)) throw new Exception("Ingrese el estado");
 
-            if (especie != null) animal.especie = especie;
-            if (raza != null) animal.raza = raza;
-            if (nombre != null) animal.nombre = nombre;
-            if (tamaño != null) animal.tamaño = tamaño;
-            if (sexo != null) animal.sexo = sexo;
-            if (estadoDeAdopcion != null) animal.estadoAdopcion = estadoDeAdopcion;
-            if (vivo != null)
-            {
-                animal.vivo = vivo.Value;
-                bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion animales", "Animal dado de baja", 2);
-            }
-            else
-            {
-                bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion animales", "Animal modificado", 2);
-            }
+            Animal animal = BuscarAnimalPorCodigo(codigo);
+
+            if (animal == null) throw new Exception("No se encontró un animal con el código proporcionado.");
+
+            animal.especie = especie;
+            animal.raza = raza;
+            animal.nombre = nombre;
+            animal.tamaño = tamano;
+            animal.sexo = sexo;
+            animal.estadoAdopcion = estadoDeAdopcion;
+            if (vivo != null) animal.vivo = vivo.Value;
 
             dal.Modificar(animal);
+            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion animales", "Animal modificado", 2);
+        }
+
+        public void Baja(string codigo)
+        {
+            if (VerificarAnimalAdoptado(codigo)) throw new Exception("No se puede borrar porque esta adoptado");
+
+            dal.Baja(codigo);
+            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion animales", "Animal dado de baja", 2);
         }
 
         public bool ValidarExistenciaAnimal(string codigo)
