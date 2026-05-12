@@ -42,7 +42,11 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle">Animales</a>
                             <ul class="dropdown-menu">
+                                <li><a runat="server" href="~/Animales/Listado">Ver animales</a></li>
                                 <li><a runat="server" href="~/RegistroAnimales.aspx">Registrar animales</a></li>
+                                <li runat="server" id="liRegistrar">
+                                    <asp:LinkButton ID="btnRegistrar" runat="server" OnClick="btnRegistrar_Click">Registrar animal</asp:LinkButton>
+                                </li>
                                 <li><a runat="server" href="~/Animales/FichasMedicas">Fichas médicas</a></li>
                                 <li><a runat="server" href="~/Animales/FichasIngreso">Fichas de ingreso</a></li>
                             </ul>
@@ -63,9 +67,11 @@
                             <a href="#" class="dropdown-toggle">Administración</a>
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/Admin/Usuarios">Usuarios</a></li>
-                                <li><a runat="server" href="~/Admin/Bitacora">Bitácora</a></li>
+                                <li runat="server" id="liBitacora">
+                                    <asp:LinkButton ID="btnBitacora" runat="server" OnClick="btnBitacora_Click">Bitácora</asp:LinkButton>
+                                </li>
                                 <li class="divider"></li>
-                                <li><a runat="server" href="~/Admin/BackupRestore">Backup &amp; Restore</a></li>
+                                <li><a runat="server" href="~/BackupRestore.aspx">Backup &amp; Restore</a></li>
                             </ul>
                         </li>
 
@@ -75,7 +81,7 @@
                         </li>
 
                         <li runat="server" id="liLogout">
-                            <a runat="server" href="~/Logout.aspx">Cerrar Sesión</a>
+                            <asp:LinkButton ID="btnCerrarSesion" runat="server" OnClick="btnCerrarSesion_Click">Cerrar Sesión</asp:LinkButton>
                         </li>
 
                     </ul>

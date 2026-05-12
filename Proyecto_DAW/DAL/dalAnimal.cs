@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using BE;
+using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -19,57 +19,55 @@ namespace DAL
 
         public void Alta(Animal animal)
         {
-            try
+            string query = "INSERT INTO Animal " +
+                         "(codigoAnimal, especie, raza, nombre, tamaño, sexo, estadoAdopcion, vivo) " +
+                         "VALUES (@codigoAnimal, @especie, @raza, @nombre, @tamaño,@sexo, @estadoAdopcion, @vivo)";
+            EjecutarQueryConEntidad(animal, query);
+        }
+
+        public int GenerarCodigoAnimalUnico()
+        {
+            Random random = new Random();
+            int codigo;
+            bool existe;
+            do
             {
-                string query = "INSERT INTO Animal " +
-                             "(codigoAnimal, especie, raza, nombre, tamaño, sexo, estadoAdopcion, vivo) " +
-                             "VALUES (@codigoAnimal, @especie, @raza, @nombre, @tamaño,@sexo, @estadoAdopcion, @vivo)";
-
-                EjecutarQueryConEntidad(animal, query);
-
+                codigo = random.Next(10000, 99999); // 5 dígitos
+                string query = "SELECT COUNT(*) FROM Animal WHERE codigoAnimal = @codigoAnimal";
+                var parametros = new Dictionary<string, object> { { "@codigoAnimal", codigo } };
+                object resultado = dal.EjecutarEscalar(query, parametros);
+                existe = Convert.ToInt32(resultado) > 0;
             }
-            catch (Exception ex) { throw new Exception("Error al guardar animal en la BD: " + ex.Message); }
+            while (existe);
+            return codigo;
         }
 
         public void Modificar(Animal animal)
         {
-            try
+            string query = "UPDATE Animal SET especie = @especie, raza = @raza,nombre = @nombre, tamaño = @tamaño, sexo = @sexo, estadoAdopcion = @estadoAdopcion, vivo = @vivo" +
+                " WHERE codigoAnimal = @codigoAnimal";
+            var propiedadesAIncluir = new List<string>
             {
-                string query = "UPDATE Animal SET especie = @especie, raza = @raza,nombre = @nombre, tamaño = @tamaño, sexo = @sexo, estadoAdopcion = @estadoAdopcion, vivo = @vivo" +
-                    " WHERE codigoAnimal = @codigoAnimal";
-
-                var propiedadesAIncluir = new List<string>
-                {
-                    "especie",
-                    "raza",
-                    "nombre",
-                    "tamaño",
-                    "sexo",
-                    "estadoAdopcion",
-                    "vivo",
-                    "codigoAnimal"
-                };
-
-                EjecutarQueryConEntidad(animal, query, propiedadesAIncluir);
-            }
-            catch (Exception ex) { throw new Exception("Error al actualizar animal en la BD: " + ex.Message); }
+                "especie",
+                "raza",
+                "nombre",
+                "tamaño",
+                "sexo",
+                "estadoAdopcion",
+                "vivo",
+                "codigoAnimal"
+            };
+            EjecutarQueryConEntidad(animal, query, propiedadesAIncluir);
         }
 
         public void Baja(string codigo)
         {
-            try
+            string query = "DELETE FROM Animal WHERE codigoAnimal=@codigoAnimal";
+            var parametros = new Dictionary<string, object>
             {
-                string query = "DELETE FROM Animal " +
-                               "WHERE codigoAnimal=@codigoAnimal";
-
-                var parametros = new Dictionary<string, object>
-                {
-                    { "@codigoAnimal", codigo }
-                };
-
-                dal.Query(query, parametros);
-            }
-            catch (Exception ex) { throw new Exception("Error al eliminar animal en la BD: " + ex.Message); }
+                { "@codigoAnimal", codigo }
+            };
+            dal.Query(query, parametros);
         }
 
         private void EjecutarQueryConEntidad(Animal animal, string query, List<string> propiedadesIncluir = null)
@@ -81,14 +79,11 @@ namespace DAL
         public Animal ObtenerAnimalPorCodigo(string codigo)
         {
             string query = "SELECT * FROM Animal WHERE codigoAnimal = @codigoAnimal";
-            
             var parametros = new Dictionary<string, object>
             {
                 { "@codigoAnimal", codigo }
             };
-
             var animales = dal.RetornarLista(query, MapearAnimal, parametros);
-
             return animales.FirstOrDefault();
         }
 

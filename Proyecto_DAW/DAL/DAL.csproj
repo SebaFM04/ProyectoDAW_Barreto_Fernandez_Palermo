@@ -43,6 +43,11 @@
   <ItemGroup>
     <Compile Include="Acceso.cs" />
     <Compile Include="dalAnimal.cs" />
+    <Compile Include="dalBackUpRestore.cs" />
+    <Compile Include="dalBitacora.cs" />
+    <Compile Include="dalIntermediaVacunaAnimal.cs" />
+    <Compile Include="dalUsuario.cs" />
+    <Compile Include="dalVacuna.cs" />
     <Compile Include="ParametroHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -50,10 +55,6 @@
     <ProjectReference Include="..\BE\BE.csproj">
       <Project>{8c60cc9f-5937-4a87-9593-59252da3a876}</Project>
       <Name>BE</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SERVICIOS\SERVICIOS.csproj">
-      <Project>{b0162088-7b60-42f2-9e87-17ad13a91a60}</Project>
-      <Name>SERVICIOS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

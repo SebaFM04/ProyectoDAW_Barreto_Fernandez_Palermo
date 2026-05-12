@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class ParametroHelper
+    internal class ParametroHelper
     {
         /// <summary>
         /// Crea un diccionario de parámetros a partir de las propiedades de una entidad.

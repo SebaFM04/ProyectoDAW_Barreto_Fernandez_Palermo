@@ -1,0 +1,135 @@
+﻿/* CONTENEDOR GENERAL */
+.bitacora-wrapper {
+    max-width: 960px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* GRILLA */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+    .table th {
+        background-color: #556B2F;
+        color: white;
+        padding: 10px 12px;
+        text-align: left;
+        font-weight: 600;
+        border: 1px solid #3d5020;
+    }
+
+    .table td {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        color: #333;
+    }
+
+    .table tr:nth-child(even) td {
+        background-color: #f5f5f0;
+    }
+
+    .table tr:hover td {
+        background-color: #eef2e6;
+    }
+
+/* SEPARADOR */
+hr {
+    border: none;
+    border-top: 1px solid #bbb;
+    margin: 24px 0;
+}
+
+/* FILTROS */
+.fila-filtro {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.campo-grupo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+    .campo-grupo label {
+        font-size: 13px;
+        white-space: nowrap;
+        color: #444;
+        font-weight: 500;
+    }
+
+.ctrl {
+    padding: 5px 8px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    font-size: 13px;
+    height: 32px;
+    color: #333;
+    background: white;
+}
+
+    .ctrl:focus {
+        outline: none;
+        border-color: #556B2F;
+        box-shadow: 0 0 0 2px rgba(85,107,47,0.15);
+    }
+
+/* BOTONES */
+.botones-fila {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn-verde {
+    padding: 9px 30px;
+    background: #556B2F;
+    color: white;
+    border: 1px solid #3d5020;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.15s;
+}
+
+    .btn-verde:hover {
+        background: #4a5e28;
+    }
+
+.btn-gris {
+    padding: 9px 30px;
+    background: #d0d0d0;
+    color: #333;
+    border: 1px solid #999;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.15s;
+}
+
+    .btn-gris:hover {
+        background: #bbb;
+    }
+
+.alert {
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+}
+
+/* Error */
+.alert-error {
+    background-color: #fdecea;
+    border: 1px solid #f5aeae;
+    color: #7b1c1c;
+}

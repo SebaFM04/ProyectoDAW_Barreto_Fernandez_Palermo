@@ -49,7 +49,6 @@ public partial class RegistroAnimales : System.Web.UI.Page
     {
         try
         {
-            var ultimoCodigo = gvAnimales.Rows[gvAnimales.Rows.Count - 1].Cells[1].Text;
             var especie = txtEspecie.Text.ToString();
             var raza = txtRaza.Text.ToString();
             var nombre = txtNombre.Text.ToString();
@@ -57,7 +56,7 @@ public partial class RegistroAnimales : System.Web.UI.Page
             var sexo = ddlSexo.SelectedValue.ToString();
             var estadoAdopcion = ddlEstado.SelectedValue.ToString();
 
-            bllanimal.AltaAnimal(int.Parse(ultimoCodigo), especie, raza, nombre, tamano, sexo, estadoAdopcion, true);
+            bllanimal.AltaAnimal(especie, raza, nombre, tamano, sexo, estadoAdopcion, true);
             CargarGrid();
             MostrarMensaje("Animal agregado exitosamente!", false);
             ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
