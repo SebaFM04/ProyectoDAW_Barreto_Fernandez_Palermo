@@ -22,12 +22,12 @@ namespace BLL
 
         public void AltaAnimal(string especie, string raza, string nombre, string tamano, string sexo, string estadoDeAdopcion, bool vivo)
         {
-            if (string.IsNullOrEmpty(especie) || string.IsNullOrWhiteSpace(especie)) throw new Exception("Ingrese la especie");
-            if (string.IsNullOrEmpty(raza) || string.IsNullOrWhiteSpace(raza)) throw new Exception("Ingrese la raza");
-            if (string.IsNullOrEmpty(nombre) || string.IsNullOrWhiteSpace(nombre)) throw new Exception("Ingrese el nombre");
-            if (string.IsNullOrEmpty(tamano) || string.IsNullOrWhiteSpace(tamano)) throw new Exception("Ingrese el tamaño");
-            if (string.IsNullOrEmpty(sexo) || string.IsNullOrWhiteSpace(sexo)) throw new Exception("Ingrese el sexo");
-            if (string.IsNullOrEmpty(estadoDeAdopcion) || string.IsNullOrWhiteSpace(estadoDeAdopcion)) throw new Exception("Ingrese el estado");
+            if (string.IsNullOrWhiteSpace(especie)) throw new Exception("Ingrese la especie");
+            if (string.IsNullOrWhiteSpace(raza)) throw new Exception("Ingrese la raza");
+            if (string.IsNullOrWhiteSpace(nombre)) throw new Exception("Ingrese el nombre");
+            if (string.IsNullOrWhiteSpace(tamano)) throw new Exception("Ingrese el tamaño");
+            if (string.IsNullOrWhiteSpace(sexo)) throw new Exception("Ingrese el sexo");
+            if (string.IsNullOrWhiteSpace(estadoDeAdopcion)) throw new Exception("Ingrese el estado");
 
             int codigoAnimal = dal.GenerarCodigoAnimalUnico();
             Animal animal = new Animal(codigoAnimal, especie, raza, nombre, tamano, sexo, estadoDeAdopcion, vivo);
@@ -37,12 +37,12 @@ namespace BLL
 
         public void Modificar(string codigo, string especie = null, string raza = null, string nombre = null, string tamano = null, string sexo = null, string estadoDeAdopcion = null, bool? vivo = null)
         {
-            if (string.IsNullOrEmpty(especie) || string.IsNullOrWhiteSpace(especie)) throw new Exception("Ingrese la especie");
-            if (string.IsNullOrEmpty(raza) || string.IsNullOrWhiteSpace(raza)) throw new Exception("Ingrese la raza");
-            if (string.IsNullOrEmpty(nombre) || string.IsNullOrWhiteSpace(nombre)) throw new Exception("Ingrese el nombre");
-            if (string.IsNullOrEmpty(tamano) || string.IsNullOrWhiteSpace(tamano)) throw new Exception("Ingrese el tamaño");
-            if (string.IsNullOrEmpty(sexo) || string.IsNullOrWhiteSpace(sexo)) throw new Exception("Ingrese el sexo");
-            if (string.IsNullOrEmpty(estadoDeAdopcion) || string.IsNullOrWhiteSpace(estadoDeAdopcion)) throw new Exception("Ingrese el estado");
+            if (string.IsNullOrWhiteSpace(especie)) throw new Exception("Ingrese la especie");
+            if (string.IsNullOrWhiteSpace(raza)) throw new Exception("Ingrese la raza");
+            if (string.IsNullOrWhiteSpace(nombre)) throw new Exception("Ingrese el nombre");
+            if (string.IsNullOrWhiteSpace(tamano)) throw new Exception("Ingrese el tamaño");
+            if (string.IsNullOrWhiteSpace(sexo)) throw new Exception("Ingrese el sexo");
+            if (string.IsNullOrWhiteSpace(estadoDeAdopcion)) throw new Exception("Ingrese el estado");
 
             Animal animal = BuscarAnimalPorCodigo(codigo);
 
