@@ -43,10 +43,8 @@ public partial class MasterPage : System.Web.UI.MasterPage
     {
         bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Usuario", "Cierre de sesión de usuario", 1);
         
-        // 1. Borramos todos los datos guardados en la sesión (Usuario, Rol, etc.)
         claseSession.Gestor.UnsetUsuario();
 
-        // 3. Redirigimos al usuario a la pantalla de Login (o al Inicio, donde prefieras)
         Response.Redirect("Login.aspx");
     }
 

@@ -7,13 +7,13 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div class="bitacora-wrapper">
         <%-- GRILLA --%>
-        <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="false"
+        <asp:GridView ID="gvBitacora" runat="server" AutoGenerateColumns="false"
             CssClass="table table-bordered"
             EmptyDataText="No hay datos para mostrar">
             <Columns>
                  <asp:BoundField DataField="codigo" HeaderText="Código" />
                  <asp:BoundField DataField="login" HeaderText="Login" />
-                 <asp:BoundField DataField="fecha" HeaderText="Fecha" DataFormatString="{0:dd:MM:yyyy}" />
+                 <asp:BoundField DataField="fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
                  <asp:TemplateField HeaderText="Hora">
                     <ItemTemplate>
                         <%# ((TimeSpan)Eval("hora")).ToString(@"hh\:mm\:ss") %>
@@ -46,15 +46,21 @@
             <div class="fila-filtro">
                 <div class="campo-grupo">
                     <asp:Label runat="server" Text="Modulo:" />
-                    <asp:DropDownList ID="dlModulo" runat="server" CssClass="ctrl" Width="190px" />
+                    <asp:DropDownList ID="dlModulo" runat="server" CssClass="ctrl" Width="190px" 
+                        AutoPostBack="true"
+                        OnSelectedIndexChanged="dlFiltro_SelectedIndexChanged" />
                 </div>
                 <div class="campo-grupo">
                     <asp:Label runat="server" Text="Evento:" />
-                    <asp:DropDownList ID="dlEvento" runat="server" CssClass="ctrl" Width="190px" />
+                    <asp:DropDownList ID="dlEvento" runat="server" CssClass="ctrl" Width="190px" 
+                        AutoPostBack="true"
+                        OnSelectedIndexChanged="dlFiltro_SelectedIndexChanged"/>
                 </div>
                 <div class="campo-grupo">
                     <asp:Label runat="server" Text="Criticidad:" />
-                    <asp:DropDownList ID="dlCriticidad" runat="server" CssClass="ctrl" Width="190px" />
+                    <asp:DropDownList ID="dlCriticidad" runat="server" CssClass="ctrl" Width="190px" 
+                        AutoPostBack="true"
+                        OnSelectedIndexChanged="dlFiltro_SelectedIndexChanged"/>
                 </div>
             </div>
 
