@@ -1,0 +1,199 @@
+/* =============================================
+   EstilosAdopciones.css
+   Modulo de adopciones - solo visual
+   ============================================= */
+
+.page-container {
+    padding: 20px;
+    font-family: Arial;
+}
+
+.titulo {
+    margin-bottom: 20px;
+    color: darkolivegreen;
+    font-family: Arial;
+}
+
+/* SECCION CON TITULO */
+.seccion-titulo {
+    font-size: 13px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 6px;
+    font-family: Arial;
+}
+
+/* GRILLAS */
+.grid {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+    .grid th {
+        background-color: darkolivegreen;
+        color: white;
+        padding: 9px 12px;
+        text-align: left;
+        font-family: Arial;
+        border: 1px solid #3d5020;
+    }
+
+    .grid td {
+        padding: 7px 12px;
+        border-bottom: 1px solid #ddd;
+        font-family: Arial;
+        color: #333;
+    }
+
+    .grid tr:nth-child(even) td {
+        background-color: #f5f5f0;
+    }
+
+    .grid tr:hover td {
+        background-color: #eef2e6;
+    }
+
+/* LAYOUT PRINCIPAL: grillas a la izquierda, botones a la derecha */
+.layout-adopcion {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.columna-grillas {
+    flex: 2;
+}
+
+.columna-botones {
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 24px;
+}
+
+/* BOTONES */
+.btn {
+    padding: 10px 16px;
+    background-color: darkolivegreen;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: Arial;
+    width: 100%;
+    text-align: center;
+}
+
+    .btn:hover {
+        background-color: #3a5020;
+    }
+
+.btn-secundario {
+    background-color: #888;
+}
+
+    .btn-secundario:hover {
+        background-color: #666;
+    }
+
+.btn-especial {
+    background-color: #2E7D5A;
+}
+
+    .btn-especial:hover {
+        background-color: #1f5a3e;
+    }
+
+hr.separador {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 4px 0;
+}
+
+/* FILA DE CAMPOS DEL FORMULARIO */
+.fila-campos {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.campo-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+    .campo-grupo label {
+        font-size: 13px;
+        color: #444;
+        font-weight: bold;
+        font-family: Arial;
+    }
+
+.input {
+    padding: 6px 9px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 13px;
+    font-family: Arial;
+    min-width: 180px;
+}
+
+    .input:focus {
+        outline: none;
+        border-color: darkolivegreen;
+    }
+
+/* RADIO BUTTONS DE ESTADO */
+.estado-group {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    display: inline-block;
+}
+
+.estado-group legend {
+    font-size: 13px;
+    font-weight: bold;
+    color: #444;
+    padding: 0 6px;
+    font-family: Arial;
+}
+
+.radio-fila {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-family: Arial;
+    color: #333;
+}
+
+/* ALERTA */
+.alert {
+    font-size: 13px;
+    margin-top: 10px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    font-family: Arial;
+}
+
+.alert-error {
+    background-color: #fdecea;
+    border: 1px solid #f5aeae;
+    color: #7b1c1c;
+}
+
+.alert-success {
+    background-color: #eaf4e2;
+    border: 1px solid #a8d48a;
+    color: #2d5a1b;
+}

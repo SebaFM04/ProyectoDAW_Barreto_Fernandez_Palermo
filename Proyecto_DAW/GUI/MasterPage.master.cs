@@ -13,7 +13,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        bllBitacora = new bllBitacora(); 
+        bllBitacora = new bllBitacora();
         ControlarLogin();
         ControlarRoles();
     }
@@ -22,8 +22,15 @@ public partial class MasterPage : System.Web.UI.MasterPage
     {
         bool haySesion = Session["UsuarioActual"] != null;
 
+        // Login / Logout
         liLogin.Visible = !haySesion;
         liLogout.Visible = haySesion;
+
+        // Elementos que requieren sesion
+        liRegistrarAnimales.Visible = haySesion;
+        liGestionVacunas.Visible = haySesion;
+        liAdopciones.Visible = haySesion;
+        liRegistrarAnimales.Visible = haySesion;
     }
 
     private void ControlarRoles()
@@ -42,7 +49,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
     protected void btnCerrarSesion_Click(object sender, EventArgs e)
     {
         bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Usuario", "Cierre de sesión de usuario", 1);
-        
+
         claseSession.Gestor.UnsetUsuario();
 
         Response.Redirect("Login.aspx");

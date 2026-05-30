@@ -17,7 +17,7 @@ public partial class Login : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        
         bllU = new bllUsuario();
         bllBitacora = new bllBitacora();
         if (!IsPostBack)
@@ -30,13 +30,15 @@ public partial class Login : System.Web.UI.Page
     {
         // Limpiar paneles de mensajes anteriores
         LimpiarAlertas();
-        if (txtNombreUsuario.Text == "" || txtContraseñaUsuario.Text == "") {
+        if (txtNombreUsuario.Text == "" || txtContraseñaUsuario.Text == "")
+        {
             lblMensajeError.Text = "Faltan ingresar datos";
             pnlAlerta.CssClass = "login-alert login-alert-error";
             ActivarAlertas();
             return;
         }
-        if (claseSession.Gestor.RetornarUsuarioSession() != null) {
+        if (claseSession.Gestor.RetornarUsuarioSession() != null)
+        {
             lblMensajeError.Text = "Ya hay una sesión iniciada";
             pnlAlerta.CssClass = "login-alert login-alert-error";
             ActivarAlertas();
@@ -59,6 +61,7 @@ public partial class Login : System.Web.UI.Page
                             var perfilNombre = usuario1.rol;
                             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Usuario", "Inicio de sesión de usuario", 1);
                             Response.Redirect("MenuPrincipal.aspx");
+
                         }
                         else
                         {

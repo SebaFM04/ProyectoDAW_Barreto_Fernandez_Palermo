@@ -19,8 +19,7 @@
             <div class="container">
 
                 <div class="navbar-header">
-                    <a class="navbar-brand" runat="server" href="~/MenuPrincipal.aspx">
-                        🐾 Refugio del Oeste
+                    <a class="navbar-brand" runat="server" href="~/MenuPrincipal.aspx">🐾 Refugio del Oeste
                     </a>
 
                     <button type="button" class="navbar-toggle" id="btnToggleMenu">
@@ -38,27 +37,29 @@
                             <a runat="server" href="~/MenuPrincipal.aspx">Inicio</a>
                         </li>
 
-                        <!-- Animales -->
+                        <%-- Animales --%>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle">Animales</a>
                             <ul class="dropdown-menu">
-                                <li><a runat="server" href="~/Animales/Listado">Ver animales</a></li>
-                                <li><a runat="server" href="~/RegistroAnimales.aspx">Registrar animales</a></li>
-                                <li runat="server" id="liRegistrar">
-                                    <asp:LinkButton ID="btnRegistrar" runat="server" OnClick="btnRegistrar_Click">Registrar animal</asp:LinkButton>
+                                <li><a runat="server" href="~/ListadoAnimales.aspx">Ver animales</a></li>
+
+                                <%-- ESTOS SE OCULTAN SIN SESION --%>
+                                <li runat="server" id="liRegistrarAnimales">
+                                    <a runat="server" href="~/RegistroAnimales.aspx">Registrar animales</a>
                                 </li>
-                                <li><a runat="server" href="~/Animales/FichasMedicas">Fichas médicas</a></li>
-                                <li><a runat="server" href="~/Animales/FichasIngreso">Fichas de ingreso</a></li>
+                                <li runat="server" id="liGestionVacunas">
+                                    <a runat="server" href="~/GestionIntermediaVacunaAnimal.aspx">Gestion Vacunas</a>
+                                </li>
                             </ul>
                         </li>
 
-                        <!-- Adopciones -->
-                        <li class="dropdown">
+                        <%-- Adopciones --%>
+                        <li class="dropdown" runat="server" id="liAdopciones">
                             <a href="#" class="dropdown-toggle">Adopciones</a>
                             <ul class="dropdown-menu">
-                                <li><a runat="server" href="~/Adopciones/Solicitudes">Solicitudes</a></li>
-                                <li><a runat="server" href="~/Adopciones/Certificados">Certificados</a></li>
-                                <li><a runat="server" href="~/Adopciones/Adoptantes">Adoptantes</a></li>
+                                <li><a runat="server" href="~/Solicitudes.aspx">Solicitudes</a></li>
+                                <li><a runat="server" href="~/Certificados.aspx">Certificados</a></li>
+                                <li><a runat="server" href="~/Adoptantes.aspx">Adoptantes</a></li>
                             </ul>
                         </li>
 
@@ -66,7 +67,7 @@
                         <li class="dropdown" runat="server" id="liAdministracion">
                             <a href="#" class="dropdown-toggle">Administración</a>
                             <ul class="dropdown-menu">
-                                <li><a runat="server" href="~/Admin/Usuarios">Usuarios</a></li>
+                                <li><a runat="server" href="~/GestionUsuarios.aspx">Usuarios</a></li>
                                 <li runat="server" id="liBitacora">
                                     <asp:LinkButton ID="btnBitacora" runat="server" OnClick="btnBitacora_Click">Bitácora</asp:LinkButton>
                                 </li>
@@ -104,6 +105,18 @@
 
     <!-- JS -->
     <script src="Scripts/ScriptMaster.js"></script>
+    <script>
+    <% if (Session["UsuarioActual"] != null)
+        { %>
+        sessionStorage.setItem('sesionActiva', '1');
+    <% } %>
 
+        var paginaActual = window.location.pathname.toLowerCase();
+        if (paginaActual.indexOf('login') === -1) {
+            if (!sessionStorage.getItem('sesionActiva')) {
+                window.location.href = 'Login.aspx?logout=auto';
+            }
+        }
+    </script>
 </body>
 </html>

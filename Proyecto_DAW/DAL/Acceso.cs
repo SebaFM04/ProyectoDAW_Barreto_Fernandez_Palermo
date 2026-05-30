@@ -14,6 +14,7 @@ namespace DAL
         public Acceso()
         {
             conn = "Data Source=.;Initial Catalog=dawRefugio;Integrated Security=True";
+            
         }
 
         public List<T> RetornarLista<T>(string query, Func<SqlDataReader, T> mapFunc, Dictionary<string, object> parametros = null)

@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using BE;
 using BLL;
 
-public partial class Default2 : System.Web.UI.Page
+public partial class ListadoAnimales : System.Web.UI.Page
 {
     bllAnimal bllAnimal;
 
@@ -23,7 +24,8 @@ public partial class Default2 : System.Web.UI.Page
     private void CargarRazas()
     {
         var razas = bllAnimal.RetornarAnimales()
-            .Where(a => a.vivo && a.estadoAdopcion.Equals("en adopcion", StringComparison.OrdinalIgnoreCase)) // ← así
+            .Where(a => a.vivo &&
+                   a.estadoAdopcion.Equals("en adopcion", StringComparison.OrdinalIgnoreCase))
             .Select(a => a.raza)
             .Distinct()
             .OrderBy(r => r)
@@ -38,11 +40,12 @@ public partial class Default2 : System.Web.UI.Page
     private void CargarAnimales()
     {
         string especie = ddlEspecie.SelectedValue;
-        string raza = ddlRaza.SelectedValue;
-        string sexo = ddlGenero.SelectedValue;
+        string raza    = ddlRaza.SelectedValue;
+        string sexo    = ddlGenero.SelectedValue;
 
         List<Animal> animales = bllAnimal.RetornarAnimales()
-            .Where(a => a.vivo && a.estadoAdopcion.Equals("en adopcion", StringComparison.OrdinalIgnoreCase))
+            .Where(a => a.vivo &&
+                   a.estadoAdopcion.Equals("en adopcion", StringComparison.OrdinalIgnoreCase))
             .ToList();
 
         if (!string.IsNullOrEmpty(especie))
@@ -64,6 +67,13 @@ public partial class Default2 : System.Web.UI.Page
         CargarAnimales();
     }
 
-    
-    
+    protected string ObtenerFoto(object especie, object codigo)
+    {
+        int cantFotos = 3;
+        int num = (Convert.ToInt32(codigo) % cantFotos) + 1;
+        string tipo = especie.ToString().ToLower() == "gato" ? "gato" : "perro";
+        return "Images/" + tipo + num + ".jpg";
+    }
+
+   
 }
