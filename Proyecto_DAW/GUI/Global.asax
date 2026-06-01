@@ -12,7 +12,7 @@
             CdnSupportsSecureConnection = true,
             LoadSuccessExpression = "window.jQuery"
         });
-        System.Web.HttpContext.Current?.Session?.Clear();
+
     }
 
     void Application_End(object sender, EventArgs e)
@@ -26,10 +26,7 @@
     void Session_Start(object sender, EventArgs e)
     {
 
-        HttpCookie cookie = new HttpCookie("ASP.NET_SessionId");
-        cookie.Value = Session.SessionID;
-        cookie.HttpOnly = true;
-        Response.Cookies.Set(cookie);
+
 
     }
 

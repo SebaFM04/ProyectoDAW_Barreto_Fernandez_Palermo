@@ -20,10 +20,7 @@ public partial class Login : System.Web.UI.Page
         
         bllU = new bllUsuario();
         bllBitacora = new bllBitacora();
-        if (!IsPostBack)
-        {
-            txtNombreUsuario.Focus();
-        }
+        
     }
 
     protected void btnIngresar_Click(object sender, EventArgs e)
