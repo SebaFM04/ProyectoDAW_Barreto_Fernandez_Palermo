@@ -62,6 +62,6 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
     protected void btnRegistrar_Click(object sender, EventArgs e)
     {
-        Response.Redirect("GestionAnimal.aspx");
+        Response.Redirect("RegistroAnimales.aspx");
     }
 }
