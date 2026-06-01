@@ -11,7 +11,7 @@
 
         <div class="animals-container">
 
-            <%-- SIDEBAR DE FILTROS --%>
+            <%--  FILTROS --%>
             <aside class="filters-sidebar">
                 <div class="filter-header">
                     <span class="filter-icon">&#9663;</span>
@@ -21,17 +21,16 @@
                 <div class="filter-group">
                     <label class="filter-label">Especie</label>
                     <asp:DropDownList ID="ddlEspecie" runat="server" CssClass="filter-select"
-                        AutoPostBack="true" OnSelectedIndexChanged="Filtros_Changed">
+                        AutoPostBack="true" OnSelectedIndexChanged="ddlEspecie_Changed">
                         <asp:ListItem Value="">Todos</asp:ListItem>
-                        <asp:ListItem Value="Perro">Perro</asp:ListItem>
-                        <asp:ListItem Value="Gato">Gato</asp:ListItem>
+
                     </asp:DropDownList>
                 </div>
 
                 <div class="filter-group">
                     <label class="filter-label">Raza</label>
                     <asp:DropDownList ID="ddlRaza" runat="server" CssClass="filter-select"
-                        AutoPostBack="true" OnSelectedIndexChanged="Filtros_Changed">
+                        AutoPostBack="true" OnSelectedIndexChanged="ddlRaza_Changed">
                         <asp:ListItem Value="">Todos</asp:ListItem>
                     </asp:DropDownList>
                 </div>
