@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="bllAnimal.cs" />
     <Compile Include="bllBitacora.cs" />
+    <Compile Include="bllDigitoVerificador.cs" />
     <Compile Include="bllIntermediaVacunaAnimal.cs" />
     <Compile Include="bllUsuario.cs" />
     <Compile Include="bllVacuna.cs" />

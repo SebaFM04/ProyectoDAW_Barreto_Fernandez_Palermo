@@ -1,0 +1,119 @@
+﻿
+
+/* Zona de contenido: ocupa el espacio entre navbar y footer */
+.dv-page {
+    flex: 1; /* aprovecha el flex-column del form */
+    background-color: #f5f5f5; /* mismo gris claro de los hover del menú */
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+/* Columna central con los controles */
+.dv-container {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* Título centrado */
+.dv-title {
+    text-align: center;
+    color: #333;
+    font-size: 1.3em;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Botones grandes (Recalcular, Restore) en el verde del navbar */
+.dv-btn {
+    width: 100%;
+    background-color: darkolivegreen;
+    color: white;
+    border: none;
+    border-radius: 8px; /* mismo radio que el dropdown */
+    padding: 35px 0;
+    font-size: 1.5em;
+    cursor: pointer;
+    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15); /* sombra estilo dropdown */
+    transition: 0.2s ease;
+}
+
+    .dv-btn:hover {
+        background-color: #6b8e23; /* olivedrab: el verde un poco más claro */
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .dv-btn:active {
+        transform: translateY(1px);
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
+    }
+
+/* Etiqueta "Tablas con inconsistencias:" */
+.dv-label {
+    display: block;
+    color: #333;
+    font-size: 1em;
+    margin-bottom: 6px;
+}
+
+/* ListBox de tablas con inconsistencias */
+.dv-listbox {
+    width: 100%;
+    height: 130px;
+    background-color: #ffffff;
+    border: 1px solid #ccc; /* mismo color del divider del menú */
+    border-radius: 8px;
+    padding: 8px;
+    outline: none;
+}
+
+/* Fila inferior: Salir (ancho) + botón de ayuda "?" */
+.dv-footer-row {
+    display: flex;
+    align-items: stretch;
+    gap: 15px;
+}
+
+.dv-btn-salir {
+    flex: 1; /* ocupa casi todo el ancho */
+}
+
+.dv-btn-help {
+    flex: 0 0 auto;
+    width: 95px;
+    padding: 0;
+    font-size: 1.3em;
+}
+
+/* Salir y Ayuda en gris (dimgrey, el color del footer) para diferenciarlos
+   de las acciones principales en verde */
+.dv-btn-salir,
+.dv-btn-help {
+    background-color: dimgrey;
+}
+
+    .dv-btn-salir:hover,
+    .dv-btn-help:hover {
+        background-color: #555;
+    }
+
+/* Responsive: el "?" pasa debajo en pantallas chicas */
+@media (max-width: 600px) {
+    .dv-footer-row {
+        flex-direction: column;
+    }
+
+    .dv-btn-help {
+        width: 100%;
+        padding: 22px 0;
+    }
+
+    .dv-btn {
+        padding: 26px 0;
+        font-size: 1.3em;
+    }
+}

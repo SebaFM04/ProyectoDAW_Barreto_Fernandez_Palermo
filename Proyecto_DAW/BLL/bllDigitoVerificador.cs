@@ -1,0 +1,164 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DAL;
+using BE;
+using SERVICIOS;
+
+namespace BLL
+{
+    public class bllDigitoVerificador
+    {
+        dalDigitoVerificador dal;
+        dalAnimal dalAnimal;
+        dalUsuario dalUsuario;
+        dalVacuna dalVacuna;
+        dalIntermediaVacunaAnimal dalIntermediaVacunaAnimal;
+        encriptador seguridad;
+
+        public bllDigitoVerificador()
+        {
+            dal = new dalDigitoVerificador();
+            dalAnimal = new dalAnimal();
+            dalUsuario = new dalUsuario();
+            dalVacuna = new dalVacuna();
+            dalIntermediaVacunaAnimal = new dalIntermediaVacunaAnimal();
+            seguridad = new encriptador();
+        }
+
+        public bool Deteccion()
+        {
+            List<DigitoVerificador> dvCalculados = Calcular();
+
+            return dal.CompararDigitos(dvCalculados).Count > 0;
+        }
+
+        private List<DigitoVerificador> Calcular()
+        {
+            return new List<DigitoVerificador>
+            {
+                DVAnimal(),
+                DVCertificadoIntermedia(),
+                DVUsuario(),
+                DVVacuna()
+            };
+        }
+
+        public List<string> MostrarInconsistencias()
+        {
+            List<DigitoVerificador> dvCalculados = Calcular();
+
+            List<string> tablasConInconsistencias = dal.CompararDigitos(dvCalculados);
+
+            return tablasConInconsistencias;
+        }
+
+
+        public DigitoVerificador DVAnimal()
+        {
+            var cedentes = dalAnimal.RetornarAnimal();
+
+            string horizontal = string.Concat(cedentes.Select(x =>
+                x.codigoAnimal + x.especie + x.raza +
+                x.nombre + x.tamaño + x.sexo + x.estadoAdopcion + x.vivo));
+            string horizontalHash = seguridad.GetSHA256(horizontal);
+
+            string vertical = string.Concat(cedentes.Select(x => x.codigoAnimal)) +
+                             string.Concat(cedentes.Select(x => x.especie)) +
+                             string.Concat(cedentes.Select(x => x.nombre)) +
+                             string.Concat(cedentes.Select(x => x.tamaño)) +
+                             string.Concat(cedentes.Select(x => x.sexo)) +
+                             string.Concat(cedentes.Select(x => x.estadoAdopcion)) +
+                             string.Concat(cedentes.Select(x => x.vivo));
+            string verticalHash = seguridad.GetSHA256(vertical);
+            return new DigitoVerificador("Animal", horizontalHash, verticalHash);
+        }
+
+        public void CalcularDVAnimal()
+        {
+            DigitoVerificador d = DVAnimal();
+            dal.Update(d);
+        }
+
+        public DigitoVerificador DVVacuna()
+        {
+            var medicamento = dalVacuna.RetornarVacunas();
+
+            string horizontal = string.Concat(medicamento.Select(x =>
+                x.codigoVacuna + x.nombreVacuna + x.activo ));
+            string horizontalHash = seguridad.GetSHA256(horizontal);
+
+            string vertical = string.Concat(medicamento.Select(x => x.codigoVacuna)) +
+                             string.Concat(medicamento.Select(x => x.nombreVacuna)) +
+                             string.Concat(medicamento.Select(x => x.activo));
+
+            string verticalHash = seguridad.GetSHA256(vertical);
+            return new DigitoVerificador("Vacuna", horizontalHash, verticalHash);
+        }
+
+        public void CalcularDVVacuna()
+        {
+            DigitoVerificador d = DVVacuna();
+            dal.Update(d);
+        }
+
+        public DigitoVerificador DVUsuario()
+        {
+            var animal = dalUsuario.RetornarUsuarios();
+
+            string horizontal = string.Concat(animal.Select(x =>
+                x.dni + x.nombreUsuario + x.contraseña + x.nombre + x.apellido +
+                x.rol + x.email + x.bloqueo + x.intentos + x.lenguaje + x.activo));
+            string horizontalHash = seguridad.GetSHA256(horizontal);
+
+            string vertical = string.Concat(animal.Select(x => x.dni)) +
+                             string.Concat(animal.Select(x => x.nombreUsuario)) +
+                             string.Concat(animal.Select(x => x.contraseña)) +
+                             string.Concat(animal.Select(x => x.nombre)) +
+                             string.Concat(animal.Select(x => x.apellido)) +
+                             string.Concat(animal.Select(x => x.rol) +
+                             string.Concat(animal.Select(x => x.email)) +
+                             string.Concat(animal.Select(x => x.bloqueo)) +
+                             string.Concat(animal.Select(x => x.intentos)) +
+                             string.Concat(animal.Select(x => x.lenguaje)) +
+                             string.Concat(animal.Select(x => x.activo)));
+
+            string verticalHash = seguridad.GetSHA256(vertical);
+            return new DigitoVerificador("Usuario", horizontalHash, verticalHash);
+        }
+
+        public void CalcularDVUsuario()
+        {
+            DigitoVerificador d = DVUsuario();
+            dal.Update(d);
+        }
+
+        public DigitoVerificador DVCertificadoIntermedia()
+        {
+            var certificado = dalIntermediaVacunaAnimal.RetornarIntermediaVacunaAnimal();
+
+            string horizontal = string.Concat(certificado.Select(x =>
+                x.codigo + x.codigoVacuna + x.codigoAnimal +
+                x.nombreVacuna + x.fechaAplicacion + x.fechaProximaAplicacion));
+            string horizontalHash = seguridad.GetSHA256(horizontal);
+
+            string vertical = string.Concat(certificado.Select(x => x.codigo)) +
+                             string.Concat(certificado.Select(x => x.codigoVacuna)) +
+                             string.Concat(certificado.Select(x => x.codigoAnimal)) +
+                             string.Concat(certificado.Select(x => x.nombreVacuna)) +
+                             string.Concat(certificado.Select(x => x.fechaAplicacion)) +
+                             string.Concat(certificado.Select(x => x.fechaProximaAplicacion));
+
+            string verticalHash = seguridad.GetSHA256(vertical);
+            return new DigitoVerificador("Intermedia vacuna-animal", horizontalHash, verticalHash);
+        }
+
+        public void CalcularDVIntermedia()
+        {
+            DigitoVerificador d = DVCertificadoIntermedia();
+            dal.Update(d);
+        }
+    }
+}
