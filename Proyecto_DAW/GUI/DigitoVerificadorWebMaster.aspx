@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Dígito Verificador" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="DigitoVerificadorWebMaster.aspx.cs" Inherits="_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <link href="digito-verificador.css" rel="stylesheet" />
+    <link href="Estilos/EstilosDigitoWebMaster.css" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
@@ -14,9 +14,7 @@
             <asp:Button ID="btnRecalcular" runat="server" CssClass="dv-btn"
                 Text="Recalcular" OnClick="btnRecalcular_Click" />
 
-            <%-- Desplegable con los .bak disponibles en el servidor --%>
-            <asp:DropDownList ID="ddlBackups" runat="server" CssClass="dv-select">
-            </asp:DropDownList>
+           <asp:DropDownList ID="ddlBackups" runat="server" CssClass="dv-select"></asp:DropDownList>
 
             <asp:Button ID="btnRestore" runat="server" CssClass="dv-btn"
                 Text="Restore" OnClick="btnRestore_Click" />

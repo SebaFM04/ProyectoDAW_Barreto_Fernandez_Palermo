@@ -14,13 +14,14 @@ public partial class Login : System.Web.UI.Page
 {
     bllUsuario bllU;
     bllBitacora bllBitacora;
+    bllDigitoVerificador bllDigitoVerificador;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         
         bllU = new bllUsuario();
         bllBitacora = new bllBitacora();
-        
+        bllDigitoVerificador = new bllDigitoVerificador();
     }
 
     protected void btnIngresar_Click(object sender, EventArgs e)
@@ -54,11 +55,35 @@ public partial class Login : System.Web.UI.Page
                         {
                             bllU.ReiniciarIntentos(usuario);
                             claseSession.Gestor.SetUsuario(usuario);
-                            var usuario1 = claseSession.Gestor.RetornarUsuarioSession();
-                            var perfilNombre = usuario1.rol;
-                            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Usuario", "Inicio de sesión de usuario", 1);
-                            Response.Redirect("MenuPrincipal.aspx");
 
+                            // ===== DETECCIÓN DEL DÍGITO VERIFICADOR =====
+                            if (bllDigitoVerificador.Deteccion())
+                            {
+                                // Hay inconsistencias en la base
+                                if (usuario.rol == "admin")
+                                {
+                                    // El admin va a la pantalla para recalcular / restaurar
+                                    Response.Redirect("DigitoVerificadorWebMaster.aspx");
+                                }
+                                else
+                                {
+                                    // Usuario común: no puede entrar, se cierra la sesión
+                                    claseSession.Gestor.UnsetUsuario();
+                                    lblMensajeError.Text = "No se puede iniciar el sistema. Contáctese con un administrador.";
+                                    pnlAlerta.CssClass = "login-alert login-alert-error";
+                                    ActivarAlertas();
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                // No hay inconsistencias → login normal
+                                var usuario1 = claseSession.Gestor.RetornarUsuarioSession();
+                                var perfilNombre = usuario1.rol;
+                                bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario,
+                                                 "Usuario", "Inicio de sesión de usuario", 1);
+                                Response.Redirect("MenuPrincipal.aspx");
+                            }
                         }
                         else
                         {

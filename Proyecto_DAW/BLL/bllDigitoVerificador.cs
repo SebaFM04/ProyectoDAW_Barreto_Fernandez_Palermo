@@ -40,7 +40,7 @@ namespace BLL
             return new List<DigitoVerificador>
             {
                 DVAnimal(),
-                DVCertificadoIntermedia(),
+                DVIntermediaVacunaAnimal(),
                 DVUsuario(),
                 DVVacuna()
             };
@@ -135,7 +135,7 @@ namespace BLL
             dal.Update(d);
         }
 
-        public DigitoVerificador DVCertificadoIntermedia()
+        public DigitoVerificador DVIntermediaVacunaAnimal()
         {
             var certificado = dalIntermediaVacunaAnimal.RetornarIntermediaVacunaAnimal();
 
@@ -155,9 +155,9 @@ namespace BLL
             return new DigitoVerificador("Intermedia vacuna-animal", horizontalHash, verticalHash);
         }
 
-        public void CalcularDVIntermedia()
+        public void CalcularDVIntermediaVacunaAnimal()
         {
-            DigitoVerificador d = DVCertificadoIntermedia();
+            DigitoVerificador d = DVIntermediaVacunaAnimal();
             dal.Update(d);
         }
     }

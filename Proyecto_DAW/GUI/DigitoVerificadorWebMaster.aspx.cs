@@ -1,24 +1,36 @@
-﻿using System;
+﻿using BLL;
+using SERVICIOS;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using BLL;
 
 public partial class _Default : System.Web.UI.Page
 {
     bllDigitoVerificador bllDigitoVerificador;
+    bllBackUpRestore bllBackUpRestore;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         bllDigitoVerificador = new bllDigitoVerificador();
+        bllBackUpRestore = new bllBackUpRestore();
 
         if (!IsPostBack)
         {
             CargarInconsistencias();
-            CargarBackups();
+            CargarBackups();   // vuelve a llenar el dropdown
+        }
+    }
+
+    private void CargarBackups()
+    {
+        ddlBackups.Items.Clear();
+        foreach (string archivo in bllBackUpRestore.ObtenerBackups())
+        {
+            ddlBackups.Items.Add(new ListItem(System.IO.Path.GetFileName(archivo), archivo));
         }
     }
 
@@ -32,39 +44,22 @@ public partial class _Default : System.Web.UI.Page
         }
     }
 
-    // Lista los .bak que hay en C:\BackUp del servidor
-    private void CargarBackups()
-    {
-        ddlBackups.Items.Clear();
-        string carpeta = @"C:\BackUp";
-
-        if (Directory.Exists(carpeta))
-        {
-            foreach (string archivo in Directory.GetFiles(carpeta, "*.bak"))
-            {
-                // Texto = nombre del archivo, Value = ruta completa
-                ddlBackups.Items.Add(new System.Web.UI.WebControls.ListItem(
-                    Path.GetFileName(archivo), archivo));
-            }
-        }
-    }
-
     protected void btnRecalcular_Click(object sender, EventArgs e)
     {
         try
         {
-            //bllDigitoVerificador.CalcularDVFichaMedica();
-            //bllDigitoVerificador.CalcularDVFichaIngreso();
-            //bllDigitoVerificador.CalcularDVEvaluaciones();
-            //bllDigitoVerificador.CalcularDVCertificadoAdopcion();
-            //bllDigitoVerificador.CalcularDVCedente();
-            //bllDigitoVerificador.CalcularDVAnimales();
-            //bllDigitoVerificador.CalcularDVAdoptante();
-            //bllDigitoVerificador.CalcularDVMedicamentos();
+            bllDigitoVerificador.CalcularDVAnimal();
+            bllDigitoVerificador.CalcularDVIntermediaVacunaAnimal();
+            bllDigitoVerificador.CalcularDVVacuna();
+            bllDigitoVerificador.CalcularDVUsuario();
 
-            // Tras recalcular, refrescamos la lista (debería quedar vacía)
-            CargarInconsistencias();
-            MostrarMensaje("Dígitos verificadores recalculados correctamente.");
+            // Cerramos la sesión en el servidor
+            claseSession.Gestor.UnsetUsuario();
+
+            // Mostramos el mensaje y, al aceptar, el navegador va al login
+            string script = "alert('Dígitos verificadores recalculados correctamente.');" +
+                            "window.location='Login.aspx';";
+            ClientScript.RegisterStartupScript(GetType(), "redir", script, true);
         }
         catch (Exception ex) { MostrarMensaje(ex.Message); }
     }
@@ -75,15 +70,18 @@ public partial class _Default : System.Web.UI.Page
         {
             if (ddlBackups.SelectedItem == null || ddlBackups.SelectedValue == "")
             {
-                MostrarMensaje("Seleccione un archivo .bak primero.");
+                MostrarMensaje("Seleccione un backup de la lista.");
                 return;
             }
 
-            // Value del DropDownList = ruta completa del .bak en el servidor
-           // bllBackUpRestore.RealizarRestore(ddlBackups.SelectedValue);
+            // El Value del dropdown ya es la ruta completa del .bak en el servidor
+            bllBackUpRestore.RealizarRestore(ddlBackups.SelectedValue);
 
-            CargarInconsistencias();
-            MostrarMensaje("Restore realizado correctamente.");
+            // Restore OK: cerramos sesión y volvemos al login
+            claseSession.Gestor.UnsetUsuario();
+            string script = "alert('Restore realizado correctamente.');" +
+                            "window.location='Login.aspx';";
+            ClientScript.RegisterStartupScript(GetType(), "redirRestore", script, true);
         }
         catch (Exception ex) { MostrarMensaje(ex.Message); }
     }
