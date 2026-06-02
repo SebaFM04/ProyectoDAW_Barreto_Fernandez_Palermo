@@ -1,4 +1,4 @@
-﻿<%@ Page Title="MenuPrincipal" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="MenuPrincipal.aspx.cs" Inherits="Default2" %>
+<%@ Page Title="Animales" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="ListadoAnimales.aspx.cs" Inherits="ListadoAnimales" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <link href="Estilos/EstilosInicio.css" rel="stylesheet" />
@@ -6,24 +6,12 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
-    <section class="hero-section">
-        <h1 class="hero-title">Bienvenidos al Refugio Oeste</h1>
-        <p class="hero-desc">
-            Somos un refugio dedicado al rescate, cuidado y rehabilitación de animales en
-            situación de abandono. Nuestro objetivo es brindarles una segunda oportunidad y
-            encontrarles un hogar lleno de amor. Cada animal tiene una historia única y merece
-            ser parte de una familia que lo valore. Te invitamos a conocer a nuestros
-            compañeros peludos y considerar darle un hogar a uno de ellos.
-        </p>
-    </section>
-
-    <%-- ===== SECCIÓN ANIMALES ===== --%>
     <section class="animals-section">
         <h2 class="section-title">Animales Disponibles para la Adopcion</h2>
 
         <div class="animals-container">
 
-            <%-- FILTROS --%>
+            <%--  FILTROS --%>
             <aside class="filters-sidebar">
                 <div class="filter-header">
                     <span class="filter-icon">&#9663;</span>
@@ -56,15 +44,16 @@
                         <asp:ListItem Value="Hembra">Hembra</asp:ListItem>
                     </asp:DropDownList>
                 </div>
+
             </aside>
 
+            <%-- GRID DE CARDS --%>
             <div class="cards-grid">
 
                 <asp:Repeater ID="rptAnimales" runat="server">
                     <ItemTemplate>
                         <div class="animal-card">
 
-                            <%-- Placeholder visual A FUTURO AGREGAR IMAGENES POR CADA ANIMAL--%>
                             <img src='<%# Eval("especie").ToString().ToLower() == "gato" ? "Imagenes/gato.png" : "Imagenes/perro.png" %>'
                                 alt='<%# Eval("especie") %>'
                                 class="animal-img" />
@@ -82,7 +71,7 @@
                                 <div class="animal-info">
                                     <div class="info-row">
                                         <span class="info-label">Tamaño:</span>
-                                        <span class="info-val"><%# Eval("tamaño") %></span>
+                                        <span class="info-val"><%# Eval("tamano") %></span>
                                     </div>
                                     <div class="info-row">
                                         <span class="info-label">Genero:</span>
@@ -93,7 +82,8 @@
                                         <span class="info-val"><%# Eval("estadoAdopcion") %></span>
                                     </div>
                                 </div>
-                                                                
+
+
                             </div>
 
                         </div>

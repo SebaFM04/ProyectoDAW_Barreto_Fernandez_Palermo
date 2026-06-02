@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -58,6 +58,16 @@ namespace DAL
                 "codigoAnimal"
             };
             EjecutarQueryConEntidad(animal, query, propiedadesAIncluir);
+        }
+
+        public void Baja(string codigo)
+        {
+            string query = "DELETE FROM Animal WHERE codigoAnimal=@codigoAnimal";
+            var parametros = new Dictionary<string, object>
+            {
+                { "@codigoAnimal", codigo }
+            };
+            dal.Query(query, parametros);
         }
 
         private void EjecutarQueryConEntidad(Animal animal, string query, List<string> propiedadesIncluir = null)

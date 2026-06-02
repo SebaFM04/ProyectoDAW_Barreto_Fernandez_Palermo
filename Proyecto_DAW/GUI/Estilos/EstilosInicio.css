@@ -1,0 +1,273 @@
+﻿/* ================================================
+   INICIO.CSS - Refugio Del Oeste
+   Estilos para el Hero y la seccion de Animales
+   ================================================ */
+
+/* -----------------------------------------------
+   HERO SECTION
+----------------------------------------------- */
+.hero-section {
+    background-color: #4B5E26;
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.hero-title {
+    color: #D4B86A;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 1.2rem 0;
+}
+
+.hero-desc {
+    color: #ffffff;
+    font-size: 1.1rem;
+    line-height: 1.85;
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+/* -----------------------------------------------
+   ANIMALS SECTION
+----------------------------------------------- */
+.animals-section {
+    padding: 2rem 2rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #222;
+    margin: 0 0 2rem 0;
+}
+
+.animals-container {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+/* -----------------------------------------------
+   FILTROS
+----------------------------------------------- */
+.filters-sidebar {
+    min-width: 185px;
+    max-width: 205px;
+    flex-shrink: 0;
+}
+
+.filter-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.2rem;
+}
+
+.filter-icon {
+    font-style: normal;
+    font-size: 1rem;
+}
+
+.filter-group {
+    margin-bottom: 1.1rem;
+}
+
+.filter-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.35rem;
+    font-weight: 400;
+}
+
+.filter-select {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    appearance: auto;
+}
+
+    .filter-select:focus {
+        outline: none;
+        border-color: #4B5E26;
+        box-shadow: 0 0 0 2px rgba(75,94,38,0.15);
+    }
+
+/* -----------------------------------------------
+   GRID DE CARDS
+----------------------------------------------- */
+.cards-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+}
+
+/* -----------------------------------------------
+   CARD  DE ANIMAL
+----------------------------------------------- */
+.animal-card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s;
+}
+
+    .animal-card:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+.animal-img {
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+    display: block;
+}
+
+.animal-body {
+    padding: 12px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.animal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.animal-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #222;
+}
+
+/* Badges por especie */
+.badge {
+    font-size: 0.72rem;
+    padding: 3px 11px;
+    border-radius: 20px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.badge-perro {
+    background-color: #4B5E26;
+    color: #ffffff;
+}
+
+.badge-gato {
+    background-color: #2E7D5A;
+    color: #ffffff;
+}
+
+.animal-breed {
+    font-size: 0.8rem;
+    color: #888;
+    margin: 0 0 10px 0;
+}
+
+/* Filas de informacion */
+.animal-info {
+    margin-bottom: 10px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    margin-bottom: 3px;
+}
+
+.info-label {
+    color: #666;
+}
+
+.info-val {
+    font-weight: 700;
+    color: #222;
+}
+
+.animal-desc {
+    font-size: 0.8rem;
+    color: #777;
+    line-height: 1.5;
+    margin: 0 0 14px 0;
+    flex: 1;
+}
+
+/* Boton Mas Informacion */
+.btn-mas-info {
+    display: block;
+    width: 100%;
+    background-color: #4B5E26;
+    color: #ffffff !important;
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+}
+
+    .btn-mas-info:hover {
+        background-color: #3a4b1e;
+        color: #ffffff !important;
+        text-decoration: none;
+    }
+
+/* -----------------------------------------------
+   RESPONSIVE
+----------------------------------------------- */
+@media (max-width: 960px) {
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+    .animals-container {
+        flex-direction: column;
+    }
+
+    .filters-sidebar {
+        max-width: 100%;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .filter-group {
+        flex: 1;
+        min-width: 140px;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-title {
+        font-size: 1.5rem;
+    }
+}

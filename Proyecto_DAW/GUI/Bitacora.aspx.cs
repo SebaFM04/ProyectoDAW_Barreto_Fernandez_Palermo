@@ -29,33 +29,67 @@ public partial class _Default : System.Web.UI.Page
 
     private void CargarDropdowns()
     {
-        var eventos = bll.RetornarEventos();
-
-        // Modulo
-        dlModulo.Items.Clear();
-        dlModulo.Items.Add(new ListItem("-- Todos --", ""));
-        foreach (var item in eventos.Select(e => e.modulo).Distinct())
-            dlModulo.Items.Add(new ListItem(item, item));
-
-        // Evento
-        dlEvento.Items.Clear();
-        dlEvento.Items.Add(new ListItem("-- Todos --", ""));
-        foreach (var item in eventos.Select(e => e.evento).Distinct())
-            dlEvento.Items.Add(new ListItem(item, item));
-
-        // Criticidad
-        dlCriticidad.Items.Clear();
-        dlCriticidad.Items.Add(new ListItem("-- Todos --", ""));
-        foreach (var item in eventos.Select(e => e.criticidad).Distinct())
-            dlCriticidad.Items.Add(new ListItem(item.ToString(), item.ToString()));
+        CargarDropdownsFiltrados("", "", "");
     }
 
-    private void CargarGrilla()
+    private void CargarDropdownsFiltrados(string moduloSeleccionado, string eventoSeleccionado, string criticidadSeleccionada)
     {
-        List<Evento> listaEventos = bll.RetornarEventos();
+        var todos = bll.RetornarEventos();
 
-        gvProductos.DataSource = listaEventos;
-        gvProductos.DataBind();
+        // Base para cascada: cada dropdown filtra con lo que está seleccionado ANTES que él
+        var paraEvento = string.IsNullOrEmpty(moduloSeleccionado)
+            ? todos
+            : todos.Where(e => e.modulo == moduloSeleccionado).ToList();
+
+        var paraCriticidad = string.IsNullOrEmpty(eventoSeleccionado)
+            ? paraEvento
+            : paraEvento.Where(e => e.evento == eventoSeleccionado).ToList();
+
+        // Módulo: siempre muestra todos (es el primero)
+        var moduloActual = dlModulo.SelectedValue;
+        dlModulo.Items.Clear();
+        dlModulo.Items.Add(new ListItem("-- Todos --", ""));
+        foreach (var item in todos.Select(e => e.modulo).Distinct().OrderBy(x => x))
+            dlModulo.Items.Add(new ListItem(item, item));
+        if (!string.IsNullOrEmpty(moduloActual))
+            dlModulo.SelectedValue = moduloActual;
+
+        // Evento: filtrado por módulo seleccionado
+        var eventoActual = dlEvento.SelectedValue;
+        dlEvento.Items.Clear();
+        dlEvento.Items.Add(new ListItem("-- Todos --", ""));
+        foreach (var item in paraEvento.Select(e => e.evento).Distinct().OrderBy(x => x))
+            dlEvento.Items.Add(new ListItem(item, item));
+        if (dlEvento.Items.FindByValue(eventoActual) != null)
+            dlEvento.SelectedValue = eventoActual;
+
+        // Criticidad: filtrado por módulo + evento seleccionados
+        var criticidadActual = dlCriticidad.SelectedValue;
+        dlCriticidad.Items.Clear();
+        dlCriticidad.Items.Add(new ListItem("-- Todos --", ""));
+        foreach (var item in paraCriticidad.Select(e => e.criticidad).Distinct().OrderBy(x => x))
+            dlCriticidad.Items.Add(new ListItem(item.ToString(), item.ToString()));
+        if (dlCriticidad.Items.FindByValue(criticidadActual) != null)
+            dlCriticidad.SelectedValue = criticidadActual;
+    }
+
+    // Handler compartido para los tres dropdowns
+    protected void dlFiltro_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        CargarDropdownsFiltrados(
+            dlModulo.SelectedValue,
+            dlEvento.SelectedValue,
+            dlCriticidad.SelectedValue
+        );
+    }
+
+    private void CargarGrilla(List<Evento> lista = null)
+    {
+        gvBitacora.DataSource = (lista ?? bll.RetornarEventos())
+            .OrderByDescending(e => e.fecha)
+            .ThenByDescending(e => e.hora.Ticks)
+            .ToList();
+        gvBitacora.DataBind();
     }
 
     protected void btnLimpiarFiltros_Click(object sender, EventArgs e)
@@ -102,9 +136,7 @@ public partial class _Default : System.Web.UI.Page
                 }
             }
 
-            // Llamás a tu BLL igual que antes
-            gvProductos.DataSource = bll.Filtros(filtros);
-            gvProductos.DataBind();
+            CargarGrilla(bll.Filtros(filtros));
         }
         catch (Exception ex)
         {

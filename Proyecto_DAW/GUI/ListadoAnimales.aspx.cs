@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using BE;
 using BLL;
 
-public partial class Default2 : System.Web.UI.Page
+public partial class ListadoAnimales : System.Web.UI.Page
 {
     bllAnimal bllAnimal;
 
@@ -121,9 +122,8 @@ public partial class Default2 : System.Web.UI.Page
 
     protected void Filtros_Changed(object sender, EventArgs e)
     {
-        CargarAnimales(); 
+        CargarAnimales();
     }
-
 
 
 }

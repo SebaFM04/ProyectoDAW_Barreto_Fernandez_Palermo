@@ -8,25 +8,34 @@ namespace BE
 {
     public class Animal
     {
+        public int codigoAnimal { get; set; }
+        public string especie { get; set; }
+        public string raza { get; set; }
+        public string nombre { get; set; }
+        private string _tamano;
+        public string tamaño
+        {
+            get { return _tamano; }
+            set { _tamano = value; }
+        }
+        public string tamano
+        {
+            get { return _tamano; }
+        }
+        public string sexo { get; set; }
+        public string estadoAdopcion { get; set; }
+        public bool vivo { get; set; }
+
         public Animal(int pCodigoAnimal, string pEspecie, string pRaza, string pNombre, string pTamaño, string pSexo, string pEstadoDeAdopcion, bool pVivo)
         {
             codigoAnimal = pCodigoAnimal;
             especie = pEspecie;
             raza = pRaza;
             nombre = pNombre;
-            tamaño = pTamaño;
+            tamaño = pTamaño;  
             sexo = pSexo;
             estadoAdopcion = pEstadoDeAdopcion;
             vivo = pVivo;
         }
-
-        public int codigoAnimal { get; set; }
-        public string especie { get; set; }
-        public string raza { get; set; }
-        public string nombre { get; set; }
-        public string tamaño { get; set; }
-        public string sexo { get; set; }
-        public string estadoAdopcion { get; set; }
-        public bool vivo { get; set; }
     }
 }

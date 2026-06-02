@@ -1,0 +1,70 @@
+﻿/* WRAPPER */
+.backup-wrapper {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* TITULO */
+.backup-titulo {
+    color: #556B2F;
+    border-bottom: 2px solid #556B2F;
+    padding-bottom: 10px;
+    margin-bottom: 24px;
+}
+
+/* SECCIONES */
+.backup-seccion {
+    margin-bottom: 20px;
+}
+
+    .backup-seccion h3 {
+        color: #444;
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
+
+    .backup-seccion p {
+        color: #666;
+        font-size: 13px;
+        margin-bottom: 12px;
+    }
+
+/* FILA RESTORE */
+.fila-restore {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* BOTON VERDE - igual al que ya tenés */
+.btn-verde {
+    padding: 9px 30px;
+    background: #556B2F;
+    color: white;
+    border: 1px solid #3d5020;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.15s;
+}
+
+    .btn-verde:hover {
+        background: #4a5e28;
+    }
+
+/* BOTON ROJO - para restore porque es una acción importante */
+.btn-rojo {
+    padding: 9px 30px;
+    background: #c0392b;
+    color: white;
+    border: 1px solid #962d22;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.15s;
+}
+
+    .btn-rojo:hover {
+        background: #a93226;
+    }
