@@ -9,10 +9,13 @@ using System.Web.UI.WebControls;
 public partial class GestionVacuna : System.Web.UI.Page
 {
     bllVacuna bllvacuna;
+    bllDigitoVerificador bllDigitoVerificador;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         bllvacuna = new bllVacuna();
+        bllDigitoVerificador = new bllDigitoVerificador();
+
         if (!IsPostBack)
         {
             CargarGrillaVacunas();
@@ -101,6 +104,8 @@ public partial class GestionVacuna : System.Web.UI.Page
                 bllvacuna.Modificar(codigoVacuna, txtNombre.Text.Trim(), rbActivo.Checked);
                 lbMensaje.Text = "Vacuna modificada exitosamente.";
             }
+
+            bllDigitoVerificador.CalcularDVVacuna();
 
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-exito";

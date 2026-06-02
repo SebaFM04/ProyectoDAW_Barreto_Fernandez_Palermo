@@ -70,6 +70,26 @@ namespace DAL
             }
         }
 
+        public string ObtenerCarpetaBackupSQL()
+        {
+            using (SqlConnection connection = new SqlConnection(conn))
+            {
+                connection.Open();
+                using (SqlCommand cmd = new SqlCommand(
+                    @"DECLARE @ruta NVARCHAR(512);
+              EXEC master.dbo.xp_instance_regread 
+                  N'HKEY_LOCAL_MACHINE',
+                  N'Software\Microsoft\MSSQLServer\MSSQLServer',
+                  N'BackupDirectory',
+                  @ruta OUTPUT;
+              SELECT @ruta;", connection))
+                {
+                    object resultado = cmd.ExecuteScalar();
+                    return resultado?.ToString();
+                }
+            }
+        }
+
         public void RestaurarBaseDatos(string rutaBackup)
         {
             const string miBase = "dawRefugio";

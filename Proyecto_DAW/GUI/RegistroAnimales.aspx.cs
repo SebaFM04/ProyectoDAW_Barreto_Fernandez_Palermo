@@ -9,9 +9,12 @@ using BLL;
 public partial class RegistroAnimales : System.Web.UI.Page
 {
     bllAnimal bllanimal;
+    bllDigitoVerificador bllDigitoVerificador;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         bllanimal = new bllAnimal();
+        bllDigitoVerificador = new bllDigitoVerificador();
 
         if (!IsPostBack)
         {
@@ -57,6 +60,9 @@ public partial class RegistroAnimales : System.Web.UI.Page
             var estadoAdopcion = ddlEstado.SelectedValue.ToString();
 
             bllanimal.AltaAnimal(especie, raza, nombre, tamano, sexo, estadoAdopcion, true);
+
+            bllDigitoVerificador.CalcularDVAnimal();
+
             CargarGrid();
             MostrarMensaje("Animal agregado exitosamente!", false);
             ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
@@ -83,6 +89,9 @@ public partial class RegistroAnimales : System.Web.UI.Page
             var estadoAdopcion = ddlEstado.SelectedValue.ToString();
 
             bllanimal.Modificar(codigo, especie, raza, nombre, tamano, sexo, estadoAdopcion, true);
+
+            bllDigitoVerificador.CalcularDVAnimal();
+
             CargarGrid();
             MostrarMensaje("Animal modificado exitosamente!", false);
             ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);

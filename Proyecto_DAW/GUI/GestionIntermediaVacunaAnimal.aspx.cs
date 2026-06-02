@@ -12,12 +12,14 @@ public partial class GestionIntermediaVacunaAnimal : System.Web.UI.Page
     bllIntermediaVacunaAnimal bllIntermedia;
     bllVacuna bllvacuna;
     bllAnimal bllanimal;
+    bllDigitoVerificador bllDigitoVerificador;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         bllIntermedia = new bllIntermediaVacunaAnimal();
         bllvacuna = new bllVacuna();
         bllanimal = new bllAnimal();
+        bllDigitoVerificador = new bllDigitoVerificador();
 
         if (!IsPostBack)
         {
@@ -69,6 +71,8 @@ public partial class GestionIntermediaVacunaAnimal : System.Web.UI.Page
             int codigoAnimal = int.Parse(ViewState["CodigoAnimal"].ToString());
 
             bllIntermedia.Alta(codigoVacuna, codigoAnimal,nombreVacuna, fechaAplicacion, fechaProxima);
+
+            bllDigitoVerificador.CalcularDVIntermediaVacunaAnimal();
 
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-exito";

@@ -45,6 +45,7 @@
     <Compile Include="dalAnimal.cs" />
     <Compile Include="dalBackUpRestore.cs" />
     <Compile Include="dalBitacora.cs" />
+    <Compile Include="dalDigitoVerificador.cs" />
     <Compile Include="dalIntermediaVacunaAnimal.cs" />
     <Compile Include="dalUsuario.cs" />
     <Compile Include="dalVacuna.cs" />

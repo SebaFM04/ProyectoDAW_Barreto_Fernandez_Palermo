@@ -10,41 +10,37 @@ using System.Web.UI.WebControls;
 public partial class _Default : System.Web.UI.Page
 {
     bllBackUpRestore bllBackupRestore;
-    
+
     protected void Page_Load(object sender, EventArgs e)
     {
         bllBackupRestore = new bllBackUpRestore();
 
-        string backupPath = Path.Combine(
-        Path.GetPathRoot(Environment.SystemDirectory),
-        "BackUp"
-    );
-
-        if (!Directory.Exists(backupPath))
+        if (!IsPostBack)
         {
-            Directory.CreateDirectory(backupPath);
-            var security = Directory.GetAccessControl(backupPath);
-            security.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(
-                "NT SERVICE\\MSSQLSERVER",
-                System.Security.AccessControl.FileSystemRights.FullControl,
-                System.Security.AccessControl.AccessControlType.Allow
-            ));
-            Directory.SetAccessControl(backupPath, security);
+            CargarBackups();
         }
+    }
 
-        Session["backupPath"] = backupPath;
+    // Muestra en el dropdown los .bak que hay en la carpeta del servidor
+    private void CargarBackups()
+    {
+        ddlBackups.Items.Clear();
+        foreach (string archivo in bllBackupRestore.ObtenerBackups())
+        {
+            ddlBackups.Items.Add(new ListItem(Path.GetFileName(archivo), archivo));
+        }
     }
 
     protected void btnBackUp_Click(object sender, EventArgs e)
     {
         try
         {
-            string backupPath = Session["backupPath"].ToString();
-            string resultado = bllBackupRestore.Backup(backupPath);
-
+            string resultado = bllBackupRestore.Backup();
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "login-alert login-alert-success";
-            lblMensajeError.Text = "Back up realizado con éxito en la ruta: " + resultado;
+            lblMensajeError.Text = "Back up realizado con éxito en: " + resultado;
+
+            CargarBackups();   // refresca la lista para que aparezca el nuevo .bak
         }
         catch (Exception ex)
         {
@@ -58,7 +54,7 @@ public partial class _Default : System.Web.UI.Page
     {
         try
         {
-            if (!fuRestore.HasFile)
+            if (ddlBackups.SelectedItem == null || ddlBackups.SelectedValue == "")
             {
                 pnlAlerta.Visible = true;
                 pnlAlerta.CssClass = "login-alert login-alert-error";
@@ -66,19 +62,8 @@ public partial class _Default : System.Web.UI.Page
                 return;
             }
 
-            if (!fuRestore.FileName.EndsWith(".bak"))
-            {
-                pnlAlerta.Visible = true;
-                pnlAlerta.CssClass = "login-alert login-alert-error";
-                lblMensajeError.Text = "El archivo debe ser .bak";
-                return;
-            }
-
-            string backupPath = Session["backupPath"].ToString();
-            string ruta = Path.Combine(backupPath, fuRestore.FileName);
-            fuRestore.SaveAs(ruta);
-
-            bllBackupRestore.RealizarRestore(ruta);
+            // El Value del dropdown ya es la ruta completa del .bak en el servidor
+            bllBackupRestore.RealizarRestore(ddlBackups.SelectedValue);
 
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "login-alert login-alert-success";
