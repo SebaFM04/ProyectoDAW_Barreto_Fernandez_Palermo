@@ -59,27 +59,26 @@ public partial class Login : System.Web.UI.Page
                             // ===== DETECCIÓN DEL DÍGITO VERIFICADOR =====
                             if (bllDigitoVerificador.Deteccion())
                             {
-                                // Hay inconsistencias en la base
-                                if (usuario.rol == "admin")
+                                // Hay inconsistencias: según el rol, va a una pantalla distinta
+                                if (usuario.rol == "web master")
                                 {
-                                    // El admin va a la pantalla para recalcular / restaurar
+                                    // El Web Master puede recalcular / restaurar
                                     Response.Redirect("DigitoVerificadorWebMaster.aspx");
+                                }
+                                else if (usuario.rol == "admin")
+                                {
+                                    // El admin solo ve el aviso para contactar al Web Master
+                                    Response.Redirect("DigitoVerificadorAdmin.aspx");
                                 }
                                 else
                                 {
-                                    // Usuario común: no puede entrar, se cierra la sesión
-                                    claseSession.Gestor.UnsetUsuario();
-                                    lblMensajeError.Text = "No se puede iniciar el sistema. Contáctese con un administrador.";
-                                    pnlAlerta.CssClass = "login-alert login-alert-error";
-                                    ActivarAlertas();
-                                    return;
+                                    // Cualquier otro rol: pantalla de no disponible
+                                    Response.Redirect("DigitoVerificadorUsuario.aspx");
                                 }
                             }
                             else
                             {
                                 // No hay inconsistencias → login normal
-                                var usuario1 = claseSession.Gestor.RetornarUsuarioSession();
-                                var perfilNombre = usuario1.rol;
                                 bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario,
                                                  "Usuario", "Inicio de sesión de usuario", 1);
                                 Response.Redirect("MenuPrincipal.aspx");
