@@ -1,10 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Bitacora.aspx.cs" Inherits="_Default" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <link href="Estilos/EstilosBitacora.css" rel="stylesheet" />
 </asp:Content>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
     <asp:ScriptManager ID="ScriptManager1" runat="server" />
 
@@ -15,7 +15,11 @@
                 <%-- GRILLA --%>
                 <asp:GridView ID="gvBitacora" runat="server" AutoGenerateColumns="false"
                     CssClass="table table-bordered"
-                    EmptyDataText="No hay datos para mostrar">
+                    EmptyDataText="No hay datos para mostrar"
+                    AllowPaging="true"
+                    PageSize="10"
+                    EnableViewState="true"
+                    OnPageIndexChanging="gvBitacora_PageIndexChanging">
                     <Columns>
                         <asp:BoundField DataField="codigo" HeaderText="Código" />
                         <asp:BoundField DataField="login" HeaderText="Login" />
@@ -29,6 +33,7 @@
                         <asp:BoundField DataField="evento" HeaderText="Evento" />
                         <asp:BoundField DataField="criticidad" HeaderText="Criticidad" />
                     </Columns>
+                    <PagerStyle CssClass="paginador" HorizontalAlign="Center" />
                 </asp:GridView>
 
                 <hr />

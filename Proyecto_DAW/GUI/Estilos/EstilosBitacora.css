@@ -5,36 +5,29 @@
     padding: 0 20px;
 }
 
-/* GRILLA */
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-    margin-bottom: 0;
+/* GRILLA - :not para excluir el paginador */
+.table th {
+    background-color: #556B2F;
+    color: white;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    border: 1px solid #3d5020;
 }
 
-    .table th {
-        background-color: #556B2F;
-        color: white;
-        padding: 10px 12px;
-        text-align: left;
-        font-weight: 600;
-        border: 1px solid #3d5020;
-    }
+.table tr:not(.paginador) td {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    color: #333;
+}
 
-    .table td {
-        padding: 8px 12px;
-        border: 1px solid #ddd;
-        color: #333;
-    }
+.table tr:nth-child(even):not(.paginador) td {
+    background-color: #f5f5f0;
+}
 
-    .table tr:nth-child(even) td {
-        background-color: #f5f5f0;
-    }
-
-    .table tr:hover td {
-        background-color: #eef2e6;
-    }
+.table tr:hover:not(.paginador) td {
+    background-color: #eef2e6;
+}
 
 /* SEPARADOR */
 hr {
@@ -132,4 +125,54 @@ hr {
     background-color: #fdecea;
     border: 1px solid #f5aeae;
     color: #7b1c1c;
+}
+
+/* Links de página */
+tr.paginador td table td a {
+    display: inline-block !important;
+    padding: 5px 10px !important;
+    margin: 0 2px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    color: #3C3489 !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+}
+
+    tr.paginador td table td a:hover {
+        background-color: #3C3489 !important;
+        color: #ffffff !important;
+        border-color: #3C3489 !important;
+    }
+
+/* Página activa */
+tr.paginador td table td span {
+    display: inline-block !important;
+    padding: 5px 10px !important;
+    margin: 0 2px !important;
+    border: 1px solid #3C3489 !important;
+    border-radius: 4px !important;
+    background-color: #3C3489 !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+tr.paginador td table td a,
+tr.paginador td table td span {
+    outline: none !important;
+}
+
+    tr.paginador td table td a:focus,
+    tr.paginador td table td span:focus {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+tr.paginador td table td {
+    border: none !important;
+    padding: 0 2px !important;
+    background: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }

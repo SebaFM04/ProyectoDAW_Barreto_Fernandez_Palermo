@@ -11,6 +11,13 @@ using System.Web.UI.WebControls;
 public partial class _Default : System.Web.UI.Page
 {
     bllBitacora bll;
+
+    private List<Evento> ListaActual
+    {
+        get { return Session["listaActual"] as List<Evento>; }
+        set { Session["listaActual"] = value; }
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         bll = new bllBitacora();
@@ -85,10 +92,13 @@ public partial class _Default : System.Web.UI.Page
 
     private void CargarGrilla(List<Evento> lista = null)
     {
-        gvBitacora.DataSource = (lista ?? bll.RetornarEventos())
+        var datos = (lista ?? bll.RetornarEventos())
             .OrderByDescending(e => e.fecha)
             .ThenByDescending(e => e.hora.Ticks)
             .ToList();
+
+        ListaActual = datos;
+        gvBitacora.DataSource = datos;
         gvBitacora.DataBind();
     }
 
@@ -100,7 +110,21 @@ public partial class _Default : System.Web.UI.Page
         dlEvento.SelectedIndex = 0;
         dlCriticidad.SelectedIndex = 0;
         pnlAlerta.Visible = false;
+        gvBitacora.PageIndex = 0;
         CargarGrilla();
+    }
+
+    protected void gvBitacora_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        gvBitacora.PageIndex = e.NewPageIndex;
+
+        var lista = ListaActual ?? bll.RetornarEventos()
+            .OrderByDescending(ev => ev.fecha)
+            .ThenByDescending(ev => ev.hora.Ticks)
+            .ToList();
+
+        gvBitacora.DataSource = lista;
+        gvBitacora.DataBind();
     }
 
     protected void btnAplicarFiltros_Click(object sender, EventArgs e)

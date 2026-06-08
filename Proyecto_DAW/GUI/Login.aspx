@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Iniciar sesión" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Login" %>
+﻿<%@ Page Title="Iniciar sesión" Language="C#" MasterPageFile="~/MasterPageLogin.master" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Login" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="head" runat="server">
     <link href="Estilos/EstilosLogin.css" rel="stylesheet" />
@@ -19,7 +19,7 @@
             <!-- Cuerpo -->
             <div class="login-card-body">
 
-                <!--Panel generico para mostrar errores-->
+                <!-- Panel generico para mostrar errores -->
                 <asp:Panel ID="pnlAlerta" runat="server" Visible="false" CssClass="login-alert login-alert-error">
                     <asp:Label ID="lblMensajeError" runat="server" Text=""></asp:Label>
                 </asp:Panel>
@@ -62,7 +62,6 @@
         </div>
     </div>
 
-    <!-- JS -->
     <script src="Scripts/ScriptLogin.js"></script>
 </asp:Content>
 

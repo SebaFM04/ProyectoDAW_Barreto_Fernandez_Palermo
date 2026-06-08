@@ -21,6 +21,22 @@
 
     void Application_Error(object sender, EventArgs e)
     {
+        Exception ex = Server.GetLastError();
+
+        HttpException httpEx = ex as HttpException;
+        if (httpEx != null && httpEx.GetHttpCode() == 404)
+        {
+            Server.ClearError();
+
+            string destino = "MenuPrincipal.aspx";
+
+            if (Context.Session != null && Session["UltimaPagina"] != null)
+            {
+                destino = Session["UltimaPagina"].ToString();
+            }
+
+            Response.Redirect(destino);
+        }
     }
 
     void Session_Start(object sender, EventArgs e)

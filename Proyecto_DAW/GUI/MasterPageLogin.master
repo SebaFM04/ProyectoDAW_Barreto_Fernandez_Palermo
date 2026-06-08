@@ -1,0 +1,49 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPageLogin.master.cs" Inherits="MasterPageLogin" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta charset="utf-8" />
+    <title>Refugio del Oeste</title>
+
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+
+    <link href="Estilos/EstilosMaestro.css" rel="stylesheet" />
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <!-- ===== NAVBAR MÍNIMO ===== -->
+        <nav class="navbar">
+            <div class="container">
+
+                <div class="navbar-header">
+                    <a class="navbar-brand" runat="server" href="~/MenuPrincipal.aspx">🐾 Refugio del Oeste</a>
+                </div>
+
+                <div class="navbar-menu">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a runat="server" href="~/MenuPrincipal.aspx">Inicio</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+
+        <!-- CONTENIDO -->
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+
+        <!-- FOOTER -->
+        <footer id="footer">
+            <span>contacto@refugio.com</span>
+            <span>Whatsapp +54 11 1111 1111</span>
+            <span>www.refugioDAW.com</span>
+        </footer>
+
+    </form>
+
+    <script src="Scripts/ScriptMaster.js"></script>
+</body>
+</html>
