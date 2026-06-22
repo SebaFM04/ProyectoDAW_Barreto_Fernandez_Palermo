@@ -108,9 +108,13 @@ namespace BLL
         {
             var animal = dalUsuario.RetornarUsuarios();
 
+            // domicilio se incluye en plain text: RetornarUsuarios() ya desencripta.
+            // El DV es consistente porque siempre se calcula sobre el mismo valor (plain).
+            // Si alguien altera el cifrado en BD, al desencriptar obtendrá un valor distinto
+            // y el hash calculado no coincidirá con el almacenado -> inconsistencia detectada.
             string horizontal = string.Concat(animal.Select(x =>
-                x.dni + x.nombreUsuario + x.contraseña + x.nombre + x.apellido +
-                x.rol + x.email + x.bloqueo + x.intentos + x.lenguaje + x.activo));
+               x.dni + x.nombreUsuario + x.contraseña + x.nombre + x.apellido +
+               x.rol + x.email + x.bloqueo + x.intentos + x.lenguaje + x.activo + x.domicilio));
             string horizontalHash = seguridad.GetSHA256(horizontal);
 
             string vertical = string.Concat(animal.Select(x => x.dni)) +
@@ -123,7 +127,8 @@ namespace BLL
                              string.Concat(animal.Select(x => x.bloqueo)) +
                              string.Concat(animal.Select(x => x.intentos)) +
                              string.Concat(animal.Select(x => x.lenguaje)) +
-                             string.Concat(animal.Select(x => x.activo)));
+                             string.Concat(animal.Select(x => x.activo)) +
+                             string.Concat(animal.Select(x => x.domicilio)));
 
             string verticalHash = seguridad.GetSHA256(vertical);
             return new DigitoVerificador("Usuario", horizontalHash, verticalHash);

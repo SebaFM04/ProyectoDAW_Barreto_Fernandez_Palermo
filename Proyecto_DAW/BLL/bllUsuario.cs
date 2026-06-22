@@ -20,17 +20,15 @@ namespace BLL
             dal = new dalUsuario();
         }
 
-        //public void Alta(string dni, string nombre, string apellido, string rol, string email)
+        //public void Alta(string dni, string nombre, string apellido, string rol, string email, string domicilio)
         //{
-        //    try
-        //    {
-        //        string nombreUsuario = dni + nombre;
-        //        string contraseña = HashearContraseña(dni + apellido); // lógica de negocio: contraseña inicial hasheada
-        //        Usuario nuevoUsuario = new Usuario(dni, nombreUsuario, contraseña, nombre, apellido, rol, email, false, 0, "es", true);
-        //        dal.Alta(nuevoUsuario);
-        //        //bllBitacoraEventos.Alta(sessionManager.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario dado de alta", 1);
-        //    }
-        //    catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+        //    string nombreUsuario = dni + nombre;
+        //    string contraseña = HashearContraseña(dni + apellido); // lógica de negocio: contraseña inicial hasheada
+        //    Usuario nuevoUsuario = new Usuario(dni, nombreUsuario, contraseña, nombre, apellido, rol, email, false, 0, "es", true, domicilio);
+        //    dal.Alta(nuevoUsuario);
+        //    //bllBitacoraEventos.Alta(sessionManager.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario dado de alta", 1);
+
         //}
 
         public bool VerificarContraseñaNoSeaDNIyApellido(string contraseña)
@@ -91,7 +89,7 @@ namespace BLL
         //    catch (Exception ex) { MessageBox.Show(ex.Message); }
         //}
 
-        
+
 
         //public void ActivarDesactivar(string dni)
         //{

@@ -8,7 +8,7 @@ namespace BE
 {
     public class Usuario
     {
-        public Usuario(string pDni, string pNombreUsuario, string pContraseñaUsuario, string pNombre, string pApellido, string pRol, string pEmailUsuario, bool pBloqueo, int pIntentos, string pLenguaje, bool pActivado)
+        public Usuario(string pDni, string pNombreUsuario, string pContraseñaUsuario, string pNombre, string pApellido, string pRol, string pEmailUsuario, bool pBloqueo, int pIntentos, string pLenguaje, bool pActivado, string pDomicilio = "")
         {
             dni = pDni;
             nombreUsuario = pNombreUsuario;
@@ -21,6 +21,7 @@ namespace BE
             intentos = pIntentos;
             lenguaje = pLenguaje;
             activo = pActivado;
+            domicilio = pDomicilio;
         }
 
         public string dni { get; set; }
@@ -34,5 +35,6 @@ namespace BE
         public int intentos { get; set; }
         public string lenguaje { get; set; }
         public bool activo { get; set; }
+        public string domicilio { get; set; }
     }
 }

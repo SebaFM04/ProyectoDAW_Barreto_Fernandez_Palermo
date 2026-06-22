@@ -5,36 +5,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BE;
+using SERVICIOS;
 
 namespace DAL
 {
     public class dalUsuario
     {
         Acceso dal;
+        encriptador seguridad;
 
         public dalUsuario()
         {
             dal = new Acceso();
+            seguridad = new encriptador();
+
         }
 
 
         public void Alta(Usuario usuario)
         {
             string query = "INSERT INTO Usuario " +
-                         "(dni, nombreUsuario, contraseña, nombre, apellido, rol, email, bloqueo, intentos, lenguaje, activo) " +
-                         "VALUES (@dni, @nombreUsuario, @contraseña, @nombre, @apellido, @rol, @email, @bloqueo, @intentos, @lenguaje, @activo)";
+                         "(dni, nombreUsuario, contraseña, nombre, apellido, rol, email, bloqueo, intentos, lenguaje, activo, domicilio) " +
+                         "VALUES (@dni, @nombreUsuario, @contraseña, @nombre, @apellido, @rol, @email, @bloqueo, @intentos, @lenguaje, @activo, @domicilio)";
             EjecutarQueryConEntidad(usuario, query);
         }
 
         public void Modificar(Usuario usuario)
         {
             string query = "UPDATE Usuario SET contraseña = @contraseña, rol = @rol, email = @email, bloqueo = @bloqueo, intentos = @intentos, " +
-                         "lenguaje = @lenguaje, activo = @activo WHERE dni = @dni";
+                         "lenguaje = @lenguaje, activo = @activo, domicilio = @domicilio WHERE dni = @dni";
             // Lista de propiedades usadas en la consulta
             var props = new List<string>
             {
                 "contraseña", "rol", "email", "bloqueo",
-                "intentos", "lenguaje", "activo", "dni"
+                "intentos", "lenguaje", "activo", "domicilio", "dni"
             };
 
             EjecutarQueryConEntidad(usuario, query, props);
@@ -43,6 +47,14 @@ namespace DAL
         private void EjecutarQueryConEntidad(Usuario usuario, string query, List<string> propiedadesIncluir = null)
         {
             Dictionary<string, object> parametros = ParametroHelper.CrearParametros(usuario, propiedadesIncluir);
+            // Cifrar domicilio antes de persistir
+            if (parametros.ContainsKey("@domicilio") && parametros["@domicilio"] != DBNull.Value)
+            {
+                string plain = parametros["@domicilio"].ToString();
+                parametros["@domicilio"] = string.IsNullOrEmpty(plain)
+                    ? (object)DBNull.Value
+                    : seguridad.Encrypt(plain);
+            }
             dal.Query(query, parametros);
         }
 
@@ -124,7 +136,9 @@ namespace DAL
                 query = "UPDATE Usuario SET intentos = @intentos  WHERE dni = @dni";
                 propiedades = new List<string> { "intentos", "dni" };
             }
-            EjecutarQueryConEntidad(usuario, query, propiedades);
+            // Llamada directa a dal para no pasar por el cifrado de domicilio
+            Dictionary<string, object> parametros = ParametroHelper.CrearParametros(usuario, propiedades);
+            dal.Query(query, parametros);
             return usuario.intentos;
         }
 
@@ -147,6 +161,14 @@ namespace DAL
 
         private Usuario MapearUsuario(SqlDataReader reader)
         {
+            string domicilioCifrado = reader["domicilio"] == DBNull.Value
+               ? null
+               : reader["domicilio"].ToString(); 
+
+            string domicilioPlain = string.IsNullOrEmpty(domicilioCifrado)
+                ? string.Empty
+                : seguridad.Decrypt(domicilioCifrado);
+
             return new Usuario(
                 reader["dni"].ToString(),
                 reader["nombreUsuario"].ToString(),
