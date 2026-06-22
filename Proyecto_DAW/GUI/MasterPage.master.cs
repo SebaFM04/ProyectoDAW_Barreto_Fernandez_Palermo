@@ -28,11 +28,12 @@ public partial class MasterPage : System.Web.UI.MasterPage
         // Públicas: cualquiera (incluso sin login) las ve
         string[] paginasPublicas = {
             "menuprincipal.aspx",
-            "listadoanimales.aspx"
+            "listadoanimales.aspx",
+            "digitoverificadorusuario.aspx",
+            "digitoverificadoradmin.aspx"
         };
 
         bool esPublica = paginasPublicas.Contains(pagina);
-
         Usuario usuario = claseSession.Gestor.RetornarUsuarioSession();
         bool logueado = usuario != null;
 
@@ -47,9 +48,23 @@ public partial class MasterPage : System.Web.UI.MasterPage
             return;
         }
 
-        // ----- WEB MASTER: pasa libre a todo -----
+        // ----- WEB MASTER: solo su grupo -----
         if (logueado && usuario.rol == "web master")
         {
+            string[] paginasWebMaster = {
+                "menuprincipal.aspx",
+                "bitacora.aspx",
+                "backup.aspx",
+                "restore.aspx",
+                "gestionusuarios.aspx",
+                "login.aspx",
+                "digitoverificadorwebmaster.aspx"
+            };
+            if (!esPublica && !paginasWebMaster.Contains(pagina))
+            {
+                Response.Redirect(paginaAnterior);
+                return;
+            }
             Session["UltimaPagina"] = pagina;
             return;
         }
@@ -58,24 +73,25 @@ public partial class MasterPage : System.Web.UI.MasterPage
         if (logueado && usuario.rol == "admin")
         {
             string[] paginasAdmin = {
-            "registroanimales.aspx",
-            "gestionintermediavacunaanimal.aspx",
-            "solicitudes.aspx",
-            "certificados.aspx",
-            "adoptantes.aspx",
-            "gestionusuarios.aspx",
-            "gestionvacuna.aspx"
-        };
-
+                "registroanimales.aspx",
+                "gestionintermediavacunaanimal.aspx",
+                "solicitudes.aspx",
+                "certificados.aspx",
+                "adoptantes.aspx",
+                "gestionusuarios.aspx",
+                "gestionvacuna.aspx",
+                "login.aspx"
+            };
             if (!esPublica && !paginasAdmin.Contains(pagina))
             {
                 Response.Redirect(paginaAnterior);
                 return;
             }
+            Session["UltimaPagina"] = pagina;
+            return;
         }
 
         // ----- USUARIO NORMAL (cualquier otro rol): solo públicas -----
-        // Si no es pública, ya queda bloqueado acá
         if (logueado && usuario.rol != "web master" && usuario.rol != "admin")
         {
             if (!esPublica)
@@ -92,13 +108,8 @@ public partial class MasterPage : System.Web.UI.MasterPage
     private void ControlarLogin()
     {
         bool haySesion = claseSession.Gestor.RetornarUsuarioSession() != null;
-
         liLogin.Visible = !haySesion;
         liLogout.Visible = haySesion;
-
-        liRegistrarAnimales.Visible = haySesion;
-        liGestionVacunas.Visible = haySesion;
-        liAdopciones.Visible = haySesion;
     }
 
     private void ControlarRoles()
@@ -107,12 +118,45 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
         if (usuario == null)
         {
+            liAnimales.Visible = true;
+            liAdopciones.Visible = false;
+            liRegistrarAnimales.Visible = false;
+            liGestionVacunas.Visible = false;
             liAdministracion.Visible = false;
             return;
         }
 
         string rol = usuario.rol;
-        liAdministracion.Visible = (rol == "admin" || rol == "web master");
+
+        if (rol == "web master")
+        {
+            liAnimales.Visible = false;
+            liAdopciones.Visible = false;
+            liRegistrarAnimales.Visible = false;
+            liGestionVacunas.Visible = false;
+            liAdministracion.Visible = true;
+            liBitacora.Visible = true;
+            liBackupRestore.Visible = true;
+        }
+        else if (rol == "admin")
+        {
+            liAnimales.Visible = true;
+            liAdopciones.Visible = true;
+            liRegistrarAnimales.Visible = true;
+            liGestionVacunas.Visible = true;
+            liAdministracion.Visible = true;
+            liBitacora.Visible = false;
+            liBackupRestore.Visible = false;
+        }
+        else
+        {
+            // Usuario normal
+            liAnimales.Visible = true;
+            liAdopciones.Visible = true;
+            liRegistrarAnimales.Visible = true;
+            liGestionVacunas.Visible = true;
+            liAdministracion.Visible = false;
+        }
     }
 
     protected void btnCerrarSesion_Click(object sender, EventArgs e)

@@ -20,6 +20,7 @@ public partial class _Default : System.Web.UI.Page
 
         if (!IsPostBack)
         {
+            claseSession.Gestor.UnsetUsuario();
             CargarInconsistencias();
             CargarBackups();   // vuelve a llenar el dropdown
         }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Dígito Verificador" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="DigitoVerificadorWebMaster.aspx.cs" Inherits="_Default" %>
+﻿<%@ Page Title="Dígito Verificador" Language="C#" MasterPageFile="~/MasterPageLogin.master" AutoEventWireup="true" CodeFile="DigitoVerificadorWebMaster.aspx.cs" Inherits="_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <link href="Estilos/EstilosDigitoWebMaster.css" rel="stylesheet" />

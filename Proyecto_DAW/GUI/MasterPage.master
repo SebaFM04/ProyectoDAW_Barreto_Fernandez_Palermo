@@ -38,7 +38,7 @@
                         </li>
 
                         <%-- Animales --%>
-                        <li class="dropdown">
+                        <li class="dropdown" runat="server" id="liAnimales">
                             <a href="#" class="dropdown-toggle">Animales</a>
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/ListadoAnimales.aspx">Ver animales</a></li>
@@ -72,7 +72,9 @@
                                     <asp:LinkButton ID="btnBitacora" runat="server" OnClick="btnBitacora_Click">Bitácora</asp:LinkButton>
                                 </li>
                                 <li class="divider"></li>
-                                <li><a runat="server" href="~/BackupRestore.aspx">Backup &amp; Restore</a></li>
+                                <li runat="server" id="liBackupRestore">
+                                    <a runat="server" href="~/BackupRestore.aspx">Backup &amp; Restore</a>
+                                </li>
                             </ul>
                         </li>
 
