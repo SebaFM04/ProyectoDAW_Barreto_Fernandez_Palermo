@@ -429,3 +429,28 @@ Proyecto_DAW/.vs/Proyecto_DAW/v17/DocumentLayout.json
 Proyecto_DAW/.vs/Proyecto_DAW/config/applicationhost.config
 /Proyecto_DAW/BE/obj/Debug
 /Proyecto_DAW/SERVICIOS/obj/Debug
+
+# Binarios y temporales de build
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+
+# Precompilado ASP.NET
+PrecompiledWeb/
+
+# NuGet (los paquetes se restauran, no se commitean)
+packages/
+*.nupkg
+
+# Archivos de log y temporales de Windows
+*.log
+Thumbs.db
+Desktop.ini
+
+# Backups del proyecto
+*.bak
+*.orig
