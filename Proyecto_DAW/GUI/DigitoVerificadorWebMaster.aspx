@@ -25,6 +25,10 @@
                 </asp:ListBox>
             </div>
 
+            <div>
+                <asp:Button ID="btnCancelar" runat="server" CssClass="dv-btn" Text="Cancelar" OnClick="btnCancelar_Click" />
+            </div>
+
         </div>
     </div>
 

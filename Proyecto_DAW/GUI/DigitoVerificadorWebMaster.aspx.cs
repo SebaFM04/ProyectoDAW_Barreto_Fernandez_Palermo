@@ -93,4 +93,10 @@ public partial class _Default : System.Web.UI.Page
         string msg = mensaje.Replace("'", "\\'").Replace("\n", " ");
         ClientScript.RegisterStartupScript(GetType(), "msg", $"alert('{msg}');", true);
     }
+
+    protected void btnCancelar_Click(object sender, EventArgs e)
+    {
+        claseSession.Gestor.UnsetUsuario();
+        Response.Redirect("MenuPrincipal.aspx");
+    }
 }

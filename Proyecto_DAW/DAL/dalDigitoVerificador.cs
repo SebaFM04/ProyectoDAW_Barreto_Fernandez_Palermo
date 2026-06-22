@@ -33,14 +33,13 @@ namespace DAL
 
         public List<string> CompararDigitos(List<DigitoVerificador> listaCalculados)
         {
-            List<string> tablasConInconsistencias = new List<string>();  // Lista para almacenar las tablas con inconsistencias
+            List<string> tablasConInconsistencias = new List<string>();
 
             foreach (var dvCalculado in listaCalculados)
             {
                 string query = @"SELECT nombreTabla, horizontal, vertical 
                          FROM DigitoVerificador 
                          WHERE nombreTabla = @nombreTabla";
-
                 var parametros = new Dictionary<string, object>
                 {
                     { "@nombreTabla", dvCalculado.nombreTabla }
@@ -50,18 +49,33 @@ namespace DAL
 
                 if (resultado.Count == 0)
                 {
-                    // No existe el registro en BD → inconsistencia
-                    tablasConInconsistencias.Add($"No se encuentra el registro para la tabla: {dvCalculado.nombreTabla}");
+                    tablasConInconsistencias.Add($"Tabla: {dvCalculado.nombreTabla} | No se encuentra el registro en BD");
                     continue;
                 }
 
                 var almacenado = resultado[0];
 
-                // Comparamos los valores de los dígitos verificadores
                 if (almacenado.horizontal != dvCalculado.horizontal ||
                     almacenado.vertical != dvCalculado.vertical)
                 {
-                    tablasConInconsistencias.Add($"Inconsistencia en la tabla: {dvCalculado.nombreTabla}");
+                    string queryAuditoria = @"SELECT TOP 1 nombreTabla, operacion, registroId 
+                                      FROM AuditoriaTablas 
+                                      WHERE nombreTabla = @nombreTabla 
+                                      ORDER BY fecha DESC";
+                    var paramAuditoria = new Dictionary<string, object>
+                    {
+                        { "@nombreTabla", dvCalculado.nombreTabla }
+                    };
+
+                    List<string> auditoriaResultado = dal.RetornarLista(queryAuditoria, r =>
+                        $"Tabla: {r["nombreTabla"]} | Operación: {r["operacion"]} | Registro: {r["registroId"]}",
+                        paramAuditoria);
+
+                    string info = auditoriaResultado.Count > 0
+                        ? auditoriaResultado[0]
+                        : $"Tabla: {dvCalculado.nombreTabla} | Sin información de auditoría";
+
+                    tablasConInconsistencias.Add(info);
                 }
             }
 
