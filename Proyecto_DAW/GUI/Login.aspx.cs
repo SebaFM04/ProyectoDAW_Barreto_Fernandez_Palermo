@@ -28,6 +28,8 @@ public partial class Login : System.Web.UI.Page
     {
         // Limpiar paneles de mensajes anteriores
         LimpiarAlertas();
+        if (!Page.IsValid)
+            return;
         if (txtNombreUsuario.Text == "" || txtContraseñaUsuario.Text == "")
         {
             lblMensajeError.Text = "Faltan ingresar datos";

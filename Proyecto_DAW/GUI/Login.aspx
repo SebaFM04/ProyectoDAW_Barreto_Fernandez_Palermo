@@ -43,11 +43,19 @@
                             ClientIDMode="Static" />
 
                         <button type="button"
-                                class="login-btn-ojo toggle-password"
-                                title="Mostrar/ocultar contraseña">
+                            class="login-btn-ojo toggle-password"
+                            title="Mostrar/ocultar contraseña">
                             👁
                         </button>
                     </div>
+                    <asp:RegularExpressionValidator
+                        ID="rgvContraseñaLogin"
+                        runat="server"
+                        ControlToValidate="txtContraseñaUsuario"
+                        ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$"
+                        ErrorMessage="Formato de contraseña inválido."
+                        Display="Dynamic"
+                        CssClass="login-alert login-alert-error" />
                 </div>
 
                 <!-- Botón -->

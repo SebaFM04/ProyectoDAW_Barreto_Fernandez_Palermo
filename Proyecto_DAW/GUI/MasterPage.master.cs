@@ -55,6 +55,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 "menuprincipal.aspx",
                 "bitacora.aspx",
                 "backup.aspx",
+                "backuprestore.aspx",
                 "restore.aspx",
                 "gestionusuarios.aspx",
                 "login.aspx",
@@ -176,5 +177,10 @@ public partial class MasterPage : System.Web.UI.MasterPage
     protected void btnRegistrar_Click(object sender, EventArgs e)
     {
         Response.Redirect("RegistroAnimales.aspx");
+    }
+
+    protected void btnBackupRestore_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("BackupRestore.aspx");
     }
 }

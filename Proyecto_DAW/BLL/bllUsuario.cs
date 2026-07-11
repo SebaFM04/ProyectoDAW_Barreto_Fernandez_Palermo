@@ -1,11 +1,12 @@
-﻿using System;
+﻿using BE;
+using DAL;
+using SERVICIOS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using SERVICIOS;
-using BE;
-using DAL;
 
 namespace BLL
 {
@@ -13,23 +14,29 @@ namespace BLL
     {
         encriptador seguridad;
         dalUsuario dal;
-
+        bllBitacora bllBitacora;
         public bllUsuario()
         {
             seguridad = new encriptador();
             dal = new dalUsuario();
+            bllBitacora = new bllBitacora();
         }
 
-        //public void Alta(string dni, string nombre, string apellido, string rol, string email, string domicilio)
-        //{
+        public void Alta(string dni, string nombre, string apellido, string rol, string email, string contraseña, string domicilio = "")
+        {
+            if (dal.ValidarDni(dni))
+                throw new Exception("Ya existe un usuario con ese DNI.");
 
-        //    string nombreUsuario = dni + nombre;
-        //    string contraseña = HashearContraseña(dni + apellido); // lógica de negocio: contraseña inicial hasheada
-        //    Usuario nuevoUsuario = new Usuario(dni, nombreUsuario, contraseña, nombre, apellido, rol, email, false, 0, "es", true, domicilio);
-        //    dal.Alta(nuevoUsuario);
-        //    //bllBitacoraEventos.Alta(sessionManager.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario dado de alta", 1);
+            if (!EsValida(contraseña))
+                throw new Exception("Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n");
 
-        //}
+            string nombreUsuario = dni + nombre;
+            string contraseñaHasheada = HashearContraseña(contraseña);
+            Usuario nuevoUsuario = new Usuario(dni, nombreUsuario, contraseñaHasheada, nombre, apellido, rol, email, false, 0, "es", true, domicilio);
+            dal.Alta(nuevoUsuario);
+
+            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario dado de alta", 1);
+        }
 
         public bool VerificarContraseñaNoSeaDNIyApellido(string contraseña)
         {
@@ -75,22 +82,22 @@ namespace BLL
             return dal.Intentos(nombreUsuario);
         }
 
-        //public void Modificar(string dni, string rol, string email)
-        //{
-        //    try
-        //    {
-        //        Usuario nuevoUsuario = BuscarUsuarioPorDNI(dni);
-        //        nuevoUsuario.rol = rol;
-        //        nuevoUsuario.email = email;
-        //        dal.Modificar(nuevoUsuario);
-        //        sessionManager.Gestor.SetPerfil(rol);
-        //        //bllBitacoraEventos.Alta(sessionManager.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario modificado", 1);
-        //    }
-        //    catch (Exception ex) { MessageBox.Show(ex.Message); }
-        //}
+        public void Modificar(string dni, string rol, string email, bool activo)
+        {
+            Usuario usuario = BuscarUsuarioPorDNI(dni);
+            if (usuario == null)
+                throw new Exception("Usuario no encontrado.");
+
+            usuario.rol = rol;
+            usuario.email = email;
+            usuario.activo = activo;
+            dal.Modificar(usuario);
+
+            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario modificado", 1);
+        }
 
 
-
+        ///// REBUNDATE AHORA
         //public void ActivarDesactivar(string dni)
         //{
         //    try
@@ -128,37 +135,22 @@ namespace BLL
             return dal.ObtenerUsuarioPorDni(dni);
         }
 
-        //public void Desbloquear(string dni)
-        //{
-        //    try
-        //    {
-        //        Usuario usuario = BuscarUsuarioPorDNI(dni);
-        //        if (usuario == null)
-        //        {
-        //            string mensaje = TraductorHelper.TraducirMensaje("FdalGestionUsuario", "MSG_USUARIO_NO_ENCONTRADO", "Usuario no encontrado");
-        //            MessageBox.Show(mensaje);
-        //            return;
-        //        }
-        //        else if (usuario.bloqueo)
-        //        {
-        //            usuario.contraseña = HashearContraseña(usuario.dni + usuario.apellido);
-        //            usuario.bloqueo = false;
-        //            usuario.intentos = 0;
-        //            dal.Modificar(usuario);
-        //            string desbloqueado = TraductorHelper.TraducirMensaje("FdalGestionUsuario", "MSG_USUARIO_DESBLOQUEADO", "Usuario desbloqueado exitosamente");
-        //            //bllBitacoraEventos.Alta(sessionManager.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario bloqueado", 1);
-        //            MessageBox.Show(desbloqueado);
-        //        }
-        //        else
-        //        {
-        //            string desbloqueado = TraductorHelper.TraducirMensaje("FdalGestionUsuario", "MSG_USUARIO_NO_DESBLOQUEADO", "El usuario ya se encuentra desbloqueado");
-        //            //bllBitacoraEventos.Alta(sessionManager.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario desbloqueado", 1);
-        //            MessageBox.Show(desbloqueado);
-        //            return;
-        //        }
-        //    }
-        //    catch (Exception ex) { MessageBox.Show(ex.Message); }
-        //}
+        public bool Desbloquear(string dni)
+        {
+            Usuario usuario = BuscarUsuarioPorDNI(dni);
+            if (usuario == null)
+                throw new Exception("Usuario no encontrado.");
+
+            if (!usuario.bloqueo)
+                return false;
+
+            usuario.bloqueo = false;
+            usuario.intentos = 0;
+            dal.Modificar(usuario);
+
+            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario desbloqueado", 1);
+            return true;
+        }
 
         public bool UsuarioActivo(Usuario usuario)
         {
@@ -181,15 +173,49 @@ namespace BLL
 
         public void ModificarContraseña(Usuario usuario, string contraseñaNueva)
         {
-            usuario.contraseña = HashearContraseña(contraseñaNueva);
-            dal.Modificar(usuario);
-            claseSession.Gestor.SetUsuario(usuario);
-            //bllBitacoraEventos.Alta(sessionManager.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Modificar contraseña usuario", 1);
+
+            if (EsValida(contraseñaNueva))
+            {
+
+                usuario.contraseña = HashearContraseña(contraseñaNueva);
+                dal.Modificar(usuario);
+                claseSession.Gestor.SetUsuario(usuario);
+                //bllBitacoraEventos.Alta(sessionManager.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Modificar contraseña usuario", 1);
+            }
+            else
+            {
+                throw new Exception("Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n");
+            }
         }
 
         public List<Usuario> RetornarUsuarios()
         {
             return dal.RetornarUsuarios();
         }
+
+        private static readonly Regex PasswordRegex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$", RegexOptions.Compiled);
+
+        public static bool EsValida(string password)
+        {
+            if (string.IsNullOrEmpty(password))
+                return false;
+
+            return PasswordRegex.IsMatch(password);
+        }
+
+        public void CambiarContraseñaAdmin(string dni, string nuevaContraseña)
+        {
+            Usuario usuario = BuscarUsuarioPorDNI(dni);
+            if (usuario == null)
+                throw new Exception("Usuario no encontrado.");
+
+            if (!EsValida(nuevaContraseña))
+                throw new Exception("Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n");
+
+            usuario.contraseña = HashearContraseña(nuevaContraseña);
+            dal.Modificar(usuario);
+            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Contraseña modificada por admin", 1);
+        }
+
     }
 }

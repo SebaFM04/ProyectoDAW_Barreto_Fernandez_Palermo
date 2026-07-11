@@ -73,7 +73,9 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li runat="server" id="liBackupRestore">
-                                    <a runat="server" href="~/BackupRestore.aspx">Backup &amp; Restore</a>
+                                    <asp:LinkButton 
+                                    runat="server" href="BackupRestore.aspx" OnClick="btnBackupRestore_Click">Backup &amp; Restore
+                                        </asp:LinkButton>
                                 </li>
                             </ul>
                         </li>
