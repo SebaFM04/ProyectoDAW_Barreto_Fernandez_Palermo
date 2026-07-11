@@ -32,13 +32,14 @@ namespace DAL
 
         public void Modificar(Usuario usuario)
         {
-            string query = "UPDATE Usuario SET contraseña = @contraseña, rol = @rol, email = @email, bloqueo = @bloqueo, intentos = @intentos, " +
-                         "lenguaje = @lenguaje, activo = @activo, domicilio = @domicilio WHERE dni = @dni";
+            string query = "UPDATE Usuario SET nombre = @nombre, contraseña = @contraseña, rol = @rol, email = @email, bloqueo = @bloqueo, intentos = @intentos, " +
+                         "lenguaje = @lenguaje, activo = @activo, domicilio = @domicilio, apellido=@apellido, nombreUsuario = @nombreUsuario WHERE dni = @dni";
             // Lista de propiedades usadas en la consulta
             var props = new List<string>
             {
-                "contraseña", "rol", "email", "bloqueo",
-                "intentos", "lenguaje", "activo", "domicilio", "dni"
+                "nombre","contraseña", "rol", "email", "bloqueo",
+                "intentos", "lenguaje", "activo", "domicilio",
+                "apellido", "nombreUsuario", "dni"
             };
 
             EjecutarQueryConEntidad(usuario, query, props);
@@ -163,7 +164,7 @@ namespace DAL
         {
             string domicilioCifrado = reader["domicilio"] == DBNull.Value
                ? null
-               : reader["domicilio"].ToString(); 
+               : reader["domicilio"].ToString();
 
             string domicilioPlain = string.IsNullOrEmpty(domicilioCifrado)
                 ? string.Empty

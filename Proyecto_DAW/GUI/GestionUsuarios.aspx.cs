@@ -123,7 +123,7 @@ public partial class GestionUsuarios : System.Web.UI.Page
     }
 
 
- 
+
 
     protected void btnModificar_Click(object sender, EventArgs e)
     {
@@ -138,7 +138,7 @@ public partial class GestionUsuarios : System.Web.UI.Page
         try
         {
             bool activo = ddlActivo.SelectedValue == "true";
-            bllUsuario.Modificar(txtDni.Text.Trim(), ddlRol.SelectedValue, txtEmail.Text.Trim(), activo);
+            bllUsuario.Modificar(txtDni.Text.Trim(), ddlRol.SelectedValue, txtEmail.Text.Trim(), txtApellido.Text.Trim(), txtNombreUsuario.Text.Trim(), txtNombre.Text.Trim(), activo);
             lbMensaje.Text = "Usuario modificado correctamente.";
             pnlAlerta.Visible = true;
             CargarGrid();
@@ -182,6 +182,7 @@ public partial class GestionUsuarios : System.Web.UI.Page
         txtNombre.Text = "";
         txtApellido.Text = "";
         txtEmail.Text = "";
+        txtNombreUsuario.Text = "";
         ddlRol.SelectedIndex = 0;
         ddlActivo.SelectedIndex = 0;
         gvUsuarios.SelectedIndex = -1;

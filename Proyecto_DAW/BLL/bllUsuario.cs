@@ -15,13 +15,18 @@ namespace BLL
         encriptador seguridad;
         dalUsuario dal;
         bllBitacora bllBitacora;
+        bllDigitoVerificador bllDigitoVerificador;
         public bllUsuario()
         {
             seguridad = new encriptador();
             dal = new dalUsuario();
             bllBitacora = new bllBitacora();
+            bllDigitoVerificador = new bllDigitoVerificador();
         }
-
+        private void RecalcularDigitoUsuario()
+        {
+            bllDigitoVerificador.CalcularDVUsuario();
+        }
         public void Alta(string dni, string nombre, string apellido, string rol, string email, string contraseña, string domicilio = "")
         {
             if (dal.ValidarDni(dni))
@@ -34,7 +39,7 @@ namespace BLL
             string contraseñaHasheada = HashearContraseña(contraseña);
             Usuario nuevoUsuario = new Usuario(dni, nombreUsuario, contraseñaHasheada, nombre, apellido, rol, email, false, 0, "es", true, domicilio);
             dal.Alta(nuevoUsuario);
-
+            RecalcularDigitoUsuario();
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario dado de alta", 1);
         }
 
@@ -63,6 +68,7 @@ namespace BLL
         {
             usuario.intentos = 0;
             dal.Modificar(usuario);
+            RecalcularDigitoUsuario();
         }
 
 
@@ -82,17 +88,19 @@ namespace BLL
             return dal.Intentos(nombreUsuario);
         }
 
-        public void Modificar(string dni, string rol, string email, bool activo)
+        public void Modificar(string dni, string rol, string email, string apellido, string nombreUsuario, string nombre, bool activo)
         {
             Usuario usuario = BuscarUsuarioPorDNI(dni);
             if (usuario == null)
                 throw new Exception("Usuario no encontrado.");
-
+            usuario.nombre = nombre;
+            usuario.nombreUsuario = nombreUsuario;
+            usuario.apellido = apellido;
             usuario.rol = rol;
             usuario.email = email;
             usuario.activo = activo;
             dal.Modificar(usuario);
-
+            RecalcularDigitoUsuario();
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario modificado", 1);
         }
 
@@ -147,7 +155,7 @@ namespace BLL
             usuario.bloqueo = false;
             usuario.intentos = 0;
             dal.Modificar(usuario);
-
+            RecalcularDigitoUsuario();
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario desbloqueado", 1);
             return true;
         }
@@ -162,7 +170,7 @@ namespace BLL
             if (!usuario.bloqueo)
                 return false;
 
-            //bllBitacoraEventos.Alta(sessionManager.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario bloqueado", 1);
+            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario bloqueado", 1);
             return true;
         }
 
@@ -179,8 +187,9 @@ namespace BLL
 
                 usuario.contraseña = HashearContraseña(contraseñaNueva);
                 dal.Modificar(usuario);
+                RecalcularDigitoUsuario();
                 claseSession.Gestor.SetUsuario(usuario);
-                //bllBitacoraEventos.Alta(sessionManager.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Modificar contraseña usuario", 1);
+                bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Modificar contraseña usuario", 1);
             }
             else
             {
@@ -214,6 +223,7 @@ namespace BLL
 
             usuario.contraseña = HashearContraseña(nuevaContraseña);
             dal.Modificar(usuario);
+            RecalcularDigitoUsuario();
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Contraseña modificada por admin", 1);
         }
 
