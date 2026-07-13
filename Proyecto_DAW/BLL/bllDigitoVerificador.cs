@@ -57,7 +57,7 @@ namespace BLL
 
             List<string> tablasConInconsistencias = dal.CompararDigitos(dvCalculados);
 
-            return tablasConInconsistencias;
+            return tablasConInconsistencias.Distinct().ToList();
         }
 
 
