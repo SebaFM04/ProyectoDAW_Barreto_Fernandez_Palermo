@@ -169,7 +169,6 @@ namespace BLL
             if (!usuario.bloqueo)
                 return false;
 
-            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario bloqueado", 1);
             return true;
         }
 

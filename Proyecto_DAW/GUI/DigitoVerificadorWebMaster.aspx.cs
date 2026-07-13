@@ -20,7 +20,6 @@ public partial class _Default : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            claseSession.Gestor.UnsetUsuario();
             CargarInconsistencias();
             CargarBackups();   // vuelve a llenar el dropdown
         }
@@ -29,9 +28,16 @@ public partial class _Default : System.Web.UI.Page
     private void CargarBackups()
     {
         ddlBackups.Items.Clear();
-        foreach (string archivo in bllBackUpRestore.ObtenerBackups())
+        try
         {
-            ddlBackups.Items.Add(new ListItem(System.IO.Path.GetFileName(archivo), archivo));
+            foreach (string archivo in bllBackUpRestore.ObtenerBackups())
+            {
+                ddlBackups.Items.Add(new ListItem(System.IO.Path.GetFileName(archivo), archivo));
+            }
+        }
+        catch (Exception ex)
+        {
+            MostrarMensaje(ex.Message);
         }
     }
 

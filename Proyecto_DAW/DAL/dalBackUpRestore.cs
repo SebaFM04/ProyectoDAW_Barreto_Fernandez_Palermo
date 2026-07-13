@@ -49,7 +49,19 @@ namespace DAL
         public List<string> ListarBackups(string carpeta)
         {
             AsegurarCarpeta(carpeta);
-            return Directory.GetFiles(carpeta, "*.bak").ToList();
+
+            try
+            {
+                return Directory.GetFiles(carpeta, "*.bak").ToList();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                throw new Exception(
+                    $"No se tienen permisos para leer la carpeta de backups configurada en SQL Server:\n{carpeta}\n\n" +
+                    "Verificá que el BackupDirectory de SQL Server no apunte a una ruta protegida como 'Program Files'. " +
+                    "Se recomienda usar una carpeta como C:\\SQLBackups."
+                );
+            }
         }
 
         // Crea la carpeta si no existe. Si no se puede (permisos), lanza un

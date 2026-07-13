@@ -28,9 +28,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
         // Públicas: cualquiera (incluso sin login) las ve
         string[] paginasPublicas = {
             "menuprincipal.aspx",
-            "listadoanimales.aspx",
-            "digitoverificadorusuario.aspx",
-            "digitoverificadoradmin.aspx"
+            "listadoanimales.aspx"
         };
 
         bool esPublica = paginasPublicas.Contains(pagina);

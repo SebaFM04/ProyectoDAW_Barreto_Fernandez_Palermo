@@ -61,6 +61,7 @@ public partial class Login : System.Web.UI.Page
                             // ===== DETECCIÓN DEL DÍGITO VERIFICADOR =====
                             if (bllDigitoVerificador.Deteccion())
                             {
+                                Session["AccesoDigitoVerificador"] = true;
                                 // Hay inconsistencias: según el rol, va a una pantalla distinta
                                 if (usuario.rol == "web master")
                                 {
@@ -77,6 +78,7 @@ public partial class Login : System.Web.UI.Page
                                     // Cualquier otro rol: pantalla de no disponible
                                     Response.Redirect("DigitoVerificadorUsuario.aspx");
                                 }
+
                             }
                             else
                             {

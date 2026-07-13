@@ -24,7 +24,7 @@
                 <div class="navbar-menu">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a runat="server" href="~/MenuPrincipal.aspx">Inicio</a>
+                            <asp:LinkButton ID="btnInicio" runat="server" OnClick="btnInicio_Click">Inicio</asp:LinkButton>
                         </li>
                     </ul>
                 </div>

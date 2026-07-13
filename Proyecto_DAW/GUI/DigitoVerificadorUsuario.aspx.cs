@@ -10,6 +10,5 @@ public partial class DigitoVerificadorUsuario : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        claseSession.Gestor.UnsetUsuario();
     }
 }
