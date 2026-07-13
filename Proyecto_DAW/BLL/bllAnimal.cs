@@ -13,11 +13,13 @@ namespace BLL
     {
         dalAnimal dal;
         bllBitacora bllBitacora;
+        bllDigitoVerificador bllDigitoVerificador;
 
         public bllAnimal()
         {
             dal = new dalAnimal();
             bllBitacora = new bllBitacora();
+            bllDigitoVerificador = new bllDigitoVerificador();
         }
 
         public void AltaAnimal(string especie, string raza, string nombre, string tamano, string sexo, string estadoDeAdopcion, bool vivo)
@@ -33,6 +35,12 @@ namespace BLL
             Animal animal = new Animal(codigoAnimal, especie, raza, nombre, tamano, sexo, estadoDeAdopcion, vivo);
             dal.Alta(animal);
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion animales", "Animal dado de alta", 2);
+            RecalcularDigitoAnimal();
+        }
+
+        private void RecalcularDigitoAnimal()
+        {
+            bllDigitoVerificador.CalcularDVAnimal();
         }
 
         public void Modificar(string codigo, string especie = null, string raza = null, string nombre = null, string tamano = null, string sexo = null, string estadoDeAdopcion = null, bool? vivo = null)
@@ -58,6 +66,7 @@ namespace BLL
 
             dal.Modificar(animal);
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion animales", "Animal modificado", 2);
+            RecalcularDigitoAnimal();
         }
 
         public void Baja(string codigo)
@@ -66,6 +75,7 @@ namespace BLL
 
             dal.Baja(codigo);
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion animales", "Animal dado de baja", 2);
+            RecalcularDigitoAnimal();
         }
 
         public bool ValidarExistenciaAnimal(string codigo)

@@ -57,9 +57,7 @@ public partial class _Default : System.Web.UI.Page
             // Cerramos la sesión en el servidor
             claseSession.Gestor.UnsetUsuario();
 
-            // Mostramos el mensaje y, al aceptar, el navegador va al login
-            string script = "alert('Dígitos verificadores recalculados correctamente.');" +
-                            "window.location='Login.aspx';";
+            string script = "mostrarPopup('Dígitos verificadores recalculados correctamente.', 'Login.aspx');";
             ClientScript.RegisterStartupScript(GetType(), "redir", script, true);
         }
         catch (Exception ex) { MostrarMensaje(ex.Message); }
@@ -80,8 +78,7 @@ public partial class _Default : System.Web.UI.Page
 
             // Restore OK: cerramos sesión y volvemos al login
             claseSession.Gestor.UnsetUsuario();
-            string script = "alert('Restore realizado correctamente.');" +
-                            "window.location='Login.aspx';";
+            string script = "mostrarPopup('Restore realizado correctamente.', 'Login.aspx');";
             ClientScript.RegisterStartupScript(GetType(), "redirRestore", script, true);
         }
         catch (Exception ex) { MostrarMensaje(ex.Message); }
@@ -91,7 +88,7 @@ public partial class _Default : System.Web.UI.Page
     private void MostrarMensaje(string mensaje)
     {
         string msg = mensaje.Replace("'", "\\'").Replace("\n", " ");
-        ClientScript.RegisterStartupScript(GetType(), "msg", $"alert('{msg}');", true);
+        ClientScript.RegisterStartupScript(GetType(), "msg", $"mostrarPopup('{msg}');", true);
     }
 
     protected void btnCancelar_Click(object sender, EventArgs e)

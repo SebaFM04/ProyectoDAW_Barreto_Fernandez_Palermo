@@ -13,11 +13,13 @@ namespace BLL
     {
         dalVacuna dal;
         bllBitacora bllBitacora;
+        bllDigitoVerificador bllDigitoVerificador;
 
         public bllVacuna()
         {
             dal = new dalVacuna();
             bllBitacora = new bllBitacora();
+            bllDigitoVerificador = new bllDigitoVerificador();
         }
 
         public void AltaVacuna(string codigoVacuna, string nombreVacuna)
@@ -34,6 +36,12 @@ namespace BLL
             Vacuna vacuna = new Vacuna(codigoVacuna, nombreVacuna);
             dal.Alta(vacuna);
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion Vacunas", "Vacuna dada de alta", 2);
+            RecalcularDigitoVacuna();
+        }
+
+        private void RecalcularDigitoVacuna()
+        {
+            bllDigitoVerificador.CalcularDVVacuna();
         }
 
         public void Modificar(string codigoVacuna, string nombreVacuna = null, bool? activo = null)
@@ -60,6 +68,7 @@ namespace BLL
 
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion Vacunas", "Vacuna modificada", 2);
             dal.Modificar(vacuna);
+            RecalcularDigitoVacuna();
         }
 
         public void Baja(string codigoVacuna)
@@ -72,6 +81,7 @@ namespace BLL
 
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion Vacunas", "Vacuna dada de baja", 2);
             dal.Modificar(vacuna);
+            RecalcularDigitoVacuna();
         }
 
         public bool ValidarExistenciaVacuna(string codigo)

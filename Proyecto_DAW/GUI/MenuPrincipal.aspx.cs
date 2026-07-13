@@ -97,6 +97,7 @@ public partial class Default2 : System.Web.UI.Page
         ddlRaza.SelectedIndex = 0;
         CargarAnimales();
     }
+
     protected void ddlRaza_Changed(object sender, EventArgs e)
     {
         string razaSeleccionada = ddlRaza.SelectedValue;

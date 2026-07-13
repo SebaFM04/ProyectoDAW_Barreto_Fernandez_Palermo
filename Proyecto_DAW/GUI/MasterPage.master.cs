@@ -92,14 +92,25 @@ public partial class MasterPage : System.Web.UI.MasterPage
             return;
         }
 
-        // ----- USUARIO NORMAL (cualquier otro rol): solo públicas -----
+        // ----- USUARIO NORMAL (cualquier otro rol): públicas + su grupo -----
         if (logueado && usuario.rol != "web master" && usuario.rol != "admin")
         {
-            if (!esPublica)
+            string[] paginasUsuario = {
+                "registroanimales.aspx",
+                "gestionintermediavacunaanimal.aspx",
+                "solicitudes.aspx",
+                "certificados.aspx",
+                "adoptantes.aspx",
+                "login.aspx"
+            };
+
+            if (!esPublica && !paginasUsuario.Contains(pagina))
             {
                 Response.Redirect(paginaAnterior);
                 return;
             }
+            Session["UltimaPagina"] = pagina;
+            return;
         }
 
         // Acceso permitido -> guardo la página como última válida

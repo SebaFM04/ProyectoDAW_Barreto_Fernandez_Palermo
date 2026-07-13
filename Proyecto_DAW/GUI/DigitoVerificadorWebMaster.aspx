@@ -7,6 +7,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
     <div class="dv-page">
+
+        <div id="popupOverlay" class="dv-popup-overlay" style="display:none;">
+            <div class="dv-popup-box">
+                <p id="popupMessage"></p>
+                <button type="button" class="dv-btn" onclick="cerrarPopup()">Aceptar</button>
+            </div>
+        </div>
+
         <div class="dv-container">
 
             <h2 class="dv-title">Inconsistencia en la base de datos</h2>
@@ -32,4 +40,5 @@
         </div>
     </div>
 
+    <script src="Scripts/ScriptDigitoWebMaster.js"></script>
 </asp:Content>

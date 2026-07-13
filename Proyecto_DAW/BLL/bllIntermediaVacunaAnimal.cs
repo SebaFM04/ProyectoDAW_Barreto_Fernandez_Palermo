@@ -13,11 +13,13 @@ namespace BLL
     {
         dalIntermediaVacunaAnimal dal;
         bllBitacora bllBitacora;
+        bllDigitoVerificador bllDigitoVerificador;
 
         public bllIntermediaVacunaAnimal()
         {
             dal = new dalIntermediaVacunaAnimal();
             bllBitacora = new bllBitacora();
+            bllDigitoVerificador = new bllDigitoVerificador();
         }
 
         public void Alta(string codigoVacuna, int codigoAnimal, string nombreVacuna, DateTime fechaAplicacion, DateTime fechaProximaAplicacion)
@@ -27,7 +29,7 @@ namespace BLL
             bool tieneVigente = asignaciones.Any(a =>
                 a.codigoAnimal == codigoAnimal &&
                 a.codigoVacuna == codigoVacuna &&
-                a.fechaProximaAplicacion >= fechaAplicacion 
+                a.fechaProximaAplicacion >= fechaAplicacion
             );
 
             if (tieneVigente)
@@ -36,6 +38,12 @@ namespace BLL
             IntermediaVacunaAnimal intermedia = new IntermediaVacunaAnimal(codigoVacuna, codigoAnimal, nombreVacuna, fechaAplicacion, fechaProximaAplicacion);
             dal.Alta(intermedia);
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion vacuna-animal", "vacuna asignada a animal", 3);
+            RecalcularDigitoVacunaIntermedia();
+        }
+
+        private void RecalcularDigitoVacunaIntermedia()
+        {
+            bllDigitoVerificador.CalcularDVIntermediaVacunaAnimal();
         }
 
         public void Modificar(int codigo, DateTime fechaAplicacion, DateTime fechaProximaApliacion)
@@ -52,6 +60,7 @@ namespace BLL
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion vacuna-animal", "intermedia modificada", 3);
 
             dal.Modificar(intermedia);
+            RecalcularDigitoVacunaIntermedia();
         }
 
         public bool ValidarExistenciaVacuna(string codigo)
