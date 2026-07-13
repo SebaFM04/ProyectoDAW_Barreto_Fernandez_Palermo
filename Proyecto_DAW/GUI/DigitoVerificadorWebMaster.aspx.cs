@@ -54,6 +54,7 @@ public partial class _Default : System.Web.UI.Page
             bllDigitoVerificador.CalcularDVVacuna();
             bllDigitoVerificador.CalcularDVUsuario();
 
+            bllDigitoVerificador.LimpiarAuditoria();
             // Cerramos la sesión en el servidor
             claseSession.Gestor.UnsetUsuario();
 
@@ -75,7 +76,7 @@ public partial class _Default : System.Web.UI.Page
 
             // El Value del dropdown ya es la ruta completa del .bak en el servidor
             bllBackUpRestore.RealizarRestore(ddlBackups.SelectedValue);
-
+            bllDigitoVerificador.LimpiarAuditoria();
             // Restore OK: cerramos sesión y volvemos al login
             claseSession.Gestor.UnsetUsuario();
             string script = "mostrarPopup('Restore realizado correctamente.', 'Login.aspx');";
@@ -93,6 +94,7 @@ public partial class _Default : System.Web.UI.Page
 
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
+        bllDigitoVerificador.LimpiarAuditoria();
         claseSession.Gestor.UnsetUsuario();
         Response.Redirect("MenuPrincipal.aspx");
     }

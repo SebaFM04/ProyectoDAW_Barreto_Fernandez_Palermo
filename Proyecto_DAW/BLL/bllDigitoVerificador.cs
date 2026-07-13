@@ -28,6 +28,11 @@ namespace BLL
             seguridad = new encriptador();
         }
 
+        public void LimpiarAuditoria()
+        {
+            dal.LimpiarAuditoria();
+        }
+
         public bool Deteccion()
         {
             List<DigitoVerificador> dvCalculados = Calcular();
@@ -58,20 +63,20 @@ namespace BLL
 
         public DigitoVerificador DVAnimal()
         {
-            var cedentes = dalAnimal.RetornarAnimal();
+            var animal = dalAnimal.RetornarAnimal();
 
-            string horizontal = string.Concat(cedentes.Select(x =>
+            string horizontal = string.Concat(animal.Select(x =>
                 x.codigoAnimal + x.especie + x.raza +
                 x.nombre + x.tamaño + x.sexo + x.estadoAdopcion + x.vivo));
             string horizontalHash = seguridad.GetSHA256(horizontal);
 
-            string vertical = string.Concat(cedentes.Select(x => x.codigoAnimal)) +
-                             string.Concat(cedentes.Select(x => x.especie)) +
-                             string.Concat(cedentes.Select(x => x.nombre)) +
-                             string.Concat(cedentes.Select(x => x.tamaño)) +
-                             string.Concat(cedentes.Select(x => x.sexo)) +
-                             string.Concat(cedentes.Select(x => x.estadoAdopcion)) +
-                             string.Concat(cedentes.Select(x => x.vivo));
+            string vertical = string.Concat(animal.Select(x => x.codigoAnimal)) +
+                             string.Concat(animal.Select(x => x.especie)) +
+                             string.Concat(animal.Select(x => x.nombre)) +
+                             string.Concat(animal.Select(x => x.tamaño)) +
+                             string.Concat(animal.Select(x => x.sexo)) +
+                             string.Concat(animal.Select(x => x.estadoAdopcion)) +
+                             string.Concat(animal.Select(x => x.vivo));
             string verticalHash = seguridad.GetSHA256(vertical);
             return new DigitoVerificador("Animal", horizontalHash, verticalHash);
         }
@@ -84,15 +89,15 @@ namespace BLL
 
         public DigitoVerificador DVVacuna()
         {
-            var medicamento = dalVacuna.RetornarVacunas();
+            var vacuna = dalVacuna.RetornarVacunas();
 
-            string horizontal = string.Concat(medicamento.Select(x =>
+            string horizontal = string.Concat(vacuna.Select(x =>
                 x.codigoVacuna + x.nombreVacuna + x.activo ));
             string horizontalHash = seguridad.GetSHA256(horizontal);
 
-            string vertical = string.Concat(medicamento.Select(x => x.codigoVacuna)) +
-                             string.Concat(medicamento.Select(x => x.nombreVacuna)) +
-                             string.Concat(medicamento.Select(x => x.activo));
+            string vertical = string.Concat(vacuna.Select(x => x.codigoVacuna)) +
+                             string.Concat(vacuna.Select(x => x.nombreVacuna)) +
+                             string.Concat(vacuna.Select(x => x.activo));
 
             string verticalHash = seguridad.GetSHA256(vertical);
             return new DigitoVerificador("Vacuna", horizontalHash, verticalHash);
@@ -106,29 +111,29 @@ namespace BLL
 
         public DigitoVerificador DVUsuario()
         {
-            var animal = dalUsuario.RetornarUsuarios();
+            var usuario = dalUsuario.RetornarUsuarios();
 
             // domicilio se incluye en plain text: RetornarUsuarios() ya desencripta.
             // El DV es consistente porque siempre se calcula sobre el mismo valor (plain).
             // Si alguien altera el cifrado en BD, al desencriptar obtendrá un valor distinto
             // y el hash calculado no coincidirá con el almacenado -> inconsistencia detectada.
-            string horizontal = string.Concat(animal.Select(x =>
+            string horizontal = string.Concat(usuario.Select(x =>
                x.dni + x.nombreUsuario + x.contraseña + x.nombre + x.apellido +
                x.rol + x.email + x.bloqueo + x.intentos + x.lenguaje + x.activo + x.domicilio));
             string horizontalHash = seguridad.GetSHA256(horizontal);
 
-            string vertical = string.Concat(animal.Select(x => x.dni)) +
-                             string.Concat(animal.Select(x => x.nombreUsuario)) +
-                             string.Concat(animal.Select(x => x.contraseña)) +
-                             string.Concat(animal.Select(x => x.nombre)) +
-                             string.Concat(animal.Select(x => x.apellido)) +
-                             string.Concat(animal.Select(x => x.rol) +
-                             string.Concat(animal.Select(x => x.email)) +
-                             string.Concat(animal.Select(x => x.bloqueo)) +
-                             string.Concat(animal.Select(x => x.intentos)) +
-                             string.Concat(animal.Select(x => x.lenguaje)) +
-                             string.Concat(animal.Select(x => x.activo)) +
-                             string.Concat(animal.Select(x => x.domicilio)));
+            string vertical = string.Concat(usuario.Select(x => x.dni)) +
+                             string.Concat(usuario.Select(x => x.nombreUsuario)) +
+                             string.Concat(usuario.Select(x => x.contraseña)) +
+                             string.Concat(usuario.Select(x => x.nombre)) +
+                             string.Concat(usuario.Select(x => x.apellido)) +
+                             string.Concat(usuario.Select(x => x.rol)) +
+                             string.Concat(usuario.Select(x => x.email)) +
+                             string.Concat(usuario.Select(x => x.bloqueo)) +
+                             string.Concat(usuario.Select(x => x.intentos)) +
+                             string.Concat(usuario.Select(x => x.lenguaje)) +
+                             string.Concat(usuario.Select(x => x.activo)) +
+                             string.Concat(usuario.Select(x => x.domicilio));
 
             string verticalHash = seguridad.GetSHA256(vertical);
             return new DigitoVerificador("Usuario", horizontalHash, verticalHash);
@@ -142,19 +147,19 @@ namespace BLL
 
         public DigitoVerificador DVIntermediaVacunaAnimal()
         {
-            var certificado = dalIntermediaVacunaAnimal.RetornarIntermediaVacunaAnimal();
+            var vacunaIntermedia = dalIntermediaVacunaAnimal.RetornarIntermediaVacunaAnimal();
 
-            string horizontal = string.Concat(certificado.Select(x =>
+            string horizontal = string.Concat(vacunaIntermedia.Select(x =>
                 x.codigo + x.codigoVacuna + x.codigoAnimal +
                 x.nombreVacuna + x.fechaAplicacion + x.fechaProximaAplicacion));
             string horizontalHash = seguridad.GetSHA256(horizontal);
 
-            string vertical = string.Concat(certificado.Select(x => x.codigo)) +
-                             string.Concat(certificado.Select(x => x.codigoVacuna)) +
-                             string.Concat(certificado.Select(x => x.codigoAnimal)) +
-                             string.Concat(certificado.Select(x => x.nombreVacuna)) +
-                             string.Concat(certificado.Select(x => x.fechaAplicacion)) +
-                             string.Concat(certificado.Select(x => x.fechaProximaAplicacion));
+            string vertical = string.Concat(vacunaIntermedia.Select(x => x.codigo)) +
+                             string.Concat(vacunaIntermedia.Select(x => x.codigoVacuna)) +
+                             string.Concat(vacunaIntermedia.Select(x => x.codigoAnimal)) +
+                             string.Concat(vacunaIntermedia.Select(x => x.nombreVacuna)) +
+                             string.Concat(vacunaIntermedia.Select(x => x.fechaAplicacion)) +
+                             string.Concat(vacunaIntermedia.Select(x => x.fechaProximaAplicacion));
 
             string verticalHash = seguridad.GetSHA256(vertical);
             return new DigitoVerificador("Intermedia vacuna-animal", horizontalHash, verticalHash);

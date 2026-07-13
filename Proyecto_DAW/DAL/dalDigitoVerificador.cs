@@ -17,6 +17,12 @@ namespace DAL
             dal = new Acceso();
         }
 
+        public void LimpiarAuditoria()
+        {
+            string query = "DELETE FROM AuditoriaTablas";
+            dal.Query(query);
+        }
+
         public void Update(DigitoVerificador d)
         {
             string query = "UPDATE DigitoVerificador SET horizontal = @horizontal, vertical = @vertical WHERE nombreTabla = @nombreTabla";
@@ -55,27 +61,24 @@ namespace DAL
 
                 var almacenado = resultado[0];
 
-                if (almacenado.horizontal != dvCalculado.horizontal ||
-                    almacenado.vertical != dvCalculado.vertical)
+                if (almacenado.horizontal != dvCalculado.horizontal || almacenado.vertical != dvCalculado.vertical)
                 {
-                    string queryAuditoria = @"SELECT TOP 1 nombreTabla, operacion, registroId 
-                                      FROM AuditoriaTablas 
-                                      WHERE nombreTabla = @nombreTabla 
-                                      ORDER BY fecha DESC";
+                    string queryAuditoria = @"SELECT nombreTabla, operacion, registroId 
+                      FROM AuditoriaTablas 
+                      WHERE nombreTabla = @nombreTabla 
+                      ORDER BY fecha DESC";
                     var paramAuditoria = new Dictionary<string, object>
                     {
                         { "@nombreTabla", dvCalculado.nombreTabla }
                     };
-
                     List<string> auditoriaResultado = dal.RetornarLista(queryAuditoria, r =>
                         $"Tabla: {r["nombreTabla"]} | Operación: {r["operacion"]} | Registro: {r["registroId"]}",
                         paramAuditoria);
 
-                    string info = auditoriaResultado.Count > 0
-                        ? auditoriaResultado[0]
-                        : $"Tabla: {dvCalculado.nombreTabla} | Sin información de auditoría";
-
-                    tablasConInconsistencias.Add(info);
+                    if (auditoriaResultado.Count > 0)
+                        tablasConInconsistencias.AddRange(auditoriaResultado);
+                    else
+                        tablasConInconsistencias.Add($"Tabla: {dvCalculado.nombreTabla} | Sin información de auditoría");
                 }
             }
 

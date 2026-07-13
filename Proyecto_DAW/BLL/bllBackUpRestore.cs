@@ -44,9 +44,11 @@ namespace BLL
 
         public void RealizarRestore(string ruta)
         {
+            string nombreUsuarioActual = claseSession.Gestor.RetornarUsuarioSession()?.nombreUsuario;
+
             dal.RealizarRestore(ruta);
-            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario,
-                             "Restore", "Restore Realizado", 1);
+
+            bllBitacora.Alta(nombreUsuarioActual ?? "Desconocido", "Restore", "Restore Realizado", 1);
         }
     }
 }

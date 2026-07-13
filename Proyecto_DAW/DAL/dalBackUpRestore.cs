@@ -24,7 +24,8 @@ namespace DAL
 
         public string Backup(string backupPath)
         {
-            Directory.CreateDirectory(backupPath);
+            AsegurarCarpeta(backupPath);
+
             string fileName = $"backUp_dawRefugio_{DateTime.Now:ddMMyy-HHmm}.bak";
             string rutaCompleta = Path.Combine(backupPath, fileName);
             string query = $@"
@@ -47,9 +48,27 @@ namespace DAL
 
         public List<string> ListarBackups(string carpeta)
         {
-            if (!Directory.Exists(carpeta))
-                return new List<string>();
+            AsegurarCarpeta(carpeta);
             return Directory.GetFiles(carpeta, "*.bak").ToList();
+        }
+
+        // Crea la carpeta si no existe. Si no se puede (permisos), lanza un
+        // mensaje claro en vez de dejar que explote un UnauthorizedAccessException crudo.
+        private void AsegurarCarpeta(string carpeta)
+        {
+            try
+            {
+                if (!Directory.Exists(carpeta))
+                    Directory.CreateDirectory(carpeta);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                throw new Exception(
+                    $"No se tienen permisos para acceder a la carpeta de backups configurada en SQL Server:\n{carpeta}\n\n" +
+                    "Verificá que el BackupDirectory de SQL Server no apunte a una ruta protegida como 'Program Files'. " +
+                    "Se recomienda usar una carpeta como C:\\SQLBackups."
+                );
+            }
         }
     }
 }

@@ -68,7 +68,6 @@ namespace BLL
         {
             usuario.intentos = 0;
             dal.Modificar(usuario);
-            RecalcularDigitoUsuario();
         }
 
 
