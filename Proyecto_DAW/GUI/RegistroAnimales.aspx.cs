@@ -1,10 +1,11 @@
-﻿using System;
+﻿using BLL;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using BLL;
 
 public partial class RegistroAnimales : System.Web.UI.Page
 {
@@ -116,5 +117,37 @@ public partial class RegistroAnimales : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
         }
         catch (Exception ex) { MostrarMensaje(ex.Message, true); }
+    }
+
+    protected void btnExportar_Click(object sender, EventArgs e)
+    {
+        string xml = bllanimal.ExportarAnimalesXML(); // adentro arma el wrapper, vos no lo tocás
+
+        Response.Clear();
+        Response.ContentType = "text/xml";
+        Response.AddHeader("Content-Disposition", "attachment; filename=Animales.xml");
+        Response.Write(xml);
+        Response.End();
+    }
+
+    protected void btnImportar_Click(object sender, EventArgs e)
+    {
+        if (!fuImportar.HasFile)
+        {
+            lbMensaje.Text = "Seleccioná un archivo XML primero.";
+            return;
+        }
+
+        string extension = Path.GetExtension(fuImportar.FileName).ToLower();
+        if (extension != ".xml")
+        {
+            lbMensajeXML.Text = "El archivo debe tener formato .xml";
+            return;
+        }
+
+        string resultado = bllanimal.ImportarAnimalesXML(fuImportar.FileContent); // ídem
+        lbMensaje.Text = resultado;
+
+        CargarGrid();
     }
 }

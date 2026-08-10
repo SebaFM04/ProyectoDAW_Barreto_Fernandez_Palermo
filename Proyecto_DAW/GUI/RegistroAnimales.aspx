@@ -26,6 +26,15 @@
                     <asp:BoundField DataField="vivo" HeaderText="Vivo" />
                 </Columns>
             </asp:GridView>
+
+            <div class="xml-box">
+                <asp:Button ID="btnExportar" runat="server" Text="Exportar a XML" CssClass="btn" OnClick="btnExportar_Click" />
+
+                <asp:FileUpload ID="fuImportar" runat="server" CssClass="input" />
+                <asp:Button ID="btnImportar" runat="server" Text="Importar desde XML" CssClass="btn" OnClick="btnImportar_Click" />
+
+                <asp:Label ID="lbMensajeXML" runat="server" Text="" />
+            </div>
         </div>
 
         <!-- INPUTS -->
