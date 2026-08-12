@@ -1,9 +1,11 @@
 ﻿<%@ Application Language="C#" %>
+<%@ Import Namespace="System.Web.Http" %>
 
 <script RunAt="server">
 
     void Application_Start(object sender, EventArgs e)
     {
+        GlobalConfiguration.Configure(WebApiConfig.Register);
 
         ScriptManager.ScriptResourceMapping.AddDefinition("jquery", new ScriptResourceDefinition
         {
@@ -12,10 +14,17 @@
             CdnSupportsSecureConnection = true,
             LoadSuccessExpression = "window.jQuery"
         });
-
     }
 
-    void Application_End(object sender, EventArgs e)
+    void Application_PostMapRequestHandler(object sender, EventArgs e)
+    {
+        if (Context.Handler is System.Web.Http.WebHost.HttpControllerHandler)
+        {
+            Context.SetSessionStateBehavior(SessionStateBehavior.Required);
+        }
+    }
+
+    void Application_End(object sender, EventArgs e) 
     {
     }
 
@@ -37,17 +46,14 @@
 
             Response.Redirect(destino);
         }
+
     }
 
     void Session_Start(object sender, EventArgs e)
     {
-
-
-
     }
 
     void Session_End(object sender, EventArgs e)
     {
     }
-
 </script>
