@@ -48,6 +48,13 @@
                 <label>Raza</label>
                 <asp:TextBox ID="txtRaza" runat="server" CssClass="input" />
 
+                <asp:Button ID="btnBuscarInfo" runat="server" Text="Buscar info de raza" CssClass="btn secundario" OnClientClick="buscarInfoRaza(); return false;" />
+
+                <div id="infoRaza" class="info-raza-box" style="display:none;">
+                    <img id="imgRaza" src="" alt="Foto de referencia" />
+                    <p id="txtInfoRaza"></p>
+                </div>
+
                 <label>Nombre</label>
                 <asp:TextBox ID="txtNombre" runat="server" CssClass="input" />
 
@@ -104,6 +111,5 @@
         alerta: '<%= pnlAlerta.ClientID %>'
     };
 </script>
-<script src="Scripts/ScriptRegistroAnimales.js"></script>
-
+<script src="<%= ResolveUrl("~/Scripts/ScriptRegistroAnimales.js") %>"></script>
 </asp:Content>

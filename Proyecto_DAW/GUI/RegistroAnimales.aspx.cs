@@ -150,4 +150,5 @@ public partial class RegistroAnimales : System.Web.UI.Page
 
         CargarGrid();
     }
+
 }
