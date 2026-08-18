@@ -7,63 +7,64 @@
 <asp:Content ID="MainContent" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div class="page-container">
-    <h2 class="titulo">Evaluacion del Adoptante</h2>
+    <h2 class="titulo">Gestión de Adoptantes</h2>
 
     <div class="layout-adopcion">
 
         <div class="columna-grillas">
 
-            <%-- GRILLA EVALUACIONES --%>
-            <p class="seccion-titulo">Evaluaciones:</p>
-            <asp:GridView ID="gvEvaluaciones" runat="server"
+            <%-- GRILLA ADOPTANTES --%>
+            <asp:GridView ID="gvAdoptantes" runat="server"
                 CssClass="grid"
                 AutoGenerateColumns="false"
                 AutoGenerateSelectButton="true"
-                OnSelectedIndexChanged="gvEvaluaciones_SelectedIndexChanged"
-                EmptyDataText="No hay evaluaciones para mostrar">
+                DataKeyNames="dni"
+                OnSelectedIndexChanged="gvAdoptantes_SelectedIndexChanged"
+                EmptyDataText="No hay adoptantes para mostrar">
                 <Columns>
-                    <asp:BoundField HeaderText="Codigo" />
-                    <asp:BoundField HeaderText="DNI" />
-                    <asp:BoundField HeaderText="Motivo" />
-                    <asp:BoundField HeaderText="Condicion economica" />
-                    <asp:BoundField HeaderText="Vivienda" />
+                    <asp:BoundField DataField="dni" HeaderText="DNI" />
+                    <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+                    <asp:BoundField DataField="apellido" HeaderText="Apellido" />
+                    <asp:BoundField DataField="telefono" HeaderText="Teléfono" />
+                    <asp:BoundField DataField="edad" HeaderText="Edad" />
+                    <asp:BoundField DataField="domicilio" HeaderText="Domicilio" />
+                    <asp:BoundField DataField="mascotas" HeaderText="Tiene mascotas" />
+                    <asp:BoundField DataField="activo" HeaderText="Activo" />
                 </Columns>
             </asp:GridView>
 
             <%-- CAMPOS DEL FORMULARIO --%>
             <div class="fila-campos">
                 <div class="campo-grupo">
-                    <label>Motivo:</label>
-                    <asp:TextBox ID="txtMotivo" runat="server" CssClass="input" />
+                    <label>DNI:</label>
+                    <asp:TextBox ID="txtDni" runat="server" CssClass="input" />
                 </div>
                 <div class="campo-grupo">
-                    <label>Condicion economica:</label>
-                    <asp:DropDownList ID="ddlCondicionEconomica" runat="server" CssClass="input">
-                        <asp:ListItem Text="Alta"  Value="Alta" />
-                        <asp:ListItem Text="Media" Value="Media" />
-                        <asp:ListItem Text="Baja"  Value="Baja" />
-                    </asp:DropDownList>
+                    <label>Nombre:</label>
+                    <asp:TextBox ID="txtNombre" runat="server" CssClass="input" />
                 </div>
                 <div class="campo-grupo">
-                    <label>Vivienda:</label>
-                    <asp:TextBox ID="txtVivienda" runat="server" CssClass="input" />
+                    <label>Apellido:</label>
+                    <asp:TextBox ID="txtApellido" runat="server" CssClass="input" />
+                </div>
+                <div class="campo-grupo">
+                    <label>Teléfono:</label>
+                    <asp:TextBox ID="txtTelefono" runat="server" CssClass="input" />
+                </div>
+                <div class="campo-grupo">
+                    <label>Edad:</label>
+                    <asp:TextBox ID="txtEdad" runat="server" CssClass="input" />
+                </div>
+                <div class="campo-grupo">
+                    <label>Domicilio:</label>
+                    <asp:TextBox ID="txtDomicilio" runat="server" CssClass="input" />
+                </div>
+                <div class="campo-grupo">
+                    <label>
+                        <asp:CheckBox ID="chkMascotas" runat="server" /> ¿Tiene mascotas?
+                    </label>
                 </div>
             </div>
-
-            <%-- GRILLA ADOPTANTES --%>
-            <p class="seccion-titulo">Adoptantes:</p>
-            <asp:GridView ID="gvAdoptantes" runat="server"
-                CssClass="grid"
-                AutoGenerateColumns="false"
-                AutoGenerateSelectButton="true"
-                OnSelectedIndexChanged="gvAdoptantes_SelectedIndexChanged"
-                EmptyDataText="No hay adoptantes para mostrar">
-                <Columns>
-                    <asp:BoundField DataField="dni"      HeaderText="DNI" />
-                    <asp:BoundField DataField="nombre"   HeaderText="Nombre" />
-                    <asp:BoundField DataField="apellido" HeaderText="Apellido" />
-                </Columns>
-            </asp:GridView>
 
             <asp:Panel ID="pnlAlerta" runat="server" Visible="false" CssClass="alert">
                 <asp:Label ID="lbMensaje" runat="server" Text=""></asp:Label>
@@ -73,14 +74,31 @@
 
         <%-- BOTONES --%>
         <div class="columna-botones">
-            <asp:Button ID="btnGenerarEvaluacion" runat="server" Text="Generar evaluacion del adoptante" CssClass="btn btn-especial" OnClick="btnGenerarEvaluacion_Click" />
-            <asp:Button ID="btnModificar"         runat="server" Text="Modificar"                        CssClass="btn"             OnClick="btnModificar_Click" />
-            <asp:Button ID="btnAplicar"           runat="server" Text="Aplicar"                          CssClass="btn"             OnClick="btnAplicar_Click" />
-            <asp:Button ID="btnCancelar"          runat="server" Text="Cancelar"                         CssClass="btn btn-secundario" OnClick="btnCancelar_Click" />
-            <asp:Button ID="btnSalir"             runat="server" Text="Salir"                            CssClass="btn btn-secundario" OnClick="btnSalir_Click" />
+            <asp:Button ID="btnAlta" runat="server" Text="Alta" CssClass="btn" OnClick="btnAlta_Click" />
+            <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn" OnClick="btnModificar_Click" />
+            <asp:Button ID="btnActivarDesactivar" runat="server" Text="Activar / Desactivar" CssClass="btn" OnClick="btnActivarDesactivar_Click" />
+
+            <hr />
+
+            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-secundario" OnClientClick="limpiarFormulario(); ocultarAlerta(true); return false;" />
+            <asp:Button ID="btnSalir" runat="server" Text="Salir" CssClass="btn btn-secundario" OnClientClick="salir(); return false;" />
         </div>
 
     </div>
 </div>
+
+<script>
+    var ids = {
+        dni: '<%= txtDni.ClientID %>',
+        nombre: '<%= txtNombre.ClientID %>',
+        apellido: '<%= txtApellido.ClientID %>',
+        telefono: '<%= txtTelefono.ClientID %>',
+        edad: '<%= txtEdad.ClientID %>',
+        domicilio: '<%= txtDomicilio.ClientID %>',
+        mascotas: '<%= chkMascotas.ClientID %>',
+        alerta: '<%= pnlAlerta.ClientID %>'
+    };
+</script>
+<script src="<%= ResolveUrl("~/Scripts/ScriptAdoptantes.js") %>"></script>
 
 </asp:Content>

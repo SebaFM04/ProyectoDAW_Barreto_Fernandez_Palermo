@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adoptante.cs" />
     <Compile Include="Animal.cs" />
     <Compile Include="AnimalXML.cs" />
     <Compile Include="DigitoVerificador.cs" />

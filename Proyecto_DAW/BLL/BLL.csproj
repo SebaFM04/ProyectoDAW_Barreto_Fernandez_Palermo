@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="bllAdoptante.cs" />
     <Compile Include="bllAnimal.cs" />
     <Compile Include="bllBackUpRestore.cs" />
     <Compile Include="bllBitacora.cs" />
