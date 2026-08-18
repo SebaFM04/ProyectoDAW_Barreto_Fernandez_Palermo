@@ -1,6 +1,7 @@
 ﻿using BE;
 using DAL;
 using SERVICIOS;
+using SERVICIOS.MultiIdioma_Observer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,10 +31,10 @@ namespace BLL
         public void Alta(string dni, string nombre, string apellido, string rol, string email, string contraseña, string domicilio = "", int codigoIdioma = 1)
         {
             if (dal.ValidarDni(dni))
-                throw new Exception("Ya existe un usuario con ese DNI.");
+                throw new Exception(GestorIdioma.Msg("MSG_USUARIO_DNI_DUPLICADO", "Ya existe un usuario con ese DNI."));
 
             if (!EsValida(contraseña))
-                throw new Exception("Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n");
+                throw new Exception(GestorIdioma.Msg("MSG_PASSWORD_INVALIDA", "Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n"));
 
             string nombreUsuario = dni + nombre;
             string contraseñaHasheada = HashearContraseña(contraseña);
@@ -91,7 +92,7 @@ namespace BLL
         {
             Usuario usuario = BuscarUsuarioPorDNI(dni);
             if (usuario == null)
-                throw new Exception("Usuario no encontrado.");
+                throw new Exception(GestorIdioma.Msg("MSG_USUARIO_NO_ENCONTRADO", "Usuario no encontrado."));
             usuario.nombre = nombre;
             usuario.nombreUsuario = nombreUsuario;
             usuario.apellido = apellido;
@@ -146,7 +147,7 @@ namespace BLL
         {
             Usuario usuario = BuscarUsuarioPorDNI(dni);
             if (usuario == null)
-                throw new Exception("Usuario no encontrado.");
+                throw new Exception(GestorIdioma.Msg("MSG_USUARIO_NO_ENCONTRADO", "Usuario no encontrado."));
 
             if (!usuario.bloqueo)
                 return false;
@@ -191,7 +192,7 @@ namespace BLL
             }
             else
             {
-                throw new Exception("Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n");
+                throw new Exception(GestorIdioma.Msg("MSG_PASSWORD_INVALIDA", "Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n"));
             }
         }
 
@@ -214,10 +215,10 @@ namespace BLL
         {
             Usuario usuario = BuscarUsuarioPorDNI(dni);
             if (usuario == null)
-                throw new Exception("Usuario no encontrado.");
+                throw new Exception(GestorIdioma.Msg("MSG_USUARIO_NO_ENCONTRADO", "Usuario no encontrado."));
 
             if (!EsValida(nuevaContraseña))
-                throw new Exception("Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n");
+                throw new Exception(GestorIdioma.Msg("MSG_PASSWORD_INVALIDA", "Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n"));
 
             usuario.contraseña = HashearContraseña(nuevaContraseña);
             dal.Modificar(usuario);

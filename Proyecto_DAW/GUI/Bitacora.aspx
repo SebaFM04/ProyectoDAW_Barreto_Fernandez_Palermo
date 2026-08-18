@@ -6,7 +6,10 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
-    <asp:ScriptManager ID="ScriptManager1" runat="server" />
+    <%-- ScriptManager ahora vive en MasterPage.master (uno solo por página,
+         compartido, requisito de EnablePageMethods para el selector de
+         idioma). No agregar otro acá: dos ScriptManager en la misma
+         página tiran excepción en tiempo de ejecución. --%>
 
     <asp:UpdatePanel ID="upBitacora" runat="server">
         <ContentTemplate>
@@ -43,30 +46,30 @@
                     <%-- Fila 1: Fechas --%>
                     <div class="fila-filtro">
                         <div class="campo-grupo">
-                            <asp:Label ID="lblFechaInicioBitacora" runat="server" Text="Fecha inicio:" />
+                            <asp:Label runat="server" Text="Fecha inicio:" />
                             <asp:TextBox ID="txtFechaInicio" runat="server" TextMode="Date" CssClass="ctrl" Width="175px" />
                         </div>
                         <div class="campo-grupo">
-                            <asp:Label ID="lblFechaFinBitacora" runat="server" Text="Fecha fin:" />
+                            <asp:Label runat="server" Text="Fecha fin:" />
                             <asp:TextBox ID="txtFechaFinal" runat="server" TextMode="Date" CssClass="ctrl" Width="175px" />
                         </div>
                     </div>
                     <%-- Fila 2: Modulo, Evento, Criticidad --%>
                     <div class="fila-filtro">
                         <div class="campo-grupo">
-                            <asp:Label ID="lblModuloBitacora" runat="server" Text="Modulo:" />
+                            <asp:Label runat="server" Text="Modulo:" />
                             <asp:DropDownList ID="dlModulo" runat="server" CssClass="ctrl" Width="190px"
                                 AutoPostBack="true"
                                 OnSelectedIndexChanged="dlFiltro_SelectedIndexChanged" />
                         </div>
                         <div class="campo-grupo">
-                            <asp:Label ID="lblEventoBitacora" runat="server" Text="Evento:" />
+                            <asp:Label runat="server" Text="Evento:" />
                             <asp:DropDownList ID="dlEvento" runat="server" CssClass="ctrl" Width="190px"
                                 AutoPostBack="true"
                                 OnSelectedIndexChanged="dlFiltro_SelectedIndexChanged" />
                         </div>
                         <div class="campo-grupo">
-                            <asp:Label ID="lblCriticidadBitacora" runat="server" Text="Criticidad:" />
+                            <asp:Label runat="server" Text="Criticidad:" />
                             <asp:DropDownList ID="dlCriticidad" runat="server" CssClass="ctrl" Width="190px"
                                 AutoPostBack="true"
                                 OnSelectedIndexChanged="dlFiltro_SelectedIndexChanged" />

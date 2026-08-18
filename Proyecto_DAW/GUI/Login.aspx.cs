@@ -1,5 +1,6 @@
 ﻿using BE;
 using SERVICIOS;
+using SERVICIOS.MultiIdioma_Observer;
 using BLL;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,12 @@ public partial class Login : System.Web.UI.Page
         bllDigitoVerificador = new bllDigitoVerificador();
     }
 
+    // Atajo para traducir mensajes propios de esta página.
+    private string TraducirMsg(string claveMensaje, string textoEspanolFallback)
+    {
+        return GestorIdioma.Instancia.TraducirMensaje("Login", claveMensaje, textoEspanolFallback);
+    }
+
     protected void btnIngresar_Click(object sender, EventArgs e)
     {
         // Limpiar paneles de mensajes anteriores
@@ -32,14 +39,14 @@ public partial class Login : System.Web.UI.Page
             return;
         if (txtNombreUsuario.Text == "" || txtContraseñaUsuario.Text == "")
         {
-            lblMensajeError.Text = "Faltan ingresar datos";
+            lblMensajeError.Text = TraducirMsg("MSG_FALTAN_DATOS", "Faltan ingresar datos");
             pnlAlerta.CssClass = "login-alert login-alert-error";
             ActivarAlertas();
             return;
         }
         if (claseSession.Gestor.RetornarUsuarioSession() != null)
         {
-            lblMensajeError.Text = "Ya hay una sesión iniciada";
+            lblMensajeError.Text = TraducirMsg("MSG_SESION_YA_INICIADA", "Ya hay una sesión iniciada");
             pnlAlerta.CssClass = "login-alert login-alert-error";
             ActivarAlertas();
             return;
@@ -96,14 +103,14 @@ public partial class Login : System.Web.UI.Page
                         {
                             if (bllU.Intentos(usuario) == 3)
                             {
-                                lblMensajeError.Text = "Usted ha sido bloqueado";
+                                lblMensajeError.Text = TraducirMsg("MSG_USUARIO_BLOQUEADO_AHORA", "Usted ha sido bloqueado");
                                 pnlAlerta.CssClass = "login-alert login-alert-error";
                                 ActivarAlertas();
                                 return;
                             }
                             else
                             {
-                                lblMensajeError.Text = "Contraseña o usuario incorrecto";
+                                lblMensajeError.Text = TraducirMsg("MSG_CREDENCIALES_INCORRECTAS", "Contraseña o usuario incorrecto");
                                 pnlAlerta.CssClass = "login-alert login-alert-error";
                                 ActivarAlertas();
                                 return;
@@ -112,7 +119,7 @@ public partial class Login : System.Web.UI.Page
                     }
                     else
                     {
-                        lblMensajeError.Text = "Usuario bloqueado";
+                        lblMensajeError.Text = TraducirMsg("MSG_USUARIO_BLOQUEADO", "Usuario bloqueado");
                         pnlAlerta.CssClass = "login-alert login-alert-error";
                         ActivarAlertas();
                         return;
@@ -120,7 +127,7 @@ public partial class Login : System.Web.UI.Page
                 }
                 else
                 {
-                    lblMensajeError.Text = "Usuario inactivo";
+                    lblMensajeError.Text = TraducirMsg("MSG_USUARIO_INACTIVO", "Usuario inactivo");
                     pnlAlerta.CssClass = "login-alert login-alert-intentos";
                     ActivarAlertas();
                     return;
@@ -128,7 +135,7 @@ public partial class Login : System.Web.UI.Page
             }
             else
             {
-                lblMensajeError.Text = "Usuario no encontrado";
+                lblMensajeError.Text = TraducirMsg("MSG_USUARIO_NO_ENCONTRADO_LOGIN", "Usuario no encontrado");
                 pnlAlerta.CssClass = "login-alert login-alert-error";
                 ActivarAlertas();
                 return;

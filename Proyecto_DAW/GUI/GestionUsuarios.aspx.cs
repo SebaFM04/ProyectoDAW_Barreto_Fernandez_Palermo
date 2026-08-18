@@ -1,5 +1,6 @@
 using BE;
 using BLL;
+using SERVICIOS.MultiIdioma_Observer;
 using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -64,7 +65,7 @@ public partial class GestionUsuarios : System.Web.UI.Page
             bllUsuario.Alta(txtDniAlta.Text.Trim(), txtNombreAlta.Text.Trim(), txtApellidoAlta.Text.Trim(),
                              ddlRolAlta.SelectedValue, txtEmailAlta.Text.Trim(), txtContraseñaAlta.Text);
             pnlPopupAlta.Visible = false;
-            lbMensaje.Text = "Usuario dado de alta correctamente.";
+            lbMensaje.Text = TraducirMsg("MSG_USUARIO_ALTA_OK", "Usuario dado de alta correctamente.");
             pnlAlerta.Visible = true;
             CargarGrid();
         }
@@ -88,7 +89,7 @@ public partial class GestionUsuarios : System.Web.UI.Page
 
         if (txtDni.Text.Trim() == "")
         {
-            lbMensaje.Text = "Seleccioná un usuario de la grilla primero.";
+            lbMensaje.Text = TraducirMsg("MSG_SELECCIONAR_USUARIO_PRIMERO", "Seleccioná un usuario de la grilla primero.");
             pnlAlerta.Visible = true;
             return;
         }
@@ -105,7 +106,7 @@ public partial class GestionUsuarios : System.Web.UI.Page
         {
             bllUsuario.CambiarContraseñaAdmin(hdnDniSeleccionado.Value, txtNuevaContraseñaPopup.Text);
             pnlPopupContraseña.Visible = false;
-            lbMensaje.Text = "Contraseña actualizada correctamente.";
+            lbMensaje.Text = TraducirMsg("MSG_CONTRASENA_ACTUALIZADA_OK", "Contraseña actualizada correctamente.");
             pnlAlerta.Visible = true;
         }
         catch (Exception ex)
@@ -131,7 +132,7 @@ public partial class GestionUsuarios : System.Web.UI.Page
 
         if (txtDni.Text.Trim() == "")
         {
-            lbMensaje.Text = "Seleccioná un usuario de la grilla.";
+            lbMensaje.Text = TraducirMsg("MSG_SELECCIONAR_USUARIO", "Seleccioná un usuario de la grilla.");
             pnlAlerta.Visible = true;
             return;
         }
@@ -139,7 +140,7 @@ public partial class GestionUsuarios : System.Web.UI.Page
         {
             bool activo = ddlActivo.SelectedValue == "true";
             bllUsuario.Modificar(txtDni.Text.Trim(), ddlRol.SelectedValue, txtEmail.Text.Trim(), txtApellido.Text.Trim(), txtNombreUsuario.Text.Trim(), txtNombre.Text.Trim(), activo);
-            lbMensaje.Text = "Usuario modificado correctamente.";
+            lbMensaje.Text = TraducirMsg("MSG_USUARIO_MODIFICADO_OK", "Usuario modificado correctamente.");
             pnlAlerta.Visible = true;
             CargarGrid();
         }
@@ -156,14 +157,16 @@ public partial class GestionUsuarios : System.Web.UI.Page
 
         if (txtDni.Text.Trim() == "")
         {
-            lbMensaje.Text = "Seleccioná un usuario de la grilla.";
+            lbMensaje.Text = TraducirMsg("MSG_SELECCIONAR_USUARIO", "Seleccioná un usuario de la grilla.");
             pnlAlerta.Visible = true;
             return;
         }
         try
         {
             bool desbloqueado = bllUsuario.Desbloquear(txtDni.Text.Trim());
-            lbMensaje.Text = desbloqueado ? "Usuario desbloqueado correctamente." : "El usuario ya se encontraba desbloqueado.";
+            lbMensaje.Text = desbloqueado
+                ? TraducirMsg("MSG_USUARIO_DESBLOQUEADO_OK", "Usuario desbloqueado correctamente.")
+                : TraducirMsg("MSG_USUARIO_YA_DESBLOQUEADO", "El usuario ya se encontraba desbloqueado.");
             pnlAlerta.Visible = true;
             CargarGrid();
         }
@@ -189,5 +192,10 @@ public partial class GestionUsuarios : System.Web.UI.Page
         pnlAlerta.Visible = false;
     }
 
+    // Atajo para traducir mensajes propios de esta página.
+    private string TraducirMsg(string claveMensaje, string textoEspanolFallback)
+    {
+        return GestorIdioma.Instancia.TraducirMensaje("GestionUsuarios", claveMensaje, textoEspanolFallback);
+    }
 
 }

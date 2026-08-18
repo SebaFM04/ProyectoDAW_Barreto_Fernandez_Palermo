@@ -63,6 +63,50 @@ namespace SERVICIOS.MultiIdioma_Observer
             return $"{nombreFormulario}|{nombreControl}";
         }
 
+        // Alias semántico de Traducir(), pensado para mensajes dinámicos
+        // (validaciones, confirmaciones, errores propios) que el code-behind
+        // arma en tiempo de ejecución en vez de texto fijo en el markup.
+        // Usa exactamente el mismo diccionario y la misma clave compuesta
+        // "Formulario|ClaveMensaje" — en Control, esa clave se registra con
+        // un nombreControl del estilo "MSG_FALTAN_DATOS" en vez de un ID de
+        // control de UI. Si no hay traducción cargada, en vez de "[clave]"
+        // devuelve un texto de fallback provisto por el llamador, para no
+        // mostrarle placeholders con corchetes a un usuario en medio de una
+        // validación.
+        public string TraducirMensaje(string nombreFormulario, string claveMensaje, string fallback)
+        {
+            string clave = ClaveDe(nombreFormulario, claveMensaje);
+            if (traducciones.TryGetValue(clave, out string texto) && !string.IsNullOrEmpty(texto))
+                return texto;
+
+            return fallback;
+        }
+
+        // "Formulario" virtual para mensajes de validación que viven en la
+        // BLL, no en una página .aspx concreta (la BLL no conoce ni debe
+        // conocer HttpContext/Request para calcular un nombre de página).
+        // La misma regla de negocio puede dispararse desde más de un
+        // formulario, así que su traducción vive en un espacio aparte,
+        // compartido por todas las capas de negocio.
+        public const string FORMULARIO_BLL = "BLL";
+
+        public string TraducirMensajeBLL(string claveMensaje, string fallback)
+        {
+            return TraducirMensaje(FORMULARIO_BLL, claveMensaje, fallback);
+        }
+
+        // Atajo estático para usar directo en un throw desde la BLL:
+        //   throw new Exception(GestorIdioma.Msg("MSG_DNI_DUPLICADO",
+        //       "Ya existe un adoptante con ese DNI."));
+        // El texto en español se sigue escribiendo en el propio throw, como
+        // fallback, para que el código siga siendo legible sin ir a buscar
+        // el texto a otro lado, y para que no se rompa nada si todavía no
+        // se cargó la traducción de ese mensaje en la base.
+        public static string Msg(string claveMensaje, string textoEspanolFallback)
+        {
+            return Instancia.TraducirMensajeBLL(claveMensaje, textoEspanolFallback);
+        }
+
         // Gestión de observadores
         public void Suscribir(IObservadorIdioma observador)
         {

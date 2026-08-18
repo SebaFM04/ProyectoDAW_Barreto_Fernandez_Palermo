@@ -100,15 +100,15 @@ namespace DAL
             return Convert.ToInt32(dal.EjecutarEscalar(queryInsert, parametrosBuscar));
         }
 
-        public List<ControlIdioma> ListarControles()
+        public List<ControlTraducible> ListarControles()
         {
             string query = "SELECT * FROM Control ORDER BY nombreFormulario, nombreControl";
             return dal.RetornarLista(query, MapearControl);
         }
 
-        private ControlIdioma MapearControl(SqlDataReader reader)
+        private ControlTraducible MapearControl(SqlDataReader reader)
         {
-            return new ControlIdioma(
+            return new ControlTraducible(
                 Convert.ToInt32(reader["codigo"]),
                 reader["nombreControl"].ToString(),
                 reader["nombreFormulario"].ToString()

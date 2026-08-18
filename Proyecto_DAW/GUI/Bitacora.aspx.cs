@@ -1,5 +1,6 @@
 ﻿using BE;
 using BLL;
+using SERVICIOS.MultiIdioma_Observer;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -156,7 +157,7 @@ public partial class _Default : System.Web.UI.Page
                 {
                     txtFechaInicio.Text = DateTime.Today.ToString("yyyy-MM-dd");
                     txtFechaFinal.Text = DateTime.Today.ToString("yyyy-MM-dd");
-                    throw new Exception("La fecha de inicio no puede ser mayor a la de fin");
+                    throw new Exception(TraducirMsg("MSG_FECHA_INICIO_MAYOR_FIN", "La fecha de inicio no puede ser mayor a la de fin"));
                 }
             }
 
@@ -168,5 +169,14 @@ public partial class _Default : System.Web.UI.Page
             pnlAlerta.CssClass = "alert alert-error";
             pnlAlerta.Visible = true;
         }
+    }
+
+    // Atajo para traducir mensajes propios de esta página. El nombre de
+    // formulario usado como clave es "Bitacora" (nombre del .aspx), no
+    // "_Default" (nombre de la clase), porque GestorIdioma calcula la clave
+    // a partir del nombre de archivo de la URL.
+    private string TraducirMsg(string claveMensaje, string textoEspanolFallback)
+    {
+        return GestorIdioma.Instancia.TraducirMensaje("Bitacora", claveMensaje, textoEspanolFallback);
     }
 }

@@ -1,4 +1,5 @@
 using BLL;
+using SERVICIOS.MultiIdioma_Observer;
 using System;
 using System.Text.RegularExpressions;
 using System.Web.UI;
@@ -47,10 +48,18 @@ public partial class Adoptantes : System.Web.UI.Page
         pnlAlerta.CssClass = esError ? "alert alert-error" : "alert alert-success";
     }
 
+    // Atajo para traducir mensajes propios de esta p√°gina (no controles de
+    // UI): usa el mismo GestorIdioma que ya traduce los labels/botones del
+    // markup, con clave "Adoptantes|claveMensaje".
+    private string TraducirMsg(string claveMensaje, string textoEspanolFallback)
+    {
+        return GestorIdioma.Instancia.TraducirMensaje("Adoptantes", claveMensaje, textoEspanolFallback);
+    }
+
     private void ValidarCampos(string dni, string nombre, string apellido, string telefono, string edad)
     {
         var regexDni = new Regex(@"^\d{8}$");
-        var regexTexto = new Regex(@"^[A-Za-z¡…Õ”⁄·ÈÌÛ˙—Ò‹¸\s]+$");
+        var regexTexto = new Regex(@"^[A-Za-z√Å√â√ç√ì√ö√°√©√≠√≥√∫√ë√±√ú√º\s]+$");
         var regexTelefonoAR = new Regex(@"^(\+54|54)?\s?(9)?\s?(11|[2368]\d{2})\s?\d{3,4}[- ]?\d{4}$");
         var regexEdad = new Regex(@"^(?:[1-9]|[1-9][0-9])$");
 
@@ -58,23 +67,23 @@ public partial class Adoptantes : System.Web.UI.Page
             string.IsNullOrWhiteSpace(apellido) || string.IsNullOrWhiteSpace(telefono) ||
             string.IsNullOrWhiteSpace(edad))
         {
-            throw new Exception("Debe completar todos los campos obligatorios.");
+            throw new Exception(TraducirMsg("MSG_CAMPOS_OBLIGATORIOS", "Debe completar todos los campos obligatorios."));
         }
 
         if (!regexDni.IsMatch(dni))
-            throw new Exception("El DNI ingresado es inv·lido. Debe contener exactamente 8 dÌgitos.");
+            throw new Exception(TraducirMsg("MSG_DNI_INVALIDO", "El DNI ingresado es inv√°lido. Debe contener exactamente 8 d√≠gitos."));
 
         if (!regexTexto.IsMatch(nombre))
-            throw new Exception("El nombre ingresado es inv·lido. Solo se permiten letras y espacios.");
+            throw new Exception(TraducirMsg("MSG_NOMBRE_INVALIDO", "El nombre ingresado es inv√°lido. Solo se permiten letras y espacios."));
 
         if (!regexTexto.IsMatch(apellido))
-            throw new Exception("El apellido ingresado es inv·lido. Solo se permiten letras y espacios.");
+            throw new Exception(TraducirMsg("MSG_APELLIDO_INVALIDO", "El apellido ingresado es inv√°lido. Solo se permiten letras y espacios."));
 
         if (!regexTelefonoAR.IsMatch(telefono))
-            throw new Exception("El telÈfono ingresado es inv·lido.");
+            throw new Exception(TraducirMsg("MSG_TELEFONO_INVALIDO", "El tel√©fono ingresado es inv√°lido."));
 
         if (!regexEdad.IsMatch(edad))
-            throw new Exception("La edad ingresada es inv·lida. Debe ser un n˙mero entre 1 y 99.");
+            throw new Exception(TraducirMsg("MSG_EDAD_INVALIDA", "La edad ingresada es inv√°lida. Debe ser un n√∫mero entre 1 y 99."));
     }
 
     protected void btnAlta_Click(object sender, EventArgs e)
@@ -92,14 +101,14 @@ public partial class Adoptantes : System.Web.UI.Page
             ValidarCampos(dni, nombre, apellido, telefono, edad);
 
             if (bllAdoptante.ValidarDNI(dni))
-                throw new Exception("Ya existe un adoptante con ese DNI.");
+                throw new Exception(TraducirMsg("MSG_ADOPTANTE_DNI_DUPLICADO", "Ya existe un adoptante con ese DNI."));
 
             bllAdoptante.Alta(dni, nombre, apellido, telefono, int.Parse(edad), domicilio, mascotas);
 
-            // bllDigitoVerificador.CalcularDVAdoptante(); // TODO: descomentar cuando estÈ terminado
+            // bllDigitoVerificador.CalcularDVAdoptante(); // TODO: descomentar cuando est√© terminado
 
             CargarGrid();
-            MostrarMensaje("Adoptante agregado exitosamente!", false);
+            MostrarMensaje(TraducirMsg("MSG_ADOPTANTE_ALTA_OK", "Adoptante agregado exitosamente!"), false);
             ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
         }
         catch (Exception ex) { MostrarMensaje(ex.Message, true); }
@@ -111,7 +120,7 @@ public partial class Adoptantes : System.Web.UI.Page
         {
             if (ViewState["dni"] == null)
             {
-                MostrarMensaje("Por favor, seleccione un adoptante de la lista.", true);
+                MostrarMensaje(TraducirMsg("MSG_ADOPTANTE_SELECCIONAR", "Por favor, seleccione un adoptante de la lista."), true);
                 return;
             }
 
@@ -127,10 +136,10 @@ public partial class Adoptantes : System.Web.UI.Page
 
             bllAdoptante.Modificar(dni, nombre, apellido, telefono, int.Parse(edad), domicilio, mascotas);
 
-            // bllDigitoVerificador.CalcularDVAdoptante(); // TODO: descomentar cuando estÈ terminado
+            // bllDigitoVerificador.CalcularDVAdoptante(); // TODO: descomentar cuando est√© terminado
 
             CargarGrid();
-            MostrarMensaje("Adoptante modificado exitosamente!", false);
+            MostrarMensaje(TraducirMsg("MSG_ADOPTANTE_MODIFICADO_OK", "Adoptante modificado exitosamente!"), false);
             ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
         }
         catch (Exception ex) { MostrarMensaje(ex.Message, true); }
@@ -142,17 +151,17 @@ public partial class Adoptantes : System.Web.UI.Page
         {
             if (ViewState["dni"] == null)
             {
-                MostrarMensaje("Por favor, seleccione un adoptante de la lista.", true);
+                MostrarMensaje(TraducirMsg("MSG_ADOPTANTE_SELECCIONAR", "Por favor, seleccione un adoptante de la lista."), true);
                 return;
             }
 
             var dni = gvAdoptantes.SelectedRow.Cells[1].Text.ToString();
             bllAdoptante.ActivarDesactivar(dni);
 
-            // bllDigitoVerificador.CalcularDVAdoptante(); // TODO: descomentar cuando estÈ terminado
+            // bllDigitoVerificador.CalcularDVAdoptante(); // TODO: descomentar cuando est√© terminado
 
             CargarGrid();
-            MostrarMensaje("Estado del adoptante actualizado exitosamente!", false);
+            MostrarMensaje(TraducirMsg("MSG_ADOPTANTE_ESTADO_OK", "Estado del adoptante actualizado exitosamente!"), false);
             ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
         }
         catch (Exception ex) { MostrarMensaje(ex.Message, true); }

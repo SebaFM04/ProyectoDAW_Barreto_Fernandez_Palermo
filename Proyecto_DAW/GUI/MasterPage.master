@@ -11,8 +11,10 @@
 
     <link href="Estilos/EstilosMaestro.css" rel="stylesheet" />
 </head>
-<body>
+<body id="bodyMaster" runat="server">
     <form id="form1" runat="server">
+
+        <asp:ScriptManager ID="ScriptManagerMaster" runat="server" EnablePageMethods="true" />
 
         <!-- ===== NAVBAR ===== -->
         <nav class="navbar">

@@ -1,4 +1,5 @@
 ﻿using BLL;
+using SERVICIOS.MultiIdioma_Observer;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -49,6 +50,12 @@ public partial class RegistroAnimales : System.Web.UI.Page
         pnlAlerta.CssClass = esError ? "alert alert-error" : "alert alert-success";
     }
 
+    // Atajo para traducir mensajes propios de esta página.
+    private string TraducirMsg(string claveMensaje, string textoEspanolFallback)
+    {
+        return GestorIdioma.Instancia.TraducirMensaje("RegistroAnimales", claveMensaje, textoEspanolFallback);
+    }
+
     protected void btnAlta_Click(object sender, EventArgs e)
     {
         try
@@ -65,7 +72,7 @@ public partial class RegistroAnimales : System.Web.UI.Page
             bllDigitoVerificador.CalcularDVAnimal();
 
             CargarGrid();
-            MostrarMensaje("Animal agregado exitosamente!", false);
+            MostrarMensaje(TraducirMsg("MSG_ANIMAL_ALTA_OK", "Animal agregado exitosamente!"), false);
             ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
         }
         catch (Exception ex) { MostrarMensaje(ex.Message, true); }
@@ -77,7 +84,7 @@ public partial class RegistroAnimales : System.Web.UI.Page
         {
             if (ViewState["codigoAnimal"] == null)
             {
-                MostrarMensaje("Por favor, seleccione un animal de la lista.", true);
+                MostrarMensaje(TraducirMsg("MSG_SELECCIONAR_ANIMAL", "Por favor, seleccione un animal de la lista."), true);
                 return;
             }
 
@@ -94,7 +101,7 @@ public partial class RegistroAnimales : System.Web.UI.Page
             bllDigitoVerificador.CalcularDVAnimal();
 
             CargarGrid();
-            MostrarMensaje("Animal modificado exitosamente!", false);
+            MostrarMensaje(TraducirMsg("MSG_ANIMAL_MODIFICADO_OK", "Animal modificado exitosamente!"), false);
             ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
         }
         catch (Exception ex) { MostrarMensaje(ex.Message, true); }
@@ -106,14 +113,14 @@ public partial class RegistroAnimales : System.Web.UI.Page
         {
             if (ViewState["codigoAnimal"] == null)
             {
-                MostrarMensaje("Por favor, seleccione un animal de la lista.", true);
+                MostrarMensaje(TraducirMsg("MSG_SELECCIONAR_ANIMAL", "Por favor, seleccione un animal de la lista."), true);
                 return;
             }
 
             var codigo = gvAnimales.SelectedRow.Cells[1].Text.ToString();
             bllanimal.Baja(codigo);
             CargarGrid();
-            MostrarMensaje("Animal borrado exitosamente!", false);
+            MostrarMensaje(TraducirMsg("MSG_ANIMAL_BORRADO_OK", "Animal borrado exitosamente!"), false);
             ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
         }
         catch (Exception ex) { MostrarMensaje(ex.Message, true); }
@@ -134,14 +141,14 @@ public partial class RegistroAnimales : System.Web.UI.Page
     {
         if (!fuImportar.HasFile)
         {
-            lbMensaje.Text = "Seleccioná un archivo XML primero.";
+            lbMensaje.Text = TraducirMsg("MSG_SELECCIONAR_ARCHIVO_XML", "Seleccioná un archivo XML primero.");
             return;
         }
 
         string extension = Path.GetExtension(fuImportar.FileName).ToLower();
         if (extension != ".xml")
         {
-            lbMensajeXML.Text = "El archivo debe tener formato .xml";
+            lbMensajeXML.Text = TraducirMsg("MSG_FORMATO_XML_INVALIDO", "El archivo debe tener formato .xml");
             return;
         }
 

@@ -1,6 +1,7 @@
 using BE;
 using DAL;
 using SERVICIOS;
+using SERVICIOS.MultiIdioma_Observer;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,12 +27,12 @@ namespace BLL
 
         public void AltaAnimal(string especie, string raza, string nombre, string tamano, string sexo, string estadoDeAdopcion, bool vivo)
         {
-            if (string.IsNullOrWhiteSpace(especie)) throw new Exception("Ingrese la especie");
-            if (string.IsNullOrWhiteSpace(raza)) throw new Exception("Ingrese la raza");
-            if (string.IsNullOrWhiteSpace(nombre)) throw new Exception("Ingrese el nombre");
-            if (string.IsNullOrWhiteSpace(tamano)) throw new Exception("Ingrese el tamaño");
-            if (string.IsNullOrWhiteSpace(sexo)) throw new Exception("Ingrese el sexo");
-            if (string.IsNullOrWhiteSpace(estadoDeAdopcion)) throw new Exception("Ingrese el estado");
+            if (string.IsNullOrWhiteSpace(especie)) throw new Exception(GestorIdioma.Msg("MSG_INGRESE_ESPECIE", "Ingrese la especie"));
+            if (string.IsNullOrWhiteSpace(raza)) throw new Exception(GestorIdioma.Msg("MSG_INGRESE_RAZA", "Ingrese la raza"));
+            if (string.IsNullOrWhiteSpace(nombre)) throw new Exception(GestorIdioma.Msg("MSG_INGRESE_NOMBRE", "Ingrese el nombre"));
+            if (string.IsNullOrWhiteSpace(tamano)) throw new Exception(GestorIdioma.Msg("MSG_INGRESE_TAMANO", "Ingrese el tamaño"));
+            if (string.IsNullOrWhiteSpace(sexo)) throw new Exception(GestorIdioma.Msg("MSG_INGRESE_SEXO", "Ingrese el sexo"));
+            if (string.IsNullOrWhiteSpace(estadoDeAdopcion)) throw new Exception(GestorIdioma.Msg("MSG_INGRESE_ESTADO", "Ingrese el estado"));
 
             int codigoAnimal = dal.GenerarCodigoAnimalUnico();
             Animal animal = new Animal(codigoAnimal, especie, raza, nombre, tamano, sexo, estadoDeAdopcion, vivo);
@@ -47,16 +48,16 @@ namespace BLL
 
         public void Modificar(string codigo, string especie = null, string raza = null, string nombre = null, string tamano = null, string sexo = null, string estadoDeAdopcion = null, bool? vivo = null)
         {
-            if (string.IsNullOrWhiteSpace(especie)) throw new Exception("Ingrese la especie");
-            if (string.IsNullOrWhiteSpace(raza)) throw new Exception("Ingrese la raza");
-            if (string.IsNullOrWhiteSpace(nombre)) throw new Exception("Ingrese el nombre");
-            if (string.IsNullOrWhiteSpace(tamano)) throw new Exception("Ingrese el tamaño");
-            if (string.IsNullOrWhiteSpace(sexo)) throw new Exception("Ingrese el sexo");
-            if (string.IsNullOrWhiteSpace(estadoDeAdopcion)) throw new Exception("Ingrese el estado");
+            if (string.IsNullOrWhiteSpace(especie)) throw new Exception(GestorIdioma.Msg("MSG_INGRESE_ESPECIE", "Ingrese la especie"));
+            if (string.IsNullOrWhiteSpace(raza)) throw new Exception(GestorIdioma.Msg("MSG_INGRESE_RAZA", "Ingrese la raza"));
+            if (string.IsNullOrWhiteSpace(nombre)) throw new Exception(GestorIdioma.Msg("MSG_INGRESE_NOMBRE", "Ingrese el nombre"));
+            if (string.IsNullOrWhiteSpace(tamano)) throw new Exception(GestorIdioma.Msg("MSG_INGRESE_TAMANO", "Ingrese el tamaño"));
+            if (string.IsNullOrWhiteSpace(sexo)) throw new Exception(GestorIdioma.Msg("MSG_INGRESE_SEXO", "Ingrese el sexo"));
+            if (string.IsNullOrWhiteSpace(estadoDeAdopcion)) throw new Exception(GestorIdioma.Msg("MSG_INGRESE_ESTADO", "Ingrese el estado"));
 
             Animal animal = BuscarAnimalPorCodigo(codigo);
 
-            if (animal == null) throw new Exception("No se encontró un animal con el código proporcionado.");
+            if (animal == null) throw new Exception(GestorIdioma.Msg("MSG_ANIMAL_NO_ENCONTRADO", "No se encontró un animal con el código proporcionado."));
 
             animal.especie = especie;
             animal.raza = raza;
@@ -73,7 +74,7 @@ namespace BLL
 
         public void Baja(string codigo)
         {
-            if (VerificarAnimalAdoptado(codigo)) throw new Exception("No se puede borrar porque esta adoptado");
+            if (VerificarAnimalAdoptado(codigo)) throw new Exception(GestorIdioma.Msg("MSG_ANIMAL_ADOPTADO_NO_BORRAR", "No se puede borrar porque esta adoptado"));
 
             dal.Baja(codigo);
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion animales", "Animal dado de baja", 2);
@@ -137,16 +138,16 @@ namespace BLL
             catch (InvalidOperationException)
             {
                 // Esto salta tanto si el archivo no es XML como si es XML pero no tiene el formato <Animales><Animal>...
-                return "El archivo no es un XML válido o no tiene la estructura esperada (<Animales><Animal>...).";
+                return GestorIdioma.Msg("MSG_XML_INVALIDO", "El archivo no es un XML válido o no tiene la estructura esperada (<Animales><Animal>...).");
             }
             catch (Exception)
             {
-                return "Ocurrió un error inesperado al leer el archivo.";
+                return GestorIdioma.Msg("MSG_XML_ERROR_INESPERADO", "Ocurrió un error inesperado al leer el archivo.");
             }
 
             if (wrapper == null || wrapper.Listado == null || wrapper.Listado.Count == 0)
             {
-                return "El archivo XML no contiene animales para importar.";
+                return GestorIdioma.Msg("MSG_XML_SIN_ANIMALES", "El archivo XML no contiene animales para importar.");
             }
 
             int insertados = 0;
@@ -156,7 +157,7 @@ namespace BLL
             {
                 if (string.IsNullOrEmpty(a.nombre) || string.IsNullOrEmpty(a.especie))
                 {
-                    errores.AppendLine("Se omitió un registro sin nombre o especie.");
+                    errores.AppendLine(GestorIdioma.Msg("MSG_XML_REGISTRO_OMITIDO", "Se omitió un registro sin nombre o especie."));
                     continue;
                 }
 
@@ -164,7 +165,8 @@ namespace BLL
                 insertados++;
             }
 
-            return $"Se importaron {insertados} animales. {errores}";
+            string mensajeResultado = GestorIdioma.Msg("MSG_XML_IMPORT_RESULTADO", "Se importaron {0} animales. {1}");
+            return string.Format(mensajeResultado, insertados, errores);
         }
     }
 }

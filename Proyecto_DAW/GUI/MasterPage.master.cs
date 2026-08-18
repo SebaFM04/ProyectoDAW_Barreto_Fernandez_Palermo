@@ -5,7 +5,9 @@ using SERVICIOS.MultiIdioma_Observer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -24,14 +26,13 @@ public partial class MasterPage : System.Web.UI.MasterPage, IObservadorIdioma
         // Patrón Observer: el MasterPage se suscribe al GestorIdioma (Sujeto)
         // en cada request y se desuscribe al terminar de renderizar (Unload),
         // ya que en Web Forms la página no persiste entre requests como un
-        // Form de escritorio. Se registra por código para no tener que tocar
-        // el markup del .master.
+        // Form de escritorio.
         this.Unload += Page_Unload;
 
         // Un visitante anónimo (páginas públicas, antes de loguearse) no pasa
         // por Login.aspx.cs, así que el GestorIdioma de su sesión nunca se
         // inicializa ahí. Si es la primera vez en esta sesión, se carga el
-        // idioma por defecto (español) para que Traducir() ya tenga datos.
+        // idioma por defecto (español).
         if (Session["GestorIdiomaInicializado"] == null)
         {
             new bllIdioma().InicializarIdioma(1);
@@ -61,12 +62,6 @@ public partial class MasterPage : System.Web.UI.MasterPage, IObservadorIdioma
         lblIdiomaActual.Text = actual != null ? actual.nombre : "Idioma";
     }
 
-    // Se asigna CommandArgument por código en vez de por binding declarativo
-    // (CommandArgument='<%# Eval("codigo") %>'): con el binding declarativo
-    // el atributo llegaba vacío al cliente (__doPostBack con el segundo
-    // parámetro en blanco), lo que hacía fallar Convert.ToInt32 en
-    // rptIdiomas_ItemCommand silenciosamente. Asignarlo acá, con acceso
-    // tipado directo al objeto Idioma del ítem, es confiable.
     protected void rptIdiomas_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem)
@@ -84,44 +79,52 @@ public partial class MasterPage : System.Web.UI.MasterPage, IObservadorIdioma
     {
         if (e.CommandName != "CambiarIdioma") return;
 
-        if (!int.TryParse(Convert.ToString(e.CommandArgument), out int codigoIdioma))
-            return; // CommandArgument vacío o inválido: no hace nada, no rompe la página
+        int codigoIdioma;
+        bool esValido = int.TryParse(Convert.ToString(e.CommandArgument), out codigoIdioma);
+        if (!esValido)
+            return;
 
         new bllIdioma().CambiarIdioma(codigoIdioma);
 
-        // Recargar el selector para que el label del idioma actual y el
-        // resaltado del Repeater reflejen el cambio en este mismo postback.
         CargarSelectorIdioma();
     }
 
     // ===== IObservadorIdioma =====
-
+    //
+    // El texto de los controles de UI (Label/Button/etc.) NO se pisa acá.
+    // Se detectó que reasignar .Text a un asp:Label desde el servidor no
+    // sobrevive hasta el render final en este proyecto (asp:Button sí,
+    // porque su texto va en el atributo value en vez de como contenido).
+    // En vez de seguir peleando contra el ciclo de vida de Web Forms para
+    // ese caso puntual, la traducción real de los controles se resuelve
+    // client-side: este método solo marca en qué formulario está parado
+    // el usuario (atributo data-formulario del <body>), y
+    // Scripts/ScriptMaster.js pide las traducciones de ese formulario vía
+    // PageMethods.ObtenerTraducciones (ver más abajo) y las aplica directo
+    // sobre el DOM. El Sujeto (GestorIdioma) y la notificación del Observer
+    // siguen existiendo igual: lo que cambió es solo el paso final de
+    // "cómo se pinta la traducción en pantalla".
     public void ActualizarIdioma()
     {
         string nombreFormulario = System.IO.Path.GetFileNameWithoutExtension(Request.Url.AbsolutePath);
-        AplicarTraduccionRecursiva(this.Page, nombreFormulario);
+        if (bodyMaster != null)
+        {
+            bodyMaster.Attributes["data-formulario"] = nombreFormulario;
+        }
     }
 
-    private void AplicarTraduccionRecursiva(System.Web.UI.Control raiz, string nombreFormulario)
+    // Endpoint AJAX invocado desde ScriptMaster.js como
+    // PageMethods.ObtenerTraducciones("GestionVacuna", callback). Requiere
+    // el <asp:ScriptManager EnablePageMethods="true"> agregado en el
+    // markup de esta master. Un PageMethod es siempre static y no tiene
+    // acceso a la instancia de la página (this, controles): por eso
+    // delega toda la lógica a bllIdioma.ObtenerTraduccionesApi, que a su
+    // vez usa HttpContext.Current.Session vía GestorIdioma.Instancia.
+    // El dato viene siempre de la tabla Traduccion, sin excepción.
+    [WebMethod]
+    public static string ObtenerTraducciones(string formulario)
     {
-        var gestor = GestorIdioma.Instancia;
-        foreach (System.Web.UI.Control ctrl in raiz.Controls)
-        {
-            // lblIdiomaActual no se traduce por este mecanismo: su texto es
-            // el NOMBRE del idioma elegido (ej. "Español", "English"), lo
-            // arma CargarSelectorIdioma() a partir de la tabla Idioma, no es
-            // una clave de Control/Traduccion.
-            if (!string.IsNullOrEmpty(ctrl.ID) && ctrl.ID != "lblIdiomaActual")
-            {
-                string traduccion = gestor.Traducir(nombreFormulario, ctrl.ID);
-                if (ctrl is Label lbl) lbl.Text = traduccion;
-                else if (ctrl is Button btn) btn.Text = traduccion;
-                else if (ctrl is LinkButton lnk) lnk.Text = traduccion;
-                else if (ctrl is HyperLink hl) hl.Text = traduccion;
-            }
-            if (ctrl.Controls.Count > 0)
-                AplicarTraduccionRecursiva(ctrl, nombreFormulario);
-        }
+        return bllIdioma.ObtenerTraduccionesApi(formulario);
     }
 
     protected void Page_Unload(object sender, EventArgs e)

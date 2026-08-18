@@ -1,6 +1,7 @@
 ﻿using BE;
 using DAL;
 using SERVICIOS;
+using SERVICIOS.MultiIdioma_Observer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace BLL
             Adoptante adoptante = BuscarAdoptantePorDNI(dni);
             if (adoptante == null)
             {
-                throw new Exception("Adoptante no encontrado");
+                throw new Exception(GestorIdioma.Msg("MSG_ADOPTANTE_NO_ENCONTRADO", "Adoptante no encontrado"));
             }
 
             //Invierte el valor actual del campo activo

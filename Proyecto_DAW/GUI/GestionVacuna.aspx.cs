@@ -1,4 +1,5 @@
 ﻿using BLL;
+using SERVICIOS.MultiIdioma_Observer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,7 +69,7 @@ public partial class GestionVacuna : System.Web.UI.Page
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "Por favor, seleccione una vacuna de la lista.";
+            lbMensaje.Text = TraducirMsg("MSG_SELECCIONAR_VACUNA", "Por favor, seleccione una vacuna de la lista.");
             return;
         }
         ViewState["Modo"] = "Modificar";
@@ -87,7 +88,7 @@ public partial class GestionVacuna : System.Web.UI.Page
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "Por favor, complete todos los campos.";
+            lbMensaje.Text = TraducirMsg("MSG_CAMPOS_OBLIGATORIOS", "Por favor, complete todos los campos.");
             return;
         }
 
@@ -96,13 +97,13 @@ public partial class GestionVacuna : System.Web.UI.Page
             if (modo == "Alta")
             {
                 bllvacuna.AltaVacuna(txtCodigo.Text.Trim(), txtNombre.Text.Trim());
-                lbMensaje.Text = "Vacuna registrada exitosamente.";
+                lbMensaje.Text = TraducirMsg("MSG_VACUNA_REGISTRADA_OK", "Vacuna registrada exitosamente.");
             }
             else
             {
                 string codigoVacuna = ViewState["CodigoVacuna"].ToString();
                 bllvacuna.Modificar(codigoVacuna, txtNombre.Text.Trim(), rbActivo.Checked);
-                lbMensaje.Text = "Vacuna modificada exitosamente.";
+                lbMensaje.Text = TraducirMsg("MSG_VACUNA_MODIFICADA_OK", "Vacuna modificada exitosamente.");
             }
 
             bllDigitoVerificador.CalcularDVVacuna();
@@ -116,7 +117,7 @@ public partial class GestionVacuna : System.Web.UI.Page
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "Error: " + ex.Message;
+            lbMensaje.Text = TraducirMsg("MSG_PREFIJO_ERROR", "Error: ") + ex.Message;
         }
     }
 
@@ -130,5 +131,11 @@ public partial class GestionVacuna : System.Web.UI.Page
     protected void btnSalir_Click(object sender, EventArgs e)
     {
         Response.Redirect("GestionIntermediaVacunaAnimal.aspx");
+    }
+
+    // Atajo para traducir mensajes propios de esta página.
+    private string TraducirMsg(string claveMensaje, string textoEspanolFallback)
+    {
+        return GestorIdioma.Instancia.TraducirMensaje("GestionVacuna", claveMensaje, textoEspanolFallback);
     }
 }

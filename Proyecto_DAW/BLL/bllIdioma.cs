@@ -112,5 +112,75 @@ namespace BLL
                 CambiarIdioma(codigoIdioma);
             }
         }
+
+        // Traduce un mensaje dinámico (validación, confirmación, error
+        // propio) armado en el code-behind. "claveMensaje" es un
+        // identificador estable tipo "MSG_FALTAN_DATOS", registrado en
+        // Control con ese nombreControl. "textoEspanolActual" se usa como
+        // fallback si el idioma activo todavía no tiene ese mensaje
+        // traducido (evita mostrarle un placeholder "[MSG_...]" al usuario
+        // en medio de una validación).
+        public string TraducirMensaje(string nombreFormulario, string claveMensaje, string textoEspanolActual)
+        {
+            return GestorIdioma.Instancia.TraducirMensaje(nombreFormulario, claveMensaje, textoEspanolActual);
+        }
+
+        // API interna consultada por el selector de idioma vía AJAX
+        // (PageMethods, ver ObtenerTraducciones en MasterPage.master.cs /
+        // MasterPageLogin.master.cs). El dato en sí sigue viniendo 100% de
+        // la tabla Traduccion — acá solo se arma como texto con formato
+        // JSON para que el navegador pueda leerlo; no hay ninguna fuente
+        // de datos alternativa a la base.
+        // Resultado: {"lblCodigo":"Code:","btnAlta":"Add", ...}
+        // Sin dependencias de JavaScriptSerializer/Json.NET a propósito: no
+        // todos los proyectos Website tienen esas referencias disponibles.
+        public static string ObtenerTraduccionesApi(string nombreFormulario)
+        {
+            if (string.IsNullOrWhiteSpace(nombreFormulario))
+                return "{}";
+
+            int codigoIdioma = GestorIdioma.Instancia.CodigoIdiomaActual;
+
+            var servicioIdioma = new bllIdioma();
+            List<Traduccion> detalle = servicioIdioma.ObtenerEstadoTraduccionesPorFormulario(codigoIdioma, nombreFormulario);
+
+            var sb = new StringBuilder();
+            sb.Append("{");
+            bool primero = true;
+            foreach (Traduccion item in detalle)
+            {
+                if (string.IsNullOrEmpty(item.textoTraducido))
+                    continue; // sin traducción cargada para este idioma: el cliente conserva el texto que ya tiene
+
+                if (!primero) sb.Append(",");
+                primero = false;
+
+                sb.Append("\"").Append(SerializarParaApi(item.nombreControl)).Append("\":");
+                sb.Append("\"").Append(SerializarParaApi(item.textoTraducido)).Append("\"");
+            }
+            sb.Append("}");
+
+            return sb.ToString();
+        }
+
+        private static string SerializarParaApi(string texto)
+        {
+            if (string.IsNullOrEmpty(texto)) return string.Empty;
+
+            var sb = new StringBuilder();
+            foreach (char c in texto)
+            {
+                switch (c)
+                {
+                    case '\"': sb.Append("\\\""); break;
+                    case '\\': sb.Append("\\\\"); break;
+                    case '\r': sb.Append("\\r"); break;
+                    case '\n': sb.Append("\\n"); break;
+                    case '\t': sb.Append("\\t"); break;
+                    default: sb.Append(c); break;
+                }
+            }
+            return sb.ToString();
+        }
     }
 }

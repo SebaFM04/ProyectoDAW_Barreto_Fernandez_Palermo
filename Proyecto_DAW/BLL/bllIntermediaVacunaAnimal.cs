@@ -1,6 +1,7 @@
 ﻿using BE;
 using DAL;
 using SERVICIOS;
+using SERVICIOS.MultiIdioma_Observer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace BLL
             );
 
             if (tieneVigente)
-                throw new Exception("La fecha de aplicación debe ser mayor a la fecha de próxima aplicación de la vacuna ya registrada.");
+                throw new Exception(GestorIdioma.Msg("MSG_FECHA_APLICACION_INVALIDA", "La fecha de aplicación debe ser mayor a la fecha de próxima aplicación de la vacuna ya registrada."));
 
             IntermediaVacunaAnimal intermedia = new IntermediaVacunaAnimal(codigoVacuna, codigoAnimal, nombreVacuna, fechaAplicacion, fechaProximaAplicacion);
             dal.Alta(intermedia);
@@ -51,7 +52,7 @@ namespace BLL
             IntermediaVacunaAnimal intermedia = BuscarVacunaPorCodigo(codigo.ToString());
             if (intermedia == null)
             {
-                throw new Exception("No se encontró una intermedia con el código proporcionado.");
+                throw new Exception(GestorIdioma.Msg("MSG_INTERMEDIA_NO_ENCONTRADA", "No se encontró una intermedia con el código proporcionado."));
             }
 
             if (fechaAplicacion != null) intermedia.fechaAplicacion = fechaAplicacion;

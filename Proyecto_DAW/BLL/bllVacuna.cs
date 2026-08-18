@@ -1,6 +1,7 @@
 ﻿using DAL;
 using BE;
 using System;
+using SERVICIOS.MultiIdioma_Observer;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,13 +26,13 @@ namespace BLL
         public void AltaVacuna(string codigoVacuna, string nombreVacuna)
         {
             if (!System.Text.RegularExpressions.Regex.IsMatch(codigoVacuna, @"^[A-Z]{6}[0-9]{1}$"))
-                throw new Exception("El código debe estar compuesto por 6 letras mayúsculas y un número al final. Ej: ABCDEF1");
+                throw new Exception(GestorIdioma.Msg("MSG_VACUNA_CODIGO_FORMATO_INVALIDO", "El código debe estar compuesto por 6 letras mayúsculas y un número al final. Ej: ABCDEF1"));
 
             if (dal.ValidarVacuna(codigoVacuna))
-                throw new Exception("Ya existe una vacuna con ese código.");
+                throw new Exception(GestorIdioma.Msg("MSG_VACUNA_CODIGO_DUPLICADO", "Ya existe una vacuna con ese código."));
 
             if (dal.ValidarNombreVacuna(nombreVacuna))
-                throw new Exception("Ya existe una vacuna con ese nombre.");
+                throw new Exception(GestorIdioma.Msg("MSG_VACUNA_NOMBRE_DUPLICADO", "Ya existe una vacuna con ese nombre."));
 
             Vacuna vacuna = new Vacuna(codigoVacuna, nombreVacuna);
             dal.Alta(vacuna);
@@ -48,19 +49,19 @@ namespace BLL
         {
             Vacuna vacuna = BuscarVacunaPorCodigo(codigoVacuna);
             if (vacuna == null)
-                throw new Exception("No se encontró una vacuna con el código proporcionado.");
+                throw new Exception(GestorIdioma.Msg("MSG_VACUNA_NO_ENCONTRADA", "No se encontró una vacuna con el código proporcionado."));
 
             // Verificar si hay cambios
             bool mismoNombre = nombreVacuna == null || nombreVacuna == vacuna.nombreVacuna;
             bool mismoEstado = activo == null || activo.Value == vacuna.activo;
 
             if (mismoNombre && mismoEstado)
-                throw new Exception("No se realizaron cambios porque los datos son iguales.");
+                throw new Exception(GestorIdioma.Msg("MSG_VACUNA_SIN_CAMBIOS", "No se realizaron cambios porque los datos son iguales."));
 
             if (nombreVacuna != null && nombreVacuna != vacuna.nombreVacuna)
             {
                 if (dal.ValidarNombreVacuna(nombreVacuna))
-                    throw new Exception("Ya existe una vacuna con ese nombre.");
+                    throw new Exception(GestorIdioma.Msg("MSG_VACUNA_NOMBRE_DUPLICADO", "Ya existe una vacuna con ese nombre."));
             }
 
             if (nombreVacuna != null) vacuna.nombreVacuna = nombreVacuna;
@@ -75,7 +76,7 @@ namespace BLL
         {
             Vacuna vacuna = BuscarVacunaPorCodigo(codigoVacuna);
             if (vacuna == null)
-                throw new Exception("No se encontró una vacuna con el código proporcionado.");
+                throw new Exception(GestorIdioma.Msg("MSG_VACUNA_NO_ENCONTRADA", "No se encontró una vacuna con el código proporcionado."));
 
             vacuna.activo = false;  // ← solo cambiás el estado
 

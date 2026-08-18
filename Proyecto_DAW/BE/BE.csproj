@@ -76,6 +76,7 @@
     <Compile Include="Animal.cs" />
     <Compile Include="AnimalXML.cs" />
     <Compile Include="ControlIdioma.cs" />
+    <Compile Include="ControlTraducible.cs" />
     <Compile Include="DigitoVerificador.cs" />
     <Compile Include="Evento.cs" />
     <Compile Include="Idioma.cs" />

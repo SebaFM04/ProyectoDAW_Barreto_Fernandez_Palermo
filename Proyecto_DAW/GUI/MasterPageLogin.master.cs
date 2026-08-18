@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -16,15 +17,11 @@ public partial class MasterPageLogin : System.Web.UI.MasterPage, IObservadorIdio
         if (!IsPostBack)
             BloquearAcceso();
 
-        // Patrón Observer: mismo mecanismo que en MasterPage.master.cs. Se
-        // suscribe/notifica en cada request (incluidos postbacks, por si hay
-        // un selector de idioma con AutoPostBack en esta master) y se
-        // desuscribe al terminar de renderizar.
         this.Unload += Page_Unload;
 
         if (Session["GestorIdiomaInicializado"] == null)
         {
-            new BLL.bllIdioma().InicializarIdioma(1);
+            new bllIdioma().InicializarIdioma(1);
             Session["GestorIdiomaInicializado"] = true;
         }
 
@@ -51,9 +48,6 @@ public partial class MasterPageLogin : System.Web.UI.MasterPage, IObservadorIdio
         lblIdiomaActual.Text = actual != null ? actual.nombre : "Idioma";
     }
 
-    // Ver comentario equivalente en MasterPage.master.cs: se asigna
-    // CommandArgument por código porque el binding declarativo
-    // (CommandArgument='<%# Eval("codigo") %>') llegaba vacío al cliente.
     protected void rptIdiomas_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem)
@@ -71,7 +65,9 @@ public partial class MasterPageLogin : System.Web.UI.MasterPage, IObservadorIdio
     {
         if (e.CommandName != "CambiarIdioma") return;
 
-        if (!int.TryParse(Convert.ToString(e.CommandArgument), out int codigoIdioma))
+        int codigoIdioma;
+        bool esValido = int.TryParse(Convert.ToString(e.CommandArgument), out codigoIdioma);
+        if (!esValido)
             return;
 
         new bllIdioma().CambiarIdioma(codigoIdioma);
@@ -80,33 +76,27 @@ public partial class MasterPageLogin : System.Web.UI.MasterPage, IObservadorIdio
     }
 
     // ===== IObservadorIdioma =====
-
+    // Ver comentario equivalente en MasterPage.master.cs: la traducción de
+    // controles se resuelve client-side vía ScriptMaster.js +
+    // PageMethods.ObtenerTraducciones. Acá solo se marca el formulario actual.
     public void ActualizarIdioma()
     {
         string nombreFormulario = System.IO.Path.GetFileNameWithoutExtension(Request.Url.AbsolutePath);
-        AplicarTraduccionRecursiva(this.Page, nombreFormulario);
+        if (bodyMaster != null)
+        {
+            bodyMaster.Attributes["data-formulario"] = nombreFormulario;
+        }
     }
 
-    private void AplicarTraduccionRecursiva(System.Web.UI.Control raiz, string nombreFormulario)
+    // Ver comentario completo en MasterPage.master.cs. Esta master también
+    // lo expone porque un PageMethod solo está disponible en la master que
+    // efectivamente esté activa en el request (Login/DigitoVerificador usan
+    // esta, el resto de las páginas usan MasterPage). La lógica de armado
+    // vive una sola vez en bllIdioma.ObtenerTraduccionesApi.
+    [WebMethod]
+    public static string ObtenerTraducciones(string formulario)
     {
-        var gestor = GestorIdioma.Instancia;
-        foreach (System.Web.UI.Control ctrl in raiz.Controls)
-        {
-            // lblIdiomaActual no se traduce por este mecanismo: su texto es
-            // el NOMBRE del idioma elegido (ej. "Español", "English"), lo
-            // arma CargarSelectorIdioma() a partir de la tabla Idioma, no es
-            // una clave de Control/Traduccion.
-            if (!string.IsNullOrEmpty(ctrl.ID) && ctrl.ID != "lblIdiomaActual")
-            {
-                string traduccion = gestor.Traducir(nombreFormulario, ctrl.ID);
-                if (ctrl is Label lbl) lbl.Text = traduccion;
-                else if (ctrl is Button btn) btn.Text = traduccion;
-                else if (ctrl is LinkButton lnk) lnk.Text = traduccion;
-                else if (ctrl is HyperLink hl) hl.Text = traduccion;
-            }
-            if (ctrl.Controls.Count > 0)
-                AplicarTraduccionRecursiva(ctrl, nombreFormulario);
-        }
+        return bllIdioma.ObtenerTraduccionesApi(formulario);
     }
 
     protected void Page_Unload(object sender, EventArgs e)
