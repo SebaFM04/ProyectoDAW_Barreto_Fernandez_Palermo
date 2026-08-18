@@ -25,8 +25,8 @@ namespace DAL
         public void Alta(Usuario usuario)
         {
             string query = "INSERT INTO Usuario " +
-                         "(dni, nombreUsuario, contraseña, nombre, apellido, rol, email, bloqueo, intentos, lenguaje, activo, domicilio) " +
-                         "VALUES (@dni, @nombreUsuario, @contraseña, @nombre, @apellido, @rol, @email, @bloqueo, @intentos, @lenguaje, @activo, @domicilio)";
+                         "(dni, nombreUsuario, contraseña, nombre, apellido, rol, email, bloqueo, intentos, lenguaje, activo, domicilio, codigoIdioma) " +
+                         "VALUES (@dni, @nombreUsuario, @contraseña, @nombre, @apellido, @rol, @email, @bloqueo, @intentos, @lenguaje, @activo, @domicilio, @codigoIdioma)";
             EjecutarQueryConEntidad(usuario, query);
         }
 
@@ -181,7 +181,9 @@ namespace DAL
                 Convert.ToBoolean(reader["bloqueo"]),
                 Convert.ToInt32(reader["intentos"]),
                 reader["lenguaje"].ToString(),
-                Convert.ToBoolean(reader["activo"])
+                Convert.ToBoolean(reader["activo"]),
+                domicilioPlain,
+                reader["codigoIdioma"] == DBNull.Value ? 1 : Convert.ToInt32(reader["codigoIdioma"])
             );
         }
     }

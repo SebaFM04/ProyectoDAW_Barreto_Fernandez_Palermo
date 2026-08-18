@@ -8,7 +8,7 @@ namespace BE
 {
     public class Usuario
     {
-        public Usuario(string pDni, string pNombreUsuario, string pContraseñaUsuario, string pNombre, string pApellido, string pRol, string pEmailUsuario, bool pBloqueo, int pIntentos, string pLenguaje, bool pActivado, string pDomicilio = "")
+        public Usuario(string pDni, string pNombreUsuario, string pContraseñaUsuario, string pNombre, string pApellido, string pRol, string pEmailUsuario, bool pBloqueo, int pIntentos, string pLenguaje, bool pActivado, string pDomicilio = "", int pCodigoIdioma = 1)
         {
             dni = pDni;
             nombreUsuario = pNombreUsuario;
@@ -22,6 +22,7 @@ namespace BE
             lenguaje = pLenguaje;
             activo = pActivado;
             domicilio = pDomicilio;
+            codigoIdioma = pCodigoIdioma;
         }
 
         public string dni { get; set; }
@@ -36,5 +37,8 @@ namespace BE
         public string lenguaje { get; set; }
         public bool activo { get; set; }
         public string domicilio { get; set; }
+
+        // Idioma preferido del usuario (FK -> Idioma.codigo). 1 = Español por defecto.
+        public int codigoIdioma { get; set; }
     }
 }

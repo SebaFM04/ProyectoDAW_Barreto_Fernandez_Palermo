@@ -78,6 +78,7 @@
     <Compile Include="bllBackUpRestore.cs" />
     <Compile Include="bllBitacora.cs" />
     <Compile Include="bllDigitoVerificador.cs" />
+    <Compile Include="bllIdioma.cs" />
     <Compile Include="bllIntermediaVacunaAnimal.cs" />
     <Compile Include="bllUsuario.cs" />
     <Compile Include="bllVacuna.cs" />

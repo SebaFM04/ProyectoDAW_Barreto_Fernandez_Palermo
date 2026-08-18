@@ -27,7 +27,7 @@ namespace BLL
         {
             bllDigitoVerificador.CalcularDVUsuario();
         }
-        public void Alta(string dni, string nombre, string apellido, string rol, string email, string contraseña, string domicilio = "")
+        public void Alta(string dni, string nombre, string apellido, string rol, string email, string contraseña, string domicilio = "", int codigoIdioma = 1)
         {
             if (dal.ValidarDni(dni))
                 throw new Exception("Ya existe un usuario con ese DNI.");
@@ -37,7 +37,7 @@ namespace BLL
 
             string nombreUsuario = dni + nombre;
             string contraseñaHasheada = HashearContraseña(contraseña);
-            Usuario nuevoUsuario = new Usuario(dni, nombreUsuario, contraseñaHasheada, nombre, apellido, rol, email, false, 0, "es", true, domicilio);
+            Usuario nuevoUsuario = new Usuario(dni, nombreUsuario, contraseñaHasheada, nombre, apellido, rol, email, false, 0, "es", true, domicilio, codigoIdioma);
             dal.Alta(nuevoUsuario);
             RecalcularDigitoUsuario();
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario dado de alta", 1);

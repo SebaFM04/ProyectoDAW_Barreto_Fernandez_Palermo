@@ -58,6 +58,10 @@ public partial class Login : System.Web.UI.Page
                             bllU.ReiniciarIntentos(usuario);
                             claseSession.Gestor.SetUsuario(usuario);
 
+                            // Carga en el GestorIdioma (Sujeto del Observer) el idioma
+                            // preferido del usuario para el resto de la sesión.
+                            new bllIdioma().InicializarIdioma(usuario.codigoIdioma);
+
                             // ===== DETECCIÓN DEL DÍGITO VERIFICADOR =====
                             if (bllDigitoVerificador.Deteccion())
                             {

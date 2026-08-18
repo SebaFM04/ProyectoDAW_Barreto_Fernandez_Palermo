@@ -31,15 +31,15 @@
     <div style="padding: 0 10px;">
         <div class="fila-form">
             <div class="campo-grupo">
-                <asp:Label runat="server" Text="Código:" />
+                <asp:Label ID="lblCodigoGestionVacuna" runat="server" Text="Código:" />
                 <asp:TextBox ID="txtCodigo" runat="server" CssClass="ctrl" Width="150px" />
             </div>
             <div class="campo-grupo">
-                <asp:Label runat="server" Text="Nombre:" />
+                <asp:Label ID="lblNombreGestionVacuna" runat="server" Text="Nombre:" />
                 <asp:TextBox ID="txtNombre" runat="server" CssClass="ctrl" Width="250px" />
             </div>
             <div class="campo-grupo">
-                <asp:Label runat="server" Text="Estado:" />
+                <asp:Label ID="lblEstadoGestionVacuna" runat="server" Text="Estado:" />
                 <asp:RadioButton ID="rbActivo" runat="server" Text="Activo" GroupName="Estado" Checked="true" />
                 <asp:RadioButton ID="rbInactivo" runat="server" Text="Inactivo" GroupName="Estado" />
             </div>

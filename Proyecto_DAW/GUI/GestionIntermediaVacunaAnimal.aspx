@@ -82,11 +82,11 @@
         </div>
         <div class="fila-form">
             <div class="campo-grupo">
-                <asp:Label runat="server" Text="Fecha aplicación:" />
+                <asp:Label ID="lblFechaAplicacionGestionIntermediaVacunaAnimal" runat="server" Text="Fecha aplicación:" />
                 <asp:TextBox ID="txtFechaAplicacion" runat="server" CssClass="ctrl" TextMode="Date" Width="175px" />
             </div>
             <div class="campo-grupo">
-                <asp:Label runat="server" Text="Próxima aplicación:" />
+                <asp:Label ID="lblProximaAplicacionGestionIntermediaVacunaAnimal" runat="server" Text="Próxima aplicación:" />
                 <asp:TextBox ID="txtFechaAplicacionProxima" runat="server" CssClass="ctrl" TextMode="Date" Width="175px" />
             </div>
         </div>

@@ -26,6 +26,22 @@
                         <li>
                             <asp:LinkButton ID="btnInicio" runat="server" OnClick="btnInicio_Click">Inicio</asp:LinkButton>
                         </li>
+
+                        <!-- Idioma -->
+                        <li class="dropdown" runat="server" id="liIdioma">
+                            <a href="#" class="dropdown-toggle">🌐 <asp:Label ID="lblIdiomaActual" runat="server" /></a>
+                            <ul class="dropdown-menu">
+                                <asp:Repeater ID="rptIdiomas" runat="server" OnItemCommand="rptIdiomas_ItemCommand" OnItemDataBound="rptIdiomas_ItemDataBound">
+                                    <ItemTemplate>
+                                        <li>
+                                            <asp:LinkButton ID="lnkIdioma" runat="server"
+                                                Text='<%# Eval("nombre") %>'
+                                                CommandName="CambiarIdioma" />
+                                        </li>
+                                    </ItemTemplate>
+                                </asp:Repeater>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
 

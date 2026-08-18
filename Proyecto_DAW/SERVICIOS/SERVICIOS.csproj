@@ -74,6 +74,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="encriptador.cs" />
+    <Compile Include="MultiIdioma_Observer\GestorIdioma.cs" />
+    <Compile Include="MultiIdioma_Observer\IObservadorIdioma.cs" />
+    <Compile Include="MultiIdioma_Observer\ISujetoIdioma.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="claseSession.cs" />
   </ItemGroup>
