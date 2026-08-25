@@ -24,7 +24,7 @@ namespace BLL
             bllDigitoVerificador = new bllDigitoVerificador();
         }
 
-        public void AltaAnimal(string especie, string raza, string nombre, string tamano, string sexo, string estadoDeAdopcion, bool vivo)
+        public int AltaAnimal(string especie, string raza, string nombre, string tamano, string sexo, string estadoDeAdopcion, bool vivo)
         {
             if (string.IsNullOrWhiteSpace(especie)) throw new Exception("Ingrese la especie");
             if (string.IsNullOrWhiteSpace(raza)) throw new Exception("Ingrese la raza");
@@ -38,6 +38,8 @@ namespace BLL
             dal.Alta(animal);
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion animales", "Animal dado de alta", 2);
             RecalcularDigitoAnimal();
+
+            return codigoAnimal;
         }
 
         private void RecalcularDigitoAnimal()

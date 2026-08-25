@@ -95,7 +95,7 @@ public partial class _Default : System.Web.UI.Page
     private void MostrarMensaje(string mensaje)
     {
         string msg = mensaje.Replace("'", "\\'").Replace("\n", " ");
-        ClientScript.RegisterStartupScript(GetType(), "msg", $"mostrarPopup('{msg}');", true);
+        ClientScript.RegisterStartupScript(GetType(), "msg", "mostrarPopup('{msg}');", true);
     }
 
     protected void btnCancelar_Click(object sender, EventArgs e)

@@ -62,8 +62,6 @@ public partial class RegistroAnimales : System.Web.UI.Page
 
             bllanimal.AltaAnimal(especie, raza, nombre, tamano, sexo, estadoAdopcion, true);
 
-            bllDigitoVerificador.CalcularDVAnimal();
-
             CargarGrid();
             MostrarMensaje("Animal agregado exitosamente!", false);
             ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
@@ -90,8 +88,6 @@ public partial class RegistroAnimales : System.Web.UI.Page
             var estadoAdopcion = ddlEstado.SelectedValue.ToString();
 
             bllanimal.Modificar(codigo, especie, raza, nombre, tamano, sexo, estadoAdopcion, true);
-
-            bllDigitoVerificador.CalcularDVAnimal();
 
             CargarGrid();
             MostrarMensaje("Animal modificado exitosamente!", false);
