@@ -60,11 +60,13 @@ public partial class RegistroAnimales : System.Web.UI.Page
             var sexo = ddlSexo.SelectedValue.ToString();
             var estadoAdopcion = ddlEstado.SelectedValue.ToString();
 
-            bllanimal.AltaAnimal(especie, raza, nombre, tamano, sexo, estadoAdopcion, true);
+            int codigoAnimalNuevo = bllanimal.AltaAnimal(especie, raza, nombre, tamano, sexo, estadoAdopcion, true);
+            Response.Redirect("FichaIngreso.aspx?codigoAnimal=" + codigoAnimalNuevo, false);
+            Context.ApplicationInstance.CompleteRequest();
 
-            CargarGrid();
-            MostrarMensaje("Animal agregado exitosamente!", false);
-            ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
+            //CargarGrid();
+            //MostrarMensaje("Animal agregado exitosamente!", false);
+            //ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
         }
         catch (Exception ex) { MostrarMensaje(ex.Message, true); }
     }
