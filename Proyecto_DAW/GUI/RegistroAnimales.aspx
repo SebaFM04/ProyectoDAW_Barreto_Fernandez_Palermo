@@ -40,6 +40,14 @@
                                 CssClass="btn-link" />
                         </ItemTemplate>
                     </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Certificados">
+                        <ItemTemplate>
+                            <asp:HyperLink runat="server" 
+                                NavigateUrl='<%# "Certificados.aspx?codigoAnimal=" + Eval("codigoAnimal") %>' 
+                                Text="Ver Certificados" 
+                                CssClass="btn-link" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
 

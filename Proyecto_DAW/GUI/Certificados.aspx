@@ -1,86 +1,30 @@
-<%@ Page Title="Certificados" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Certificados.aspx.cs" Inherits="Certificados" %>
+<%@ Page Title="Certificados de Adopción" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Certificados.aspx.cs" Inherits="Certificados" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="head" runat="server">
-    <link href="Estilos/EstilosAdopciones.css" rel="stylesheet" />
+    <link href="Estilos/EstilosCertificadoAdopcion.css" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div class="page-container">
-    <h2 class="titulo">Certificados de Adopcion</h2>
+    <h2 class="titulo">Certificados de Adopci&oacute;n</h2>
+        
+    <asp:Label ID="lbFiltroActivo" runat="server" CssClass="info-animal" />
 
-    <div class="layout-adopcion">
+    <asp:GridView ID="gvCertificados" runat="server" CssClass="grid" AutoGenerateColumns="false" EmptyDataText="No hay certificados para mostrar">
+        <Columns>
+            <asp:BoundField DataField="codigo" HeaderText="C&oacute;digo" HtmlEncode="false" />
+            <asp:BoundField DataField="fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
+            <asp:BoundField DataField="nombreAnimal" HeaderText="Animal" />
+            <asp:BoundField DataField="especie" HeaderText="Especie" />
+            <asp:BoundField DataField="raza" HeaderText="Raza" />
+            <asp:BoundField DataField="nombreAdoptante" HeaderText="Adoptante" />
+            <asp:BoundField DataField="apellidoAdoptante" HeaderText="Apellido" />
+            <asp:BoundField DataField="dni" HeaderText="DNI" />
+        </Columns>
+    </asp:GridView>
 
-        <div class="columna-grillas">
-
-            <%-- GRILLA CERTIFICADOS --%>
-            <p class="seccion-titulo">Certificados de adopcion:</p>
-            <asp:GridView ID="gvCertificados" runat="server"
-                CssClass="grid"
-                AutoGenerateColumns="false"
-                AutoGenerateSelectButton="true"
-                OnSelectedIndexChanged="gvCertificados_SelectedIndexChanged"
-                EmptyDataText="No hay certificados para mostrar">
-                <Columns>
-                    <asp:BoundField HeaderText="Codigo" />
-                    <asp:BoundField HeaderText="DNI adoptante" />
-                    <asp:BoundField HeaderText="Codigo animal" />
-                    <asp:BoundField HeaderText="Especie" />
-                    <asp:BoundField HeaderText="Fecha" />
-                </Columns>
-            </asp:GridView>
-
-            <%-- GRILLA ADOPTANTES --%>
-            <p class="seccion-titulo">Adoptantes:</p>
-            <asp:GridView ID="gvAdoptantes" runat="server"
-                CssClass="grid"
-                AutoGenerateColumns="false"
-                AutoGenerateSelectButton="true"
-                OnSelectedIndexChanged="gvAdoptantes_SelectedIndexChanged"
-                EmptyDataText="No hay adoptantes para mostrar">
-                <Columns>
-                    <asp:BoundField DataField="dni"      HeaderText="DNI" />
-                    <asp:BoundField DataField="nombre"   HeaderText="Nombre" />
-                    <asp:BoundField DataField="apellido" HeaderText="Apellido" />
-                </Columns>
-            </asp:GridView>
-
-            <%-- GRILLA ANIMALES --%>
-            <p class="seccion-titulo">Animales:</p>
-            <asp:GridView ID="gvAnimales" runat="server"
-                CssClass="grid"
-                AutoGenerateColumns="false"
-                AutoGenerateSelectButton="true"
-                OnSelectedIndexChanged="gvAnimales_SelectedIndexChanged"
-                EmptyDataText="No hay animales para mostrar">
-                <Columns>
-                    <asp:BoundField DataField="codigoAnimal" HeaderText="Codigo" />
-                    <asp:BoundField DataField="especie"      HeaderText="Especie" />
-                    <asp:BoundField DataField="raza"         HeaderText="Raza" />
-                    <asp:BoundField DataField="nombre"       HeaderText="Nombre" />
-                </Columns>
-            </asp:GridView>
-
-            <asp:Panel ID="pnlAlerta" runat="server" Visible="false" CssClass="alert">
-                <asp:Label ID="lbMensaje" runat="server" Text=""></asp:Label>
-            </asp:Panel>
-
-        </div>
-
-        <%-- BOTONES --%>
-        <div class="columna-botones">
-            <asp:Button ID="btnGenerarCertificado" runat="server" Text="Generar certificado de adopcion" CssClass="btn btn-especial" OnClick="btnGenerarCertificado_Click" />
-            <asp:Button ID="btnModificar"          runat="server" Text="Modificar"                       CssClass="btn"            OnClick="btnModificar_Click" />
-            <asp:Button ID="btnAplicar"            runat="server" Text="Aplicar"                         CssClass="btn"            OnClick="btnAplicar_Click" />
-            <asp:Button ID="btnCancelar"           runat="server" Text="Cancelar"                        CssClass="btn btn-secundario" OnClick="btnCancelar_Click" />
-            <asp:Button ID="btnSalir"              runat="server" Text="Salir"                           CssClass="btn btn-secundario" OnClick="btnSalir_Click" />
-
-            <hr class="separador" />
-
-            <asp:Button ID="btnReporte" runat="server" Text="Generar reporte inteligente" CssClass="btn btn-especial" OnClick="btnReporte_Click" />
-        </div>
-
-    </div>
+    <asp:Button ID="btnVerTodos" runat="server" Text="Ver todos los certificados" CssClass="btn secundario" OnClick="btnVerTodos_Click" Visible="false" />
 </div>
 
 </asp:Content>

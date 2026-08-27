@@ -1,83 +1,46 @@
-using System;
+﻿using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BLL;
 
 public partial class Certificados : System.Web.UI.Page
 {
-    bllAnimal bllAnimal;
-    bllUsuario bllUsuario;
+    bllCertificadoAdopcion bllCertificado;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        bllAnimal  = new bllAnimal();
-        bllUsuario = new bllUsuario();
+        bllCertificado = new bllCertificadoAdopcion();
 
         if (!IsPostBack)
         {
-            CargarGridAnimales();
-            CargarGridAdoptantes();
+            string codigoAnimalParam = Request.QueryString["codigoAnimal"];
+            string dniParam = Request.QueryString["dni"];
+
+            if (!string.IsNullOrEmpty(codigoAnimalParam) && int.TryParse(codigoAnimalParam, out int codigoAnimal))
+            {
+                gvCertificados.DataSource = bllCertificado.ObtenerCertificadosPorAnimal(codigoAnimal);
+                lbFiltroActivo.Text = "Mostrando certificados del animal seleccionado.";
+                btnVerTodos.Visible = true;
+            }
+            else if (!string.IsNullOrEmpty(dniParam))
+            {
+                gvCertificados.DataSource = bllCertificado.ObtenerCertificadosPorAdoptante(dniParam);
+                lbFiltroActivo.Text = "Mostrando certificados del adoptante seleccionado.";
+                btnVerTodos.Visible = true;
+            }
+            else
+            {
+                gvCertificados.DataSource = bllCertificado.RetornarCertificados();
+                lbFiltroActivo.Text = "";
+                btnVerTodos.Visible = false;
+            }
+
+            gvCertificados.DataBind();
         }
     }
 
-    private void CargarGridAnimales()
+    protected void btnVerTodos_Click(object sender, EventArgs e)
     {
-        gvAnimales.DataSource = bllAnimal.RetornarAnimales();
-        gvAnimales.DataBind();
-    }
-
-    private void CargarGridAdoptantes()
-    {
-        // Filtra usuarios con rol adoptante
-        var adoptantes = bllUsuario.RetornarUsuarios()
-            .FindAll(u => u.rol.Equals("adoptante", StringComparison.OrdinalIgnoreCase));
-
-        gvAdoptantes.DataSource = adoptantes;
-        gvAdoptantes.DataBind();
-    }
-
-    protected void gvCertificados_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        // TODO: implementar en proxima entrega
-    }
-
-    protected void gvAdoptantes_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        // TODO: implementar en proxima entrega
-    }
-
-    protected void gvAnimales_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        // TODO: implementar en proxima entrega
-    }
-
-    protected void btnGenerarCertificado_Click(object sender, EventArgs e)
-    {
-        // TODO: implementar en proxima entrega
-    }
-
-    protected void btnModificar_Click(object sender, EventArgs e)
-    {
-        // TODO: implementar en proxima entrega
-    }
-
-    protected void btnAplicar_Click(object sender, EventArgs e)
-    {
-        // TODO: implementar en proxima entrega
-    }
-
-    protected void btnCancelar_Click(object sender, EventArgs e)
-    {
-        // TODO: implementar en proxima entrega
-    }
-
-    protected void btnSalir_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("MenuPrincipal.aspx");
-    }
-
-    protected void btnReporte_Click(object sender, EventArgs e)
-    {
-        // TODO: implementar en proxima entrega
+        Response.Redirect("Certificados.aspx");
     }
 }

@@ -81,7 +81,8 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 "gestionvacuna.aspx",
                 "login.aspx",
                 "fichaingreso.aspx",
-                "fichamedica.aspx"
+                "fichamedica.aspx",
+                "registraradopcion.aspx"
             };
             if (!esPublica && !paginasAdmin.Contains(pagina))
             {

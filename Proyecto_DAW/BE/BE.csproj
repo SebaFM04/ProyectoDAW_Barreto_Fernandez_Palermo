@@ -81,6 +81,7 @@
     <Compile Include="Adoptante.cs" />
     <Compile Include="Animal.cs" />
     <Compile Include="AnimalXML.cs" />
+    <Compile Include="CertificadoAdopcion.cs" />
     <Compile Include="DigitoVerificador.cs" />
     <Compile Include="Evento.cs" />
     <Compile Include="FichaDeIngreso.cs" />

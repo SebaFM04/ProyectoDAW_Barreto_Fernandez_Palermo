@@ -97,6 +97,16 @@ namespace BLL
             return BuscarAnimalPorCodigo(codigo).estadoAdopcion == "Adoptado";
         }
 
+        public void MarcarComoAdoptado(string codigo)
+        {
+            Animal animal = BuscarAnimalPorCodigo(codigo);
+            if (animal == null) throw new Exception("No se encontró un animal con el código proporcionado.");
+
+            animal.estadoAdopcion = "Adoptado";
+            dal.Modificar(animal);
+            RecalcularDigitoAnimal();
+        }
+
         public string RetornarEstadoDelAnimal(string codigo)
         {
             return BuscarAnimalPorCodigo(codigo).estadoAdopcion;
