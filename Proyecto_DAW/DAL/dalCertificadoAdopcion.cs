@@ -35,6 +35,30 @@ namespace DAL
             return codigo;
         }
 
+        public AccionSql ConstruirAccionAlta(CertificadoAdopcion certificado)
+        {
+            string query = "INSERT INTO CertificadoAdopcion " +
+                "(codigo, dni, codigoAnimal, especie, raza, nombreAnimal, nombreAdoptante, apellidoAdoptante, fecha, activo) " +
+                "VALUES (@codigo, @dni, @codigoAnimal, @especie, @raza, @nombreAnimal, @nombreAdoptante, @apellidoAdoptante, @fecha, @activo)";
+            var parametros = ParametroHelper.CrearParametros(certificado);
+            return new AccionSql { Query = query, Parametros = parametros };
+        }
+
+        public AccionSql ConstruirAccionCancelar(string codigo)
+        {
+            string query = "UPDATE CertificadoAdopcion SET activo = 0 WHERE codigo = @codigo";
+            var parametros = new Dictionary<string, object> { { "@codigo", codigo } };
+            return new AccionSql { Query = query, Parametros = parametros };
+        }
+
+        public CertificadoAdopcion ObtenerPorCodigo(string codigo)
+        {
+            string query = "SELECT * FROM CertificadoAdopcion WHERE codigo = @codigo";
+            var parametros = new Dictionary<string, object> { { "@codigo", codigo } };
+            var lista = dal.RetornarLista(query, MapearCertificado, parametros);
+            return lista.FirstOrDefault();
+        }
+
         public List<CertificadoAdopcion> ObtenerPorDni(string dni)
         {
             string query = "SELECT * FROM CertificadoAdopcion WHERE dni = @dni ORDER BY fecha DESC";
@@ -79,7 +103,8 @@ namespace DAL
                 reader["nombreAnimal"].ToString(),
                 reader["nombreAdoptante"].ToString(),
                 reader["apellidoAdoptante"].ToString(),
-                Convert.ToDateTime(reader["fecha"])
+                Convert.ToDateTime(reader["fecha"]),
+                Convert.ToBoolean(reader["activo"])
             );
         }
     }

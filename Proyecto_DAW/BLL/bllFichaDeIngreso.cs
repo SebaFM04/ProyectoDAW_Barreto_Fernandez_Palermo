@@ -55,6 +55,20 @@ namespace BLL
             RegistrarEnHistorial(ficha.codigoFicha, motivo);
         }
 
+        public AccionSql ConstruirAccionReingreso(int codigoAnimal, string motivo)
+        {
+            if (string.IsNullOrWhiteSpace(motivo))
+                throw new Exception("Debe indicar el motivo del reingreso.");
+
+            FichaDeIngreso ficha = ObtenerFichaPorAnimal(codigoAnimal);
+            if (ficha == null)
+                throw new Exception("Este animal no tiene una ficha de ingreso creada.");
+
+            int codigoHistorial = dalHistorial.GenerarCodigoHistorialUnico();
+            HistorialIngreso registro = new HistorialIngreso(codigoHistorial, ficha.codigoFicha, DateTime.Now, motivo);
+            return dalHistorial.ConstruirAccionAlta(registro);
+        }
+
         private void RegistrarEnHistorial(int codigoFicha, string motivo)
         {
             int codigoHistorial = dalHistorial.GenerarCodigoHistorialUnico();

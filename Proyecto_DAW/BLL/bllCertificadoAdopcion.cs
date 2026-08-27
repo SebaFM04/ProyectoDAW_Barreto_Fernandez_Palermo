@@ -12,16 +12,40 @@ namespace BLL
     public class bllCertificadoAdopcion
     {
         dalCertificadoAdopcion dal;
+        Acceso acceso;
         bllAnimal bllAnimal;
         bllAdoptante bllAdoptante;
         bllBitacora bllBitacora;
+        bllDigitoVerificador bllDigitoVerificador;
+        bllFichaDeIngreso bllFichaDeIngreso;
 
         public bllCertificadoAdopcion()
         {
             dal = new dalCertificadoAdopcion();
+            acceso = new Acceso();
             bllAnimal = new bllAnimal();
             bllAdoptante = new bllAdoptante();
             bllBitacora = new bllBitacora();
+            bllDigitoVerificador = new bllDigitoVerificador();
+            bllFichaDeIngreso = new bllFichaDeIngreso();
+        }
+
+        public void CancelarAdopcion(string codigoCertificado)
+        {
+            CertificadoAdopcion certificado = dal.ObtenerPorCodigo(codigoCertificado);
+            if (certificado == null) throw new Exception("No se encontró el certificado indicado.");
+            if (!certificado.activo) throw new Exception("Este certificado ya fue cancelado anteriormente.");
+
+            AccionSql accionCancelarCertificado = dal.ConstruirAccionCancelar(codigoCertificado);
+            AccionSql accionAnimalDisponible = bllAnimal.ConstruirAccionCambiarEstadoAdopcion(certificado.codigoAnimal.ToString(), "En Adopcion");
+            AccionSql accionReingreso = bllFichaDeIngreso.ConstruirAccionReingreso(certificado.codigoAnimal, "Devolución de adopción");
+
+            List<AccionSql> acciones = new List<AccionSql> { accionCancelarCertificado, accionAnimalDisponible, accionReingreso };
+            acceso.EjecutarTransaccion(acciones);
+
+            bllDigitoVerificador.CalcularDVAnimal();
+            bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario,
+                "Gestion adopciones", "Adopción cancelada", 2);
         }
 
         public void RegistrarAdopcion(string dni, int codigoAnimal)
@@ -41,9 +65,17 @@ namespace BLL
                 adoptante.nombre, adoptante.apellido, DateTime.Now
             );
 
-            dal.Alta(certificado);
-            bllAnimal.MarcarComoAdoptado(codigoAnimal.ToString());
+            // Arma las dos acciones, sin ejecutarlas todavía
+            AccionSql accionAltaCertificado = dal.ConstruirAccionAlta(certificado);
+            AccionSql accionMarcarAdoptado = bllAnimal.ConstruirAccionMarcarAdoptado(codigoAnimal.ToString());
 
+            List<AccionSql> acciones = new List<AccionSql> { accionAltaCertificado, accionMarcarAdoptado };
+
+            // Ejecuta las dos juntas: o pasan las dos, o no pasa ninguna
+            acceso.EjecutarTransaccion(acciones);
+
+            // Recién acá, con los cambios ya confirmados en la base, hacemos los efectos secundarios
+            bllDigitoVerificador.CalcularDVAnimal();
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario,
                 "Gestion adopciones", "Adopción registrada", 2);
         }

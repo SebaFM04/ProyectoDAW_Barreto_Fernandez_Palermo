@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acceso.cs" />
+    <Compile Include="AccionSql.cs" />
     <Compile Include="dalCertificadoAdopcion.cs" />
     <Compile Include="dalAdoptante.cs" />
     <Compile Include="dalAnimal.cs" />

@@ -17,11 +17,12 @@ namespace BE
         public string nombreAdoptante { get; set; }
         public string apellidoAdoptante { get; set; }
         public DateTime fecha { get; set; }
+        public bool activo { get; set; }
 
         public CertificadoAdopcion() { }
 
         public CertificadoAdopcion(string codigo, string dni, int codigoAnimal, string especie, string raza,
-            string nombreAnimal, string nombreAdoptante, string apellidoAdoptante, DateTime fecha)
+            string nombreAnimal, string nombreAdoptante, string apellidoAdoptante, DateTime fecha, bool activo = true)
         {
             this.codigo = codigo;
             this.dni = dni;
@@ -32,6 +33,7 @@ namespace BE
             this.nombreAdoptante = nombreAdoptante;
             this.apellidoAdoptante = apellidoAdoptante;
             this.fecha = fecha;
+            this.activo = activo;
         }
     }
 }

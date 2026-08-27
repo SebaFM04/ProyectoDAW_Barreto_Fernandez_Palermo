@@ -34,6 +34,14 @@ namespace DAL
             return codigo;
         }
 
+        public AccionSql ConstruirAccionAlta(HistorialIngreso historial)
+        {
+            string query = "INSERT INTO HistorialIngreso (codigoHistorial, codigoFicha, fecha, motivo) " +
+                            "VALUES (@codigoHistorial, @codigoFicha, @fecha, @motivo)";
+            var parametros = ParametroHelper.CrearParametros(historial);
+            return new AccionSql { Query = query, Parametros = parametros };
+        }
+
         public void Alta(HistorialIngreso historial)
         {
             string query = "INSERT INTO HistorialIngreso (codigoHistorial, codigoFicha, fecha, motivo) " +

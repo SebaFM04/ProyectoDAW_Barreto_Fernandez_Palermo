@@ -26,6 +26,24 @@ namespace BLL
             bllFichaDeIngreso = new bllFichaDeIngreso();
         }
 
+        public AccionSql ConstruirAccionMarcarAdoptado(string codigo)
+        {
+            Animal animal = BuscarAnimalPorCodigo(codigo);
+            if (animal == null) throw new Exception("No se encontró un animal con el código proporcionado.");
+
+            animal.estadoAdopcion = "Adoptado";
+            return dal.ConstruirAccionModificar(animal);
+        }
+
+        public AccionSql ConstruirAccionCambiarEstadoAdopcion(string codigo, string nuevoEstado)
+        {
+            Animal animal = BuscarAnimalPorCodigo(codigo);
+            if (animal == null) throw new Exception("No se encontró un animal con el código proporcionado.");
+
+            animal.estadoAdopcion = nuevoEstado;
+            return dal.ConstruirAccionModificar(animal);
+        }
+
         public int AltaAnimal(string especie, string raza, string nombre, string tamano, string sexo, string estadoDeAdopcion, bool vivo)
         {
             if (string.IsNullOrWhiteSpace(especie)) throw new Exception("Ingrese la especie");
