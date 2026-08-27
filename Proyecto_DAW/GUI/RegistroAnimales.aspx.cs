@@ -60,13 +60,13 @@ public partial class RegistroAnimales : System.Web.UI.Page
             var sexo = ddlSexo.SelectedValue.ToString();
             var estadoAdopcion = ddlEstado.SelectedValue.ToString();
 
-            bllanimal.AltaAnimal(especie, raza, nombre, tamano, sexo, estadoAdopcion, true);
+            int codigoAnimalNuevo = bllanimal.AltaAnimal(especie, raza, nombre, tamano, sexo, estadoAdopcion, true);
+            Response.Redirect("FichaIngreso.aspx?codigoAnimal=" + codigoAnimalNuevo, false);
+            Context.ApplicationInstance.CompleteRequest();
 
-            bllDigitoVerificador.CalcularDVAnimal();
-
-            CargarGrid();
-            MostrarMensaje("Animal agregado exitosamente!", false);
-            ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
+            //CargarGrid();
+            //MostrarMensaje("Animal agregado exitosamente!", false);
+            //ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
         }
         catch (Exception ex) { MostrarMensaje(ex.Message, true); }
     }
@@ -90,8 +90,6 @@ public partial class RegistroAnimales : System.Web.UI.Page
             var estadoAdopcion = ddlEstado.SelectedValue.ToString();
 
             bllanimal.Modificar(codigo, especie, raza, nombre, tamano, sexo, estadoAdopcion, true);
-
-            bllDigitoVerificador.CalcularDVAnimal();
 
             CargarGrid();
             MostrarMensaje("Animal modificado exitosamente!", false);

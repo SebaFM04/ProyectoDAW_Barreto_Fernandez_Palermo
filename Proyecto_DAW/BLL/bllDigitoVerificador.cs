@@ -17,6 +17,11 @@ namespace BLL
         dalVacuna dalVacuna;
         dalIntermediaVacunaAnimal dalIntermediaVacunaAnimal;
         encriptador seguridad;
+        dalAdoptante dalAdoptante;
+        dalFichaDeIngreso dalFichaDeIngreso;
+        dalHistorialIngreso dalHistorialIngreso;
+        dalFichaMedica dalFichaMedica;
+        dalCertificadoAdopcion dalCertificadoAdopcion;
 
         public bllDigitoVerificador()
         {
@@ -26,6 +31,11 @@ namespace BLL
             dalVacuna = new dalVacuna();
             dalIntermediaVacunaAnimal = new dalIntermediaVacunaAnimal();
             seguridad = new encriptador();
+            dalAdoptante = new dalAdoptante();
+            dalFichaDeIngreso = new dalFichaDeIngreso();
+            dalHistorialIngreso = new dalHistorialIngreso();
+            dalFichaMedica = new dalFichaMedica();
+            dalCertificadoAdopcion = new dalCertificadoAdopcion();
         }
 
         public void LimpiarAuditoria()
@@ -47,7 +57,12 @@ namespace BLL
                 DVAnimal(),
                 DVIntermediaVacunaAnimal(),
                 DVUsuario(),
-                DVVacuna()
+                DVVacuna(),
+                DVAdoptante(),
+                DVFichaDeIngreso(),
+                DVHistorialIngreso(),
+                DVFichaMedica(),
+                DVCertificadoAdopcion()
             };
         }
 
@@ -60,6 +75,133 @@ namespace BLL
             return tablasConInconsistencias.Distinct().ToList();
         }
 
+        public DigitoVerificador DVAdoptante()
+        {
+            var adoptante = dalAdoptante.RetornarAdoptantes();
+
+            string horizontal = string.Concat(adoptante.Select(x =>
+                x.dni + x.nombre + x.apellido + x.telefono + x.edad + x.domicilio + x.mascotas + x.activo));
+            string horizontalHash = seguridad.GetSHA256(horizontal);
+
+            string vertical = string.Concat(adoptante.Select(x => x.dni)) +
+                             string.Concat(adoptante.Select(x => x.nombre)) +
+                             string.Concat(adoptante.Select(x => x.apellido)) +
+                             string.Concat(adoptante.Select(x => x.telefono)) +
+                             string.Concat(adoptante.Select(x => x.edad)) +
+                             string.Concat(adoptante.Select(x => x.domicilio)) +
+                             string.Concat(adoptante.Select(x => x.mascotas)) +
+                             string.Concat(adoptante.Select(x => x.activo));
+
+            string verticalHash = seguridad.GetSHA256(vertical);
+            return new DigitoVerificador("Adoptante", horizontalHash, verticalHash);
+        }
+
+        public void CalcularDVAdoptante()
+        {
+            DigitoVerificador d = DVAdoptante();
+            dal.Update(d);
+        }
+
+        public DigitoVerificador DVFichaDeIngreso()
+        {
+            var fichas = dalFichaDeIngreso.RetornarTodas();
+
+            string horizontal = string.Concat(fichas.Select(x =>
+                x.codigoFicha + x.codigoAnimal.ToString() + x.fecha));
+            string horizontalHash = seguridad.GetSHA256(horizontal);
+
+            string vertical = string.Concat(fichas.Select(x => x.codigoFicha)) +
+                             string.Concat(fichas.Select(x => x.codigoAnimal)) +
+                             string.Concat(fichas.Select(x => x.fecha));
+
+            string verticalHash = seguridad.GetSHA256(vertical);
+            return new DigitoVerificador("FichaDeIngreso", horizontalHash, verticalHash);
+        }
+
+        public void CalcularDVFichaDeIngreso()
+        {
+            DigitoVerificador d = DVFichaDeIngreso();
+            dal.Update(d);
+        }
+
+        public DigitoVerificador DVHistorialIngreso()
+        {
+            var historial = dalHistorialIngreso.RetornarTodos();
+
+            string horizontal = string.Concat(historial.Select(x =>
+                x.codigoHistorial.ToString() + x.codigoFicha.ToString() + x.fecha.ToString() + x.motivo));
+            string horizontalHash = seguridad.GetSHA256(horizontal);
+
+            string vertical = string.Concat(historial.Select(x => x.codigoHistorial)) +
+                             string.Concat(historial.Select(x => x.codigoFicha)) +
+                             string.Concat(historial.Select(x => x.fecha)) +
+                             string.Concat(historial.Select(x => x.motivo));
+
+            string verticalHash = seguridad.GetSHA256(vertical);
+            return new DigitoVerificador("HistorialIngreso", horizontalHash, verticalHash);
+        }
+
+        public void CalcularDVHistorialIngreso()
+        {
+            DigitoVerificador d = DVHistorialIngreso();
+            dal.Update(d);
+        }
+
+        public DigitoVerificador DVFichaMedica()
+        {
+            var fichas = dalFichaMedica.RetornarTodas();
+
+            string horizontal = string.Concat(fichas.Select(x =>
+    x.codigo.ToString() + x.codigoAnimal.ToString() + x.fecha.ToString() + x.castrado.ToString() + x.dieta + x.medicamento + x.observaciones));
+            string horizontalHash = seguridad.GetSHA256(horizontal);
+
+            string vertical = string.Concat(fichas.Select(x => x.codigo)) +
+                             string.Concat(fichas.Select(x => x.codigoAnimal)) +
+                             string.Concat(fichas.Select(x => x.fecha)) +
+                             string.Concat(fichas.Select(x => x.castrado)) +
+                             string.Concat(fichas.Select(x => x.dieta)) +
+                             string.Concat(fichas.Select(x => x.medicamento)) +
+                             string.Concat(fichas.Select(x => x.observaciones));
+
+            string verticalHash = seguridad.GetSHA256(vertical);
+            return new DigitoVerificador("FichaMedica", horizontalHash, verticalHash);
+        }
+
+        public void CalcularDVFichaMedica()
+        {
+            DigitoVerificador d = DVFichaMedica();
+            dal.Update(d);
+        }
+
+        public DigitoVerificador DVCertificadoAdopcion()
+        {
+            var certificados = dalCertificadoAdopcion.RetornarCertificados();
+
+            string horizontal = string.Concat(certificados.Select(x =>
+                x.codigo + x.dni + x.codigoAnimal + x.especie + x.raza +
+                x.nombreAnimal + x.nombreAdoptante + x.apellidoAdoptante + x.fecha + x.activo));
+            string horizontalHash = seguridad.GetSHA256(horizontal);
+
+            string vertical = string.Concat(certificados.Select(x => x.codigo)) +
+                             string.Concat(certificados.Select(x => x.dni)) +
+                             string.Concat(certificados.Select(x => x.codigoAnimal)) +
+                             string.Concat(certificados.Select(x => x.especie)) +
+                             string.Concat(certificados.Select(x => x.raza)) +
+                             string.Concat(certificados.Select(x => x.nombreAnimal)) +
+                             string.Concat(certificados.Select(x => x.nombreAdoptante)) +
+                             string.Concat(certificados.Select(x => x.apellidoAdoptante)) +
+                             string.Concat(certificados.Select(x => x.fecha)) +
+                             string.Concat(certificados.Select(x => x.activo));
+
+            string verticalHash = seguridad.GetSHA256(vertical);
+            return new DigitoVerificador("CertificadoAdopcion", horizontalHash, verticalHash);
+        }
+
+        public void CalcularDVCertificadoAdopcion()
+        {
+            DigitoVerificador d = DVCertificadoAdopcion();
+            dal.Update(d);
+        }
 
         public DigitoVerificador DVAnimal()
         {

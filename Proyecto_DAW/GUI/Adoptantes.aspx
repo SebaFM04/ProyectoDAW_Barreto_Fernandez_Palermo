@@ -30,6 +30,14 @@
                     <asp:BoundField DataField="domicilio" HeaderText="Domicilio" />
                     <asp:BoundField DataField="mascotas" HeaderText="Tiene mascotas" />
                     <asp:BoundField DataField="activo" HeaderText="Activo" />
+                    <asp:TemplateField HeaderText="Certificados">
+                        <ItemTemplate>
+                            <asp:HyperLink runat="server" 
+                                NavigateUrl='<%# "Certificados.aspx?dni=" + Eval("dni") %>' 
+                                Text="Ver Certificados" 
+                                CssClass="btn-link" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
 

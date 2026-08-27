@@ -17,6 +17,18 @@ namespace DAL
             dal = new Acceso();
         }
 
+        public AccionSql ConstruirAccionModificar(Animal animal)
+        {
+            string query = "UPDATE Animal SET especie = @especie, raza = @raza,nombre = @nombre, tamaño = @tamaño, sexo = @sexo, estadoAdopcion = @estadoAdopcion, vivo = @vivo" +
+                " WHERE codigoAnimal = @codigoAnimal";
+            var propiedadesAIncluir = new List<string>
+            {
+                "especie", "raza", "nombre", "tamaño", "sexo", "estadoAdopcion", "vivo", "codigoAnimal"
+            };
+            var parametros = ParametroHelper.CrearParametros(animal, propiedadesAIncluir);
+            return new AccionSql { Query = query, Parametros = parametros };
+        }
+
         public void Alta(Animal animal)
         {
             string query = "INSERT INTO Animal " +

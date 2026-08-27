@@ -16,15 +16,35 @@ namespace BLL
         dalAnimal dal;
         bllBitacora bllBitacora;
         bllDigitoVerificador bllDigitoVerificador;
+        bllFichaDeIngreso bllFichaDeIngreso;
 
         public bllAnimal()
         {
             dal = new dalAnimal();
             bllBitacora = new bllBitacora();
             bllDigitoVerificador = new bllDigitoVerificador();
+            bllFichaDeIngreso = new bllFichaDeIngreso();
         }
 
-        public void AltaAnimal(string especie, string raza, string nombre, string tamano, string sexo, string estadoDeAdopcion, bool vivo)
+        public AccionSql ConstruirAccionMarcarAdoptado(string codigo)
+        {
+            Animal animal = BuscarAnimalPorCodigo(codigo);
+            if (animal == null) throw new Exception("No se encontró un animal con el código proporcionado.");
+
+            animal.estadoAdopcion = "Adoptado";
+            return dal.ConstruirAccionModificar(animal);
+        }
+
+        public AccionSql ConstruirAccionCambiarEstadoAdopcion(string codigo, string nuevoEstado)
+        {
+            Animal animal = BuscarAnimalPorCodigo(codigo);
+            if (animal == null) throw new Exception("No se encontró un animal con el código proporcionado.");
+
+            animal.estadoAdopcion = nuevoEstado;
+            return dal.ConstruirAccionModificar(animal);
+        }
+
+        public int AltaAnimal(string especie, string raza, string nombre, string tamano, string sexo, string estadoDeAdopcion, bool vivo)
         {
             if (string.IsNullOrWhiteSpace(especie)) throw new Exception("Ingrese la especie");
             if (string.IsNullOrWhiteSpace(raza)) throw new Exception("Ingrese la raza");
@@ -38,6 +58,8 @@ namespace BLL
             dal.Alta(animal);
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion animales", "Animal dado de alta", 2);
             RecalcularDigitoAnimal();
+
+            return codigoAnimal;
         }
 
         private void RecalcularDigitoAnimal()
@@ -75,6 +97,9 @@ namespace BLL
         {
             if (VerificarAnimalAdoptado(codigo)) throw new Exception("No se puede borrar porque esta adoptado");
 
+            if (bllFichaDeIngreso.TieneFicha(int.Parse(codigo))) // <- agregar este bloque
+                throw new Exception("No se puede borrar el animal porque tiene una ficha de ingreso con historial.");
+
             dal.Baja(codigo);
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion animales", "Animal dado de baja", 2);
             RecalcularDigitoAnimal();
@@ -88,6 +113,16 @@ namespace BLL
         public bool VerificarAnimalAdoptado(string codigo)
         {
             return BuscarAnimalPorCodigo(codigo).estadoAdopcion == "Adoptado";
+        }
+
+        public void MarcarComoAdoptado(string codigo)
+        {
+            Animal animal = BuscarAnimalPorCodigo(codigo);
+            if (animal == null) throw new Exception("No se encontró un animal con el código proporcionado.");
+
+            animal.estadoAdopcion = "Adoptado";
+            dal.Modificar(animal);
+            RecalcularDigitoAnimal();
         }
 
         public string RetornarEstadoDelAnimal(string codigo)

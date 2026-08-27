@@ -59,11 +59,14 @@ public partial class _Default : System.Web.UI.Page
             bllDigitoVerificador.CalcularDVIntermediaVacunaAnimal();
             bllDigitoVerificador.CalcularDVVacuna();
             bllDigitoVerificador.CalcularDVUsuario();
-
+            bllDigitoVerificador.CalcularDVAdoptante();
+            bllDigitoVerificador.CalcularDVFichaDeIngreso();
+            bllDigitoVerificador.CalcularDVHistorialIngreso();
+            bllDigitoVerificador.CalcularDVFichaMedica();
+            bllDigitoVerificador.CalcularDVCertificadoAdopcion();
             bllDigitoVerificador.LimpiarAuditoria();
-            // Cerramos la sesión en el servidor
-            claseSession.Gestor.UnsetUsuario();
 
+            claseSession.Gestor.UnsetUsuario();
             string script = "mostrarPopup('Dígitos verificadores recalculados correctamente.', 'Login.aspx');";
             ClientScript.RegisterStartupScript(GetType(), "redir", script, true);
         }
@@ -95,7 +98,7 @@ public partial class _Default : System.Web.UI.Page
     private void MostrarMensaje(string mensaje)
     {
         string msg = mensaje.Replace("'", "\\'").Replace("\n", " ");
-        ClientScript.RegisterStartupScript(GetType(), "msg", $"mostrarPopup('{msg}');", true);
+        ClientScript.RegisterStartupScript(GetType(), "msg", "mostrarPopup('{msg}');", true);
     }
 
     protected void btnCancelar_Click(object sender, EventArgs e)
