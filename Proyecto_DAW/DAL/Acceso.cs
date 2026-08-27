@@ -36,6 +36,33 @@ namespace DAL
             return lista;
         }
 
+        public void EjecutarTransaccion(List<AccionSql> acciones)
+        {
+            using (SqlConnection connection = new SqlConnection(conn))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+                    foreach (AccionSql accion in acciones)
+                    {
+                        using (SqlCommand cmd = new SqlCommand(accion.Query, connection, transaction))
+                        {
+                            AsignarParametros(cmd, accion.Parametros);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw; // vuelve a lanzar la excepción original, para que la BLL la atrape
+                }
+            }
+        }
+
         public void Query(string query, Dictionary<string, object> parametros = null)
         {
             using (SqlConnection connection = new SqlConnection(conn))

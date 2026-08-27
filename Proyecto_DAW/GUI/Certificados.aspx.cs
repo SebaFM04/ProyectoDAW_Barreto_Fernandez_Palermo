@@ -1,83 +1,77 @@
-using System;
+﻿using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BLL;
 
 public partial class Certificados : System.Web.UI.Page
 {
-    bllAnimal bllAnimal;
-    bllUsuario bllUsuario;
+    bllCertificadoAdopcion bllCertificado;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        bllAnimal  = new bllAnimal();
-        bllUsuario = new bllUsuario();
+        bllCertificado = new bllCertificadoAdopcion();
 
         if (!IsPostBack)
         {
-            CargarGridAnimales();
-            CargarGridAdoptantes();
+            CargarGrilla();
         }
     }
 
-    private void CargarGridAnimales()
+    private void CargarGrilla()
     {
-        gvAnimales.DataSource = bllAnimal.RetornarAnimales();
-        gvAnimales.DataBind();
+        string codigoAnimalParam = Request.QueryString["codigoAnimal"];
+        string dniParam = Request.QueryString["dni"];
+
+        if (!string.IsNullOrEmpty(codigoAnimalParam) && int.TryParse(codigoAnimalParam, out int codigoAnimal))
+        {
+            gvCertificados.DataSource = bllCertificado.ObtenerCertificadosPorAnimal(codigoAnimal);
+            lbFiltroActivo.Text = "Mostrando certificados del animal seleccionado.";
+            btnVerTodos.Visible = true;
+        }
+        else if (!string.IsNullOrEmpty(dniParam))
+        {
+            gvCertificados.DataSource = bllCertificado.ObtenerCertificadosPorAdoptante(dniParam);
+            lbFiltroActivo.Text = "Mostrando certificados del adoptante seleccionado.";
+            btnVerTodos.Visible = true;
+        }
+        else
+        {
+            gvCertificados.DataSource = bllCertificado.RetornarCertificados();
+            lbFiltroActivo.Text = "";
+            btnVerTodos.Visible = false;
+        }
+
+        gvCertificados.DataBind();
     }
 
-    private void CargarGridAdoptantes()
+    protected void gvCertificados_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        // Filtra usuarios con rol adoptante
-        var adoptantes = bllUsuario.RetornarUsuarios()
-            .FindAll(u => u.rol.Equals("adoptante", StringComparison.OrdinalIgnoreCase));
+        if (e.CommandName == "Cancelar")
+        {
+            try
+            {
+                string codigo = e.CommandArgument.ToString();
+                bllCertificado.CancelarAdopcion(codigo);
+                MostrarMensaje("Adopción cancelada exitosamente. El animal fue reingresado al refugio.", false);
+            }
+            catch (Exception ex)
+            {
+                MostrarMensaje(ex.Message, true);
+            }
 
-        gvAdoptantes.DataSource = adoptantes;
-        gvAdoptantes.DataBind();
+            CargarGrilla();
+        }
     }
 
-    protected void gvCertificados_SelectedIndexChanged(object sender, EventArgs e)
+    private void MostrarMensaje(string mensaje, bool esError)
     {
-        // TODO: implementar en proxima entrega
+        pnlAlerta.Visible = true;
+        lbMensaje.Text = mensaje;
+        pnlAlerta.CssClass = esError ? "alert alert-error" : "alert alert-success";
     }
 
-    protected void gvAdoptantes_SelectedIndexChanged(object sender, EventArgs e)
+    protected void btnVerTodos_Click(object sender, EventArgs e)
     {
-        // TODO: implementar en proxima entrega
-    }
-
-    protected void gvAnimales_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        // TODO: implementar en proxima entrega
-    }
-
-    protected void btnGenerarCertificado_Click(object sender, EventArgs e)
-    {
-        // TODO: implementar en proxima entrega
-    }
-
-    protected void btnModificar_Click(object sender, EventArgs e)
-    {
-        // TODO: implementar en proxima entrega
-    }
-
-    protected void btnAplicar_Click(object sender, EventArgs e)
-    {
-        // TODO: implementar en proxima entrega
-    }
-
-    protected void btnCancelar_Click(object sender, EventArgs e)
-    {
-        // TODO: implementar en proxima entrega
-    }
-
-    protected void btnSalir_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("MenuPrincipal.aspx");
-    }
-
-    protected void btnReporte_Click(object sender, EventArgs e)
-    {
-        // TODO: implementar en proxima entrega
+        Response.Redirect("Certificados.aspx");
     }
 }

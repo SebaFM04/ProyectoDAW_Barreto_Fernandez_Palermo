@@ -13,10 +13,13 @@ namespace BLL
     {
         dalAdoptante dal;
         bllBitacora bllBitacoraEvento;
+        bllDigitoVerificador bllDigitoVerificador;
+
         public bllAdoptante()
         {
             dal = new dalAdoptante();
             bllBitacoraEvento = new bllBitacora();
+            bllDigitoVerificador = new bllDigitoVerificador();
         }
 
         public void Alta(string dni, string nombre, string apellido, string telefono, int edad, string domicilio, bool mascotas)
@@ -24,6 +27,7 @@ namespace BLL
             Adoptante nuevoAdoptante = new Adoptante(dni, nombre, apellido, telefono, edad, domicilio, mascotas, true);
             dal.Alta(nuevoAdoptante);
             bllBitacoraEvento.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion adoptantes", "Adoptante dado de alta", 2);
+            bllDigitoVerificador.CalcularDVAdoptante();
         }
 
         public bool ValidarDNI(string dni)
@@ -38,16 +42,16 @@ namespace BLL
 
         public void Modificar(string dni, string nombre, string apellido, string telefono, int edad, string domicilio, bool mascotas)
         {
-                Adoptante adoptante = BuscarAdoptantePorDNI(dni);
-                adoptante.nombre = nombre;
-                adoptante.apellido = apellido;
-                adoptante.telefono = telefono;
-                adoptante.edad = edad;
-                adoptante.domicilio = domicilio;
-                adoptante.mascotas = mascotas;
-                dal.Modificar(adoptante);
-                bllBitacoraEvento.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion adoptantes", "Adoptante modificado", 3);
-           
+            Adoptante adoptante = BuscarAdoptantePorDNI(dni);
+            adoptante.nombre = nombre;
+            adoptante.apellido = apellido;
+            adoptante.telefono = telefono;
+            adoptante.edad = edad;
+            adoptante.domicilio = domicilio;
+            adoptante.mascotas = mascotas;
+            dal.Modificar(adoptante);
+            bllBitacoraEvento.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion adoptantes", "Adoptante modificado", 3);
+            bllDigitoVerificador.CalcularDVAdoptante();
         }
 
         public void ActivarDesactivar(string dni)

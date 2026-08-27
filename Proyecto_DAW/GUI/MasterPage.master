@@ -60,6 +60,7 @@
                                 <li><a runat="server" href="~/Solicitudes.aspx">Solicitudes</a></li>
                                 <li><a runat="server" href="~/Certificados.aspx">Certificados</a></li>
                                 <li><a runat="server" href="~/Adoptantes.aspx">Adoptantes</a></li>
+                                <li><a runat="server" href="~/RegistrarAdopcion.aspx">Registrar Adopción</a></li>
                             </ul>
                         </li>
 
