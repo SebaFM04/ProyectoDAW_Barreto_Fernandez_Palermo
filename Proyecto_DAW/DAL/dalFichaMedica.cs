@@ -34,6 +34,11 @@ namespace DAL
             return codigo;
         }
 
+        public List<FichaMedica> RetornarTodas()
+        {
+            return dal.RetornarLista("SELECT * FROM FichaMedica", MapearFichaMedica);
+        }
+
         public void Alta(FichaMedica ficha)
         {
             string query = "INSERT INTO FichaMedica (codigo, codigoAnimal, fecha, castrado, dieta, medicamento, observaciones) " +

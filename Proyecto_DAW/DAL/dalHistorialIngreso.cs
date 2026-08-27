@@ -34,6 +34,11 @@ namespace DAL
             return codigo;
         }
 
+        public List<HistorialIngreso> RetornarTodos()
+        {
+            return dal.RetornarLista("SELECT * FROM HistorialIngreso", MapearHistorial);
+        }
+
         public AccionSql ConstruirAccionAlta(HistorialIngreso historial)
         {
             string query = "INSERT INTO HistorialIngreso (codigoHistorial, codigoFicha, fecha, motivo) " +

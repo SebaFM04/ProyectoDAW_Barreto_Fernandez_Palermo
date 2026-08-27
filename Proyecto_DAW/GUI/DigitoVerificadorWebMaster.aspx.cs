@@ -59,11 +59,14 @@ public partial class _Default : System.Web.UI.Page
             bllDigitoVerificador.CalcularDVIntermediaVacunaAnimal();
             bllDigitoVerificador.CalcularDVVacuna();
             bllDigitoVerificador.CalcularDVUsuario();
-
+            bllDigitoVerificador.CalcularDVAdoptante();
+            bllDigitoVerificador.CalcularDVFichaDeIngreso();
+            bllDigitoVerificador.CalcularDVHistorialIngreso();
+            bllDigitoVerificador.CalcularDVFichaMedica();
+            bllDigitoVerificador.CalcularDVCertificadoAdopcion();
             bllDigitoVerificador.LimpiarAuditoria();
-            // Cerramos la sesión en el servidor
-            claseSession.Gestor.UnsetUsuario();
 
+            claseSession.Gestor.UnsetUsuario();
             string script = "mostrarPopup('Dígitos verificadores recalculados correctamente.', 'Login.aspx');";
             ClientScript.RegisterStartupScript(GetType(), "redir", script, true);
         }

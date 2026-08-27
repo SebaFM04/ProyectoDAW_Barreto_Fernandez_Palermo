@@ -1,5 +1,6 @@
 ﻿using BE;
 using DAL;
+using SERVICIOS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,15 @@ namespace BLL
     {
         dalFichaDeIngreso dalFicha;
         dalHistorialIngreso dalHistorial;
+        bllDigitoVerificador bllDigitoVerificador;
+        bllBitacora bllBitacoraEvento;
 
         public bllFichaDeIngreso()
         {
             dalFicha = new dalFichaDeIngreso();
             dalHistorial = new dalHistorialIngreso();
+            bllBitacoraEvento = new bllBitacora();
+            bllDigitoVerificador = new bllDigitoVerificador();
         }
 
         public FichaDeIngreso ObtenerFichaPorAnimal(int codigoAnimal)
@@ -40,6 +45,9 @@ namespace BLL
             dalFicha.Alta(ficha);
 
             RegistrarEnHistorial(codigoFicha, motivo);
+            bllBitacoraEvento.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Ficha de ingreso", "Ficha de ingreso dada de alta", 3);
+            bllDigitoVerificador.CalcularDVFichaDeIngreso(); 
+            bllDigitoVerificador.CalcularDVHistorialIngreso();
         }
 
         // El animal vuelve al refugio (ya tiene ficha creada)
@@ -53,6 +61,8 @@ namespace BLL
                 throw new Exception("Este animal no tiene una ficha de ingreso creada.");
 
             RegistrarEnHistorial(ficha.codigoFicha, motivo);
+            bllBitacoraEvento.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Ficha de ingreso", "Ficha de ingreso redada de alta", 3);
+            bllDigitoVerificador.CalcularDVHistorialIngreso();
         }
 
         public AccionSql ConstruirAccionReingreso(int codigoAnimal, string motivo)

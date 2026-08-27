@@ -1,5 +1,6 @@
 ﻿using BE;
 using DAL;
+using SERVICIOS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,16 @@ namespace BLL
         dalFichaMedica dal;
         bllAnimal bllAnimal;
         bllFichaDeIngreso bllFichaDeIngreso;
+        bllDigitoVerificador bllDigitoVerificador;
+        bllBitacora bllBitacoraEvento;
 
         public bllFichaMedica()
         {
             dal = new dalFichaMedica();
             bllAnimal = new bllAnimal();
             bllFichaDeIngreso = new bllFichaDeIngreso();
+            bllDigitoVerificador = new bllDigitoVerificador();
+            bllBitacoraEvento = new bllBitacora();
         }
 
         public bool YaEstaCastrado(int codigoAnimal)
@@ -45,6 +50,8 @@ namespace BLL
             int codigo = dal.GenerarCodigoFichaMedicaUnico();
             FichaMedica ficha = new FichaMedica(codigo, codigoAnimal, DateTime.Now, castrado, dieta, medicamento, observaciones);
             dal.Alta(ficha);
+            bllBitacoraEvento.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Ficha médica", "Ficha médica dada de alta", 3);
+            bllDigitoVerificador.CalcularDVFichaMedica();
         }
 
         public List<FichaMedica> ObtenerFichasPorAnimal(int codigoAnimal)

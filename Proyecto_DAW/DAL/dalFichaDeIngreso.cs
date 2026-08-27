@@ -34,6 +34,11 @@ namespace DAL
             return codigo;
         }
 
+        public List<FichaDeIngreso> RetornarTodas()
+        {
+            return dal.RetornarLista("SELECT * FROM FichaDeIngreso", MapearFicha);
+        }
+
         public void Alta(FichaDeIngreso ficha)
         {
             string query = "INSERT INTO FichaDeIngreso (codigoFicha, codigoAnimal, fecha) " +

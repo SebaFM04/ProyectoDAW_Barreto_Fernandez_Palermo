@@ -44,6 +44,8 @@ namespace BLL
             acceso.EjecutarTransaccion(acciones);
 
             bllDigitoVerificador.CalcularDVAnimal();
+            bllDigitoVerificador.CalcularDVCertificadoAdopcion(); 
+            bllDigitoVerificador.CalcularDVHistorialIngreso();
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario,
                 "Gestion adopciones", "Adopción cancelada", 2);
         }
@@ -78,6 +80,7 @@ namespace BLL
             bllDigitoVerificador.CalcularDVAnimal();
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario,
                 "Gestion adopciones", "Adopción registrada", 2);
+            bllDigitoVerificador.CalcularDVCertificadoAdopcion();
         }
 
         public List<CertificadoAdopcion> RetornarCertificados()
