@@ -84,6 +84,7 @@
     <Compile Include="DigitoVerificador.cs" />
     <Compile Include="Evento.cs" />
     <Compile Include="FichaDeIngreso.cs" />
+    <Compile Include="FichaMedica.cs" />
     <Compile Include="HistorialIngreso.cs" />
     <Compile Include="IntermediaVacunaAnimal.cs" />
     <Compile Include="Usuario.cs" />

@@ -85,6 +85,7 @@
     <Compile Include="dalBitacora.cs" />
     <Compile Include="dalDigitoVerificador.cs" />
     <Compile Include="dalFichaDeIngreso.cs" />
+    <Compile Include="dalFichaMedica.cs" />
     <Compile Include="dalHistorialIngreso.cs" />
     <Compile Include="dalIntermediaVacunaAnimal.cs" />
     <Compile Include="dalUsuario.cs" />

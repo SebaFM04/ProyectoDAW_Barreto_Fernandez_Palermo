@@ -24,11 +24,19 @@
                     <asp:BoundField DataField="sexo" HeaderText="sexo" />
                     <asp:BoundField DataField="estadoAdopcion" HeaderText="Estado Adopcion" />
                     <asp:BoundField DataField="vivo" HeaderText="Vivo" />
-                    <asp:TemplateField HeaderText="Ficha">
+                    <asp:TemplateField HeaderText="Ficha Ingreso">
                         <ItemTemplate>
                             <asp:HyperLink runat="server" 
                                 NavigateUrl='<%# "FichaIngreso.aspx?codigoAnimal=" + Eval("codigoAnimal") %>' 
                                 Text="Ver Ficha" 
+                                CssClass="btn-link" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Ficha Médica">
+                        <ItemTemplate>
+                            <asp:HyperLink runat="server" 
+                                NavigateUrl='<%# "FichaMedica.aspx?codigoAnimal=" + Eval("codigoAnimal") %>' 
+                                Text="Ver Ficha Médica" 
                                 CssClass="btn-link" />
                         </ItemTemplate>
                     </asp:TemplateField>

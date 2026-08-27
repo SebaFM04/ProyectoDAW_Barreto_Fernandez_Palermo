@@ -85,6 +85,7 @@
     <Compile Include="bllBitacora.cs" />
     <Compile Include="bllDigitoVerificador.cs" />
     <Compile Include="bllFichaDeIngreso.cs" />
+    <Compile Include="bllFichaMedica.cs" />
     <Compile Include="bllIntermediaVacunaAnimal.cs" />
     <Compile Include="bllUsuario.cs" />
     <Compile Include="bllVacuna.cs" />
