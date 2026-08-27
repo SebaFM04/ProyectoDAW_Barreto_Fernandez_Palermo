@@ -16,12 +16,14 @@ namespace BLL
         dalAnimal dal;
         bllBitacora bllBitacora;
         bllDigitoVerificador bllDigitoVerificador;
+        bllFichaDeIngreso bllFichaDeIngreso;
 
         public bllAnimal()
         {
             dal = new dalAnimal();
             bllBitacora = new bllBitacora();
             bllDigitoVerificador = new bllDigitoVerificador();
+            bllFichaDeIngreso = new bllFichaDeIngreso();
         }
 
         public int AltaAnimal(string especie, string raza, string nombre, string tamano, string sexo, string estadoDeAdopcion, bool vivo)
@@ -76,6 +78,9 @@ namespace BLL
         public void Baja(string codigo)
         {
             if (VerificarAnimalAdoptado(codigo)) throw new Exception("No se puede borrar porque esta adoptado");
+
+            if (bllFichaDeIngreso.TieneFicha(int.Parse(codigo))) // <- agregar este bloque
+                throw new Exception("No se puede borrar el animal porque tiene una ficha de ingreso con historial.");
 
             dal.Baja(codigo);
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion animales", "Animal dado de baja", 2);
