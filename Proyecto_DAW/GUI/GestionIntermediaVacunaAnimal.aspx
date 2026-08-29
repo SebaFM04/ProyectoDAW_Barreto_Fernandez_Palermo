@@ -22,7 +22,7 @@
         </Columns>
     </asp:GridView>
 
-    <asp:Button ID="btnGestionarVacunas" runat="server" Text="Gestionar vacunas" CssClass="btn-verde" OnClick="btnGestionarVacunas_Click"/>
+    <asp:Button ID="btnGestionarVacunas" runat="server" Text="Gestionar vacunas" CssClass="btn-verde" OnClick="btnGestionarVacunas_Click" data-permiso="GESTIONAR_VACUNAS"/>
 
 
     <hr />
@@ -94,8 +94,8 @@
 
     <%-- BOTONES --%>
     <div class="botones-fila">
-        <asp:Button ID="btnAlta" runat="server" Text="Alta" CssClass="btn-verde" OnClick="btnAlta_Click" />
-        <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn-verde" OnClick="btnModificar_Click"/>
+        <asp:Button ID="btnAlta" runat="server" Text="Alta" CssClass="btn-verde" OnClick="btnAlta_Click" data-permiso="ANIMAL_VACUNA_ALTA"/>
+        <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn-verde" OnClick="btnModificar_Click" data-permiso="ANIMAL_VACUNA_MODIFICAR"/>
     </div>
 
     <%-- MENSAJE --%>

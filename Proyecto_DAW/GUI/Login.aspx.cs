@@ -63,12 +63,12 @@ public partial class Login : System.Web.UI.Page
                             {
                                 Session["AccesoDigitoVerificador"] = true;
                                 // Hay inconsistencias: según el rol, va a una pantalla distinta
-                                if (usuario.rol == "web master")
+                                if (usuario.rol == "Web Master")
                                 {
                                     // El Web Master puede recalcular / restaurar
                                     Response.Redirect("DigitoVerificadorWebMaster.aspx");
                                 }
-                                else if (usuario.rol == "admin")
+                                else if (usuario.rol == "AdminSuper")
                                 {
                                     // El admin solo ve el aviso para contactar al Web Master
                                     Response.Redirect("DigitoVerificadorAdmin.aspx");

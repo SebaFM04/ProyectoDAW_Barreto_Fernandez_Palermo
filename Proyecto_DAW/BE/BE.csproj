@@ -72,12 +72,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccesoPermiso.cs" />
     <Compile Include="Adoptante.cs" />
     <Compile Include="Animal.cs" />
     <Compile Include="AnimalXML.cs" />
     <Compile Include="DigitoVerificador.cs" />
     <Compile Include="Evento.cs" />
+    <Compile Include="Familia.cs" />
     <Compile Include="IntermediaVacunaAnimal.cs" />
+    <Compile Include="Permiso.cs" />
+    <Compile Include="Rol.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vacuna.cs" />

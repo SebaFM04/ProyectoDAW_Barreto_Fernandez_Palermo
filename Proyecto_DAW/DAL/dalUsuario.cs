@@ -32,6 +32,8 @@ namespace DAL
 
         public void Modificar(Usuario usuario)
         {
+            usuario.rol = (new dalRol().ObtenerRol(usuario.rol)).ID.ToString();
+
             string query = "UPDATE Usuario SET nombre = @nombre, contraseña = @contraseña, rol = @rol, email = @email, bloqueo = @bloqueo, intentos = @intentos, " +
                          "lenguaje = @lenguaje, activo = @activo, domicilio = @domicilio, apellido=@apellido, nombreUsuario = @nombreUsuario WHERE dni = @dni";
             // Lista de propiedades usadas en la consulta
@@ -43,6 +45,8 @@ namespace DAL
             };
 
             EjecutarQueryConEntidad(usuario, query, props);
+
+            usuario.rol = (new dalRol().ObtenerRolPorID(Convert.ToInt32(usuario.rol.ToString()))).Nombre;
         }
 
         private void EjecutarQueryConEntidad(Usuario usuario, string query, List<string> propiedadesIncluir = null)
@@ -170,13 +174,15 @@ namespace DAL
                 ? string.Empty
                 : seguridad.Decrypt(domicilioCifrado);
 
+            string rol = (new dalRol().ObtenerRolPorID(Convert.ToInt32(reader["rol"].ToString()))).Nombre;
+
             return new Usuario(
                 reader["dni"].ToString(),
                 reader["nombreUsuario"].ToString(),
                 reader["contraseña"].ToString(),
                 reader["nombre"].ToString(),
                 reader["apellido"].ToString(),
-                reader["rol"].ToString(),
+                rol,
                 reader["email"].ToString(),
                 Convert.ToBoolean(reader["bloqueo"]),
                 Convert.ToInt32(reader["intentos"]),

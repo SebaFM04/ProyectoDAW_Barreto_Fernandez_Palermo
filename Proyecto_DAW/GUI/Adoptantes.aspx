@@ -74,14 +74,14 @@
 
         <%-- BOTONES --%>
         <div class="columna-botones">
-            <asp:Button ID="btnAlta" runat="server" Text="Alta" CssClass="btn" OnClick="btnAlta_Click" />
-            <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn" OnClick="btnModificar_Click" />
-            <asp:Button ID="btnActivarDesactivar" runat="server" Text="Activar / Desactivar" CssClass="btn" OnClick="btnActivarDesactivar_Click" />
+            <asp:Button ID="btnAlta" runat="server" Text="Alta" CssClass="btn" OnClick="btnAlta_Click" data-permiso="ADOPTANTE_ALTA"/>
+            <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn" OnClick="btnModificar_Click" data-permiso="ADOPTANTE_MODIFICAR"/>
+            <asp:Button ID="btnActivarDesactivar" runat="server" Text="Activar / Desactivar" CssClass="btn" OnClick="btnActivarDesactivar_Click" data-permiso="ADOPTANTE_ACT_DESAC"/>
 
             <hr />
 
-            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-secundario" OnClientClick="limpiarFormulario(); ocultarAlerta(true); return false;" />
-            <asp:Button ID="btnSalir" runat="server" Text="Salir" CssClass="btn btn-secundario" OnClientClick="salir(); return false;" />
+            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-secundario" OnClientClick="limpiarFormulario(); ocultarAlerta(true); return false;"/>
+            <asp:Button ID="btnSalir" runat="server" Text="Salir" CssClass="btn btn-secundario" OnClientClick="salir(); return false;"/>
         </div>
 
     </div>

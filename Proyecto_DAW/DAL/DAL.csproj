@@ -78,7 +78,9 @@
     <Compile Include="dalBackUpRestore.cs" />
     <Compile Include="dalBitacora.cs" />
     <Compile Include="dalDigitoVerificador.cs" />
+    <Compile Include="dalFamilia.cs" />
     <Compile Include="dalIntermediaVacunaAnimal.cs" />
+    <Compile Include="dalRol.cs" />
     <Compile Include="dalUsuario.cs" />
     <Compile Include="dalVacuna.cs" />
     <Compile Include="ParametroHelper.cs" />

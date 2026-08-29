@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="SiteMaster" %>
 
 <!DOCTYPE html>
 
@@ -31,7 +31,7 @@
 
                 <div class="navbar-menu" id="navbarMenu">
 
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav" runat="server" id="navMenu">
 
                         <li runat="server" id="liInicio">
                             <a runat="server" href="~/MenuPrincipal.aspx">Inicio</a>
@@ -41,13 +41,12 @@
                         <li class="dropdown" runat="server" id="liAnimales">
                             <a href="#" class="dropdown-toggle">Animales</a>
                             <ul class="dropdown-menu">
-                                <li><a runat="server" href="~/ListadoAnimales.aspx">Ver animales</a></li>
+                                <li runat="server" id="liVerAnimales"><a runat="server" href="~/ListadoAnimales.aspx">Ver animales</a></li>
 
-                                <%-- ESTOS SE OCULTAN SIN SESION --%>
-                                <li runat="server" id="liRegistrarAnimales">
+                                <li runat="server" id="liRegistrarAnimales" data-pagina="RegistroAnimales.aspx">
                                     <a runat="server" href="~/RegistroAnimales.aspx">Registrar animales</a>
                                 </li>
-                                <li runat="server" id="liGestionVacunas">
+                                <li runat="server" id="liGestionVacunas" data-pagina="GestionIntermediaVacunaAnimal.aspx">
                                     <a runat="server" href="~/GestionIntermediaVacunaAnimal.aspx">Gestion Vacunas</a>
                                 </li>
                             </ul>
@@ -57,9 +56,9 @@
                         <li class="dropdown" runat="server" id="liAdopciones">
                             <a href="#" class="dropdown-toggle">Adopciones</a>
                             <ul class="dropdown-menu">
-                                <li><a runat="server" href="~/Solicitudes.aspx">Solicitudes</a></li>
-                                <li><a runat="server" href="~/Certificados.aspx">Certificados</a></li>
-                                <li><a runat="server" href="~/Adoptantes.aspx">Adoptantes</a></li>
+                                <li runat="server" data-pagina="Solicitudes.aspx"><a runat="server" href="~/Solicitudes.aspx">Solicitudes</a></li>
+                                <li runat="server" data-pagina="Certificados.aspx"><a runat="server" href="~/Certificados.aspx">Certificados</a></li>
+                                <li runat="server" data-pagina="Adoptantes.aspx"><a runat="server" href="~/Adoptantes.aspx">Adoptantes</a></li>
                             </ul>
                         </li>
 
@@ -67,12 +66,13 @@
                         <li class="dropdown" runat="server" id="liAdministracion">
                             <a href="#" class="dropdown-toggle">Administración</a>
                             <ul class="dropdown-menu">
-                                <li><a runat="server" href="~/GestionUsuarios.aspx">Usuarios</a></li>
-                                <li runat="server" id="liBitacora">
+                                <li runat="server" data-pagina="GestionUsuarios.aspx"><a runat="server" href="~/GestionUsuarios.aspx">Usuarios</a></li>
+                                <li runat="server" data-pagina="RolesFamilias.aspx"><a runat="server" href="~/RolesFamilias.aspx">Roles y Familias</a></li>
+                                <li runat="server" id="liBitacora" data-pagina="Bitacora.aspx">
                                     <asp:LinkButton ID="btnBitacora" runat="server" OnClick="btnBitacora_Click">Bitácora</asp:LinkButton>
                                 </li>
                                 <li class="divider"></li>
-                                <li runat="server" id="liBackupRestore">
+                                <li runat="server" id="liBackupRestore" data-pagina="BackupRestore.aspx">
                                     <asp:LinkButton 
                                     runat="server" href="BackupRestore.aspx" OnClick="btnBackupRestore_Click">Backup &amp; Restore
                                         </asp:LinkButton>

@@ -6,7 +6,7 @@
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-<div class="page-container">
+    <div class="page-container">
     <h2 class="titulo">Certificados de Adopcion</h2>
 
     <div class="layout-adopcion">
@@ -69,15 +69,15 @@
 
         <%-- BOTONES --%>
         <div class="columna-botones">
-            <asp:Button ID="btnGenerarCertificado" runat="server" Text="Generar certificado de adopcion" CssClass="btn btn-especial" OnClick="btnGenerarCertificado_Click" />
-            <asp:Button ID="btnModificar"          runat="server" Text="Modificar"                       CssClass="btn"            OnClick="btnModificar_Click" />
-            <asp:Button ID="btnAplicar"            runat="server" Text="Aplicar"                         CssClass="btn"            OnClick="btnAplicar_Click" />
-            <asp:Button ID="btnCancelar"           runat="server" Text="Cancelar"                        CssClass="btn btn-secundario" OnClick="btnCancelar_Click" />
-            <asp:Button ID="btnSalir"              runat="server" Text="Salir"                           CssClass="btn btn-secundario" OnClick="btnSalir_Click" />
+            <asp:Button ID="btnGenerarCertificado" runat="server" Text="Generar certificado de adopcion" CssClass="btn btn-especial" OnClick="btnGenerarCertificado_Click" data-permiso="CERTIFICADO_GENERAR"/>
+            <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn" OnClick="btnModificar_Click" data-permiso="CERTIFICADO_MODIFICAR"/>
+            <asp:Button ID="btnAplicar" runat="server" Text="Aplicar" CssClass="btn" OnClick="btnAplicar_Click" data-permiso="CERTIFICADO_APLICAR"/>
+            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secundario" OnClick="btnCancelar_Click"/>
+            <asp:Button ID="btnSalir" runat="server" Text="Salir" CssClass="btn btn-secundario" OnClick="btnSalir_Click"/>
 
             <hr class="separador" />
 
-            <asp:Button ID="btnReporte" runat="server" Text="Generar reporte inteligente" CssClass="btn btn-especial" OnClick="btnReporte_Click" />
+            <asp:Button ID="btnReporte" runat="server" Text="Generar reporte inteligente" CssClass="btn btn-especial" OnClick="btnReporte_Click" data-permiso="CERTIFICADO_GENERAR_REPORTE"/>
         </div>
 
     </div>

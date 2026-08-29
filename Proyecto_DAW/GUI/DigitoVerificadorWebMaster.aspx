@@ -20,12 +20,12 @@
             <h2 class="dv-title">Inconsistencia en la base de datos</h2>
 
             <asp:Button ID="btnRecalcular" runat="server" CssClass="dv-btn"
-                Text="Recalcular" OnClick="btnRecalcular_Click" />
+                Text="Recalcular" OnClick="btnRecalcular_Click" data-permiso="DV_RECALCULAR"/>
 
            <asp:DropDownList ID="ddlBackups" runat="server" CssClass="dv-select"></asp:DropDownList>
 
             <asp:Button ID="btnRestore" runat="server" CssClass="dv-btn"
-                Text="Restore" OnClick="btnRestore_Click" />
+                Text="Restore" OnClick="btnRestore_Click" data-permiso="DV_RESTORE"/>
 
             <div>
                 <label class="dv-label">Tablas con inconsistencias:</label>
@@ -34,7 +34,7 @@
             </div>
 
             <div>
-                <asp:Button ID="btnCancelar" runat="server" CssClass="dv-btn" Text="Cancelar" OnClick="btnCancelar_Click" />
+                <asp:Button ID="btnCancelar" runat="server" CssClass="dv-btn" Text="Cancelar" OnClick="btnCancelar_Click"/>
             </div>
 
         </div>

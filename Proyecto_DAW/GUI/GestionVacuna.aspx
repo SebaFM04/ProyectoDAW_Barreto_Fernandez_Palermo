@@ -5,7 +5,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<div class="vacuna-wrapper">
+    <div class="vacuna-wrapper">
 
     <%-- GRILLA VACUNAS --%>
     <p class="seccion-titulo">Vacunas registradas</p>
@@ -48,10 +48,10 @@
 
     <%-- BOTONES --%>
     <div class="botones-fila">
-        <asp:Button ID="btnAlta" runat="server" Text="Alta" CssClass="btn-verde" OnClick="btnAlta_Click" />
-        <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn-verde" OnClick="btnModificar_Click" />
-        <asp:Button ID="btnAplicar" runat="server" Text="Aplicar" CssClass="btn-verde" OnClick="btnAplicar_Click" Visible="false" />
-        <asp:Button ID="btnSalir" runat="server" OnClick="btnSalir_Click" Text="Volver" CssClass="btn-verde"  />
+        <asp:Button ID="btnAlta" runat="server" Text="Alta" CssClass="btn-verde" OnClick="btnAlta_Click" data-permiso="VACUNA_ALTA"/>
+        <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn-verde" OnClick="btnModificar_Click" data-permiso="VACUNA_MODIFICAR"/>
+        <asp:Button ID="btnAplicar" runat="server" Text="Aplicar" CssClass="btn-verde" OnClick="btnAplicar_Click" Visible="false" data-permiso="VACUNA_APLICAR"/>
+        <asp:Button ID="btnSalir" runat="server" OnClick="btnSalir_Click" Text="Volver" CssClass="btn-verde"/>
     </div>
 
     <%-- MENSAJE --%>
