@@ -320,7 +320,7 @@ node_modules/
 
 # Visual Studio 6 technical files
 *.ncb
-*.aps
+*.ap
 
 # Visual Studio LightSwitch build output
 **/*.HTMLClient/GeneratedArtifacts
@@ -454,3 +454,6 @@ Desktop.ini
 # Backups del proyecto
 *.bak
 *.orig
+
+#web config
+!web.config
