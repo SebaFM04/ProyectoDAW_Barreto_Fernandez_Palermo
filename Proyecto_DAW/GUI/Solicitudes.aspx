@@ -6,7 +6,7 @@
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-<div class="page-container">
+    <div class="page-container">
     <h2 class="titulo">Estado de Adopcion</h2>
 
     <div class="layout-adopcion">
@@ -53,8 +53,8 @@
 
         <%-- BOTONES --%>
         <div class="columna-botones">
-            <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" CssClass="btn"           OnClick="btnAceptar_Click" />
-            <asp:Button ID="btnSalir"   runat="server" Text="Salir"   CssClass="btn btn-secundario" OnClick="btnSalir_Click" />
+            <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" CssClass="btn" OnClick="btnAceptar_Click" data-permiso="SOLICITUD_ACEPTAR"/>
+            <asp:Button ID="btnSalir" runat="server" Text="Salir" CssClass="btn btn-secundario" OnClick="btnSalir_Click"/>
         </div>
 
     </div>

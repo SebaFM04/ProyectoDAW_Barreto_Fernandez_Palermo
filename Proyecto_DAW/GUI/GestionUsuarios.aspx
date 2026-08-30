@@ -26,11 +26,12 @@
                         <asp:RequiredFieldValidator ControlToValidate="txtApellidoAlta" ErrorMessage="Requerido" ValidationGroup="vgAlta" runat="server" ForeColor="Red"/><br />
 
                         <label>Rol</label>
-                        <asp:DropDownList ID="ddlRolAlta" runat="server" CssClass="input">
+                        <%--<asp:DropDownList ID="ddlRolAlta" runat="server" CssClass="input">
                             <asp:ListItem Text="Usuario" Value="usuario" />
                             <asp:ListItem Text="Admin" Value="admin" />
                             <asp:ListItem Text="Web Master" Value="webmaster" />
-                        </asp:DropDownList><br />
+                        </asp:DropDownList><br />--%>
+                        <asp:DropDownList ID="ddlRolAlta" runat="server" CssClass="input" /><br />
 
                         <label>Email</label>
                         <asp:TextBox ID="txtEmailAlta" runat="server" CssClass="input" />
@@ -53,8 +54,8 @@
                             ErrorMessage="Las contraseñas no coinciden."
                             ValidationGroup="vgAlta" Display="Dynamic" CssClass="validation-error" /><br />
 
-                        <asp:Button ID="btnGuardarAlta" runat="server" Text="Guardar" CssClass="btn" OnClick="btnGuardarAlta_Click" ValidationGroup="vgAlta" />
-                        <asp:Button ID="btnCancelarAlta" runat="server" Text="Cancelar" CssClass="btn-secundario" OnClick="btnCancelarAlta_Click" CausesValidation="false" />
+                        <asp:Button ID="btnGuardarAlta" runat="server" Text="Guardar" CssClass="btn" OnClick="btnGuardarAlta_Click" ValidationGroup="vgAlta"/>
+                        <asp:Button ID="btnCancelarAlta" runat="server" Text="Cancelar" CssClass="btn secundario" OnClick="btnCancelarAlta_Click" CausesValidation="false"/>
                     </div>
                 </asp:Panel>
 
@@ -83,8 +84,8 @@
                             ValidationGroup="vgPassword" Display="Dynamic" CssClass="validation-error" />
                         <br />
 
-                        <asp:Button ID="btnGuardarContraseña" runat="server" Text="Guardar" CssClass="btn" OnClick="btnGuardarContraseña_Click" ValidationGroup="vgPassword" />
-                        <asp:Button ID="btnCancelarContraseña" runat="server" Text="Cancelar" CssClass="btn-secundario" OnClick="btnCancelarContraseña_Click" CausesValidation="false" />
+                        <asp:Button ID="btnGuardarContraseña" runat="server" Text="Guardar" CssClass="btn" OnClick="btnGuardarContraseña_Click" ValidationGroup="vgPassword"/>
+                        <asp:Button ID="btnCancelarContraseña" runat="server" Text="Cancelar" CssClass="btn secundario" OnClick="btnCancelarContraseña_Click" CausesValidation="false"/>
                     </div>
                 </asp:Panel>
         <div class="layout">
@@ -130,12 +131,13 @@
                     <label>Nombre Usuario</label>
                     <asp:TextBox ID="txtNombreUsuario" runat="server" CssClass="input" />
                     <label>Rol</label>
-                    <asp:DropDownList ID="ddlRol" runat="server" CssClass="input">
+                    <%--<asp:DropDownList ID="ddlRol" runat="server" CssClass="input">
                         <asp:ListItem Text="admin" Value="admin" />
                         <asp:ListItem Text="adoptante" Value="adoptante" />
                         <asp:ListItem Text="empleado" Value="empleado" />
                         <asp:ListItem Text="webmaster" Value="webmaster" />
-                    </asp:DropDownList>
+                    </asp:DropDownList>--%>
+                    <asp:DropDownList ID="ddlRol" runat="server" CssClass="input" />
 
                     <label>Activo</label>
                     <asp:DropDownList ID="ddlActivo" runat="server" CssClass="input">
@@ -154,14 +156,14 @@
                     <asp:HiddenField ID="hdnDniSeleccionado" runat="server" />
                 <%-- BOTONES --%>
                 <div class="form-buttons">
-                    <asp:Button ID="btnNuevoUsuario" runat="server" Text="Nuevo usuario" CssClass="btn" OnClick="btnNuevoUsuario_Click" CausesValidation="false" />
-                    <asp:Button ID="btnCambiarContraseña" runat="server" Text="Cambiar contraseña" CssClass="btn" OnClick="btnCambiarContraseña_Click" CausesValidation="false" />
+                    <asp:Button ID="btnNuevoUsuario" runat="server" Text="Nuevo usuario" CssClass="btn" OnClick="btnNuevoUsuario_Click" CausesValidation="false" data-permiso="USUARIO_ALTA"/>
+                    <asp:Button ID="btnCambiarContraseña" runat="server" Text="Cambiar contraseña" CssClass="btn" OnClick="btnCambiarContraseña_Click" CausesValidation="false" data-permiso="MODIFICAR_PASSWORD"/>
 
-                    <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn" OnClick="btnModificar_Click" />
-                    <asp:Button ID="btnDesbloquear" runat="server" Text="Desbloquear" CssClass="btn secundario" OnClick="btnDesbloquear_Click" />
+                    <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn" OnClick="btnModificar_Click" data-permiso="USUARIO_MODIFICAR"/>
+                    <asp:Button ID="btnDesbloquear" runat="server" Text="Desbloquear" CssClass="btn secundario" OnClick="btnDesbloquear_Click" data-permiso="USUARIO_DESBLOQUEAR"/>
                     <hr />
 
-                    <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn secundario" OnClick="btnLimpiar_Click" />
+                    <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn secundario" OnClick="btnLimpiar_Click"/>
                 </div>
 
             </div>

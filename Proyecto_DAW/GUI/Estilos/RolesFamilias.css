@@ -1,0 +1,61 @@
+﻿.pf-layout {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.pf-columna {
+    flex: 1 1 230px;
+    min-width: 230px;
+}
+
+    .pf-columna h3 {
+        margin: 0 0 8px 0;
+        font-size: 16px;
+    }
+
+.pf-acciones {
+    flex: 0 0 230px;
+    min-width: 210px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+    .pf-acciones .btn, .pf-acciones .input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .pf-acciones label {
+        font-weight: bold;
+        margin-top: 4px;
+    }
+
+    .pf-acciones hr {
+        width: 100%;
+        border: none;
+        border-top: 1px solid #ddd;
+        margin: 4px 0;
+    }
+
+.pf-tree {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    padding: 8px;
+    min-height: 400px;
+    max-height: 62vh;
+    overflow: auto;
+}
+
+.pf-acciones .alert {
+    color: red;
+    font-family: sans-serif;
+}
+
+.pf-acciones .exito {
+    color: darkgreen;
+    font-family: sans-serif;
+}

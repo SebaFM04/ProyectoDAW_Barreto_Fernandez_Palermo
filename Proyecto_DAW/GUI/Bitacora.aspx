@@ -76,8 +76,8 @@
 
                 <%-- BOTONES --%>
                 <div class="botones-fila">
-                    <asp:Button ID="btnLimpiarFiltros" runat="server" Text="Limpiar" CssClass="btn-gris" OnClick="btnLimpiarFiltros_Click" />
-                    <asp:Button ID="btnAplicarFiltros" runat="server" Text="Aplicar" CssClass="btn-verde" OnClick="btnAplicarFiltros_Click" />
+                    <asp:Button ID="btnLimpiarFiltros" runat="server" Text="Limpiar" CssClass="btn-gris" OnClick="btnLimpiarFiltros_Click"/>
+                    <asp:Button ID="btnAplicarFiltros" runat="server" Text="Aplicar" CssClass="btn-verde" OnClick="btnAplicarFiltros_Click" data-permiso="BITACORA_APLICAR_FILTROS"/>
                 </div>
 
                 <%-- PANEL DE ERRORES --%>

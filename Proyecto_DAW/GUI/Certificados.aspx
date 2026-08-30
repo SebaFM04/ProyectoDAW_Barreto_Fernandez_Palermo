@@ -1,4 +1,4 @@
-<%@ Page Title="Certificados de Adopción" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Certificados.aspx.cs" Inherits="Certificados" %>
+<%@ Page Title="Certificados de AdopciÃ³n" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Certificados.aspx.cs" Inherits="Certificados" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="head" runat="server">
     <link href="Estilos/EstilosCertificadoAdopcion.css" rel="stylesheet" />

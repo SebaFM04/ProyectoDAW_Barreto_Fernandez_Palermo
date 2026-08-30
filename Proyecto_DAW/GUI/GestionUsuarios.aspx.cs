@@ -14,6 +14,7 @@ public partial class GestionUsuarios : System.Web.UI.Page
 
         if (!IsPostBack)
         {
+            CargarRoles();
             CargarGrid();
             CerrarPopups();
         }
@@ -27,6 +28,23 @@ public partial class GestionUsuarios : System.Web.UI.Page
     {
         gvUsuarios.DataSource = bllUsuario.RetornarUsuarios();
         gvUsuarios.DataBind();
+    }
+
+    private void CargarRoles()
+    {
+        var roles = new bllRol().ObtenerRoles();
+
+        // Alta
+        ddlRolAlta.DataSource = roles;
+        ddlRolAlta.DataTextField = "Nombre";
+        ddlRolAlta.DataValueField = "Nombre";
+        ddlRolAlta.DataBind();
+
+        // Modificación
+        ddlRol.DataSource = roles;
+        ddlRol.DataTextField = "Nombre";
+        ddlRol.DataValueField = "Nombre";
+        ddlRol.DataBind();
     }
 
     protected void gvUsuarios_SelectedIndexChanged(object sender, EventArgs e)
@@ -122,9 +140,6 @@ public partial class GestionUsuarios : System.Web.UI.Page
         pnlPopupContraseña.Visible = false;
     }
 
-
-
-
     protected void btnModificar_Click(object sender, EventArgs e)
     {
         CerrarPopups();
@@ -188,6 +203,4 @@ public partial class GestionUsuarios : System.Web.UI.Page
         gvUsuarios.SelectedIndex = -1;
         pnlAlerta.Visible = false;
     }
-
-
 }

@@ -17,7 +17,8 @@
             <asp:Button ID="btnBackUp" runat="server"
                         OnClick="btnBackUp_Click"
                         Text="Realizar Backup"
-                        CssClass="btn-verde" />
+                        CssClass="btn-verde" 
+                        data-permiso="REALIZAR_BACKUP"/>
         </div>
 
         <hr />
@@ -32,7 +33,8 @@
                 <asp:Button ID="btnRestore" runat="server"
                             OnClick="btnRestore_Click"
                             Text="Restaurar"
-                            CssClass="btn-rojo" />
+                            CssClass="btn-rojo" 
+                            data-permiso="REALIZAR_RESTORE"/>
             </div>
         </div>
     </div>

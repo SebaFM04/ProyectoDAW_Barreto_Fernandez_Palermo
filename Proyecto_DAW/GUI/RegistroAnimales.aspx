@@ -52,10 +52,10 @@
             </asp:GridView>
 
             <div class="xml-box">
-                <asp:Button ID="btnExportar" runat="server" Text="Exportar a XML" CssClass="btn" OnClick="btnExportar_Click" />
+                <asp:Button ID="btnExportar" runat="server" Text="Exportar a XML" CssClass="btn" OnClick="btnExportar_Click" data-permiso="ANIMAL_EXPORTAR_XML"/>
 
                 <asp:FileUpload ID="fuImportar" runat="server" CssClass="input" />
-                <asp:Button ID="btnImportar" runat="server" Text="Importar desde XML" CssClass="btn" OnClick="btnImportar_Click" />
+                <asp:Button ID="btnImportar" runat="server" Text="Importar desde XML" CssClass="btn" OnClick="btnImportar_Click" data-permiso="ANIMAL_IMPORTAR_XML"/>
 
                 <asp:Label ID="lbMensajeXML" runat="server" Text="" />
             </div>
@@ -108,9 +108,9 @@
 
             <!-- BOTONES -->
             <div class="form-buttons">
-                <asp:button ID="btnAlta" runat="server" Text="Alta" CssClass="btn" OnClick="btnAlta_Click"/>
-                <asp:button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn" OnClick="btnModificar_Click"/>
-                <asp:button ID="btnBaja" runat="server" Text="Baja" CssClass="btn" OnClientClick="return confirmarBaja();" OnClick="btnBaja_Click"/>
+                <asp:button ID="btnAlta" runat="server" Text="Alta" CssClass="btn" OnClick="btnAlta_Click" data-permiso="ANIMAL_ALTA"/>
+                <asp:button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn" OnClick="btnModificar_Click" data-permiso="ANIMAL_MODIFICAR"/>
+                <asp:button ID="btnBaja" runat="server" Text="Baja" CssClass="btn" OnClientClick="return confirmarBaja();" OnClick="btnBaja_Click" data-permiso="ANIMAL_BAJA"/>
 
                 <hr />
 
