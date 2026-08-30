@@ -24,6 +24,8 @@ namespace DAL
 
         public void Alta(Usuario usuario)
         {
+            usuario.rol = (new dalRol().ObtenerRol(usuario.rol)).ID.ToString();
+
             string query = "INSERT INTO Usuario " +
                          "(dni, nombreUsuario, contraseña, nombre, apellido, rol, email, bloqueo, intentos, lenguaje, activo, domicilio) " +
                          "VALUES (@dni, @nombreUsuario, @contraseña, @nombre, @apellido, @rol, @email, @bloqueo, @intentos, @lenguaje, @activo, @domicilio)";

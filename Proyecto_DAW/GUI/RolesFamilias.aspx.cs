@@ -122,11 +122,11 @@ public partial class RolesFamilias : System.Web.UI.Page
             else
                 bllFamilia.CrearFamilia(txtNombre.Text.Trim(), accesos);
 
-            LimpiarFormulario();
+            btnLimpiar_Click(null, null);
             RecargarTodo();
-            Mostrar(ModoRol ? "Perfil creado correctamente." : "Familia creada correctamente.");
+            Mostrar(ModoRol ? "Perfil creado correctamente." : "Familia creada correctamente.", lblMensajeExito, pnlExito);
         }
-        catch (Exception ex) { Mostrar(ex.Message); }
+        catch (Exception ex) { Mostrar(ex.Message, lblMensaje, pnlAlerta); }
     }
 
     protected void btnModificar_Click(object sender, EventArgs e)
@@ -136,7 +136,7 @@ public partial class RolesFamilias : System.Web.UI.Page
         {
             if (string.IsNullOrEmpty(ddlRolesFamilias.SelectedValue))
             {
-                Mostrar("Seleccioná un perfil o familia del desplegable para modificar.");
+                Mostrar("Seleccioná un perfil o familia del desplegable para modificar.", lblMensaje, pnlAlerta);
                 return;
             }
 
@@ -149,9 +149,9 @@ public partial class RolesFamilias : System.Web.UI.Page
 
             RecargarTodo();
             AjustarModo();
-            Mostrar(ModoRol ? "Perfil modificado correctamente." : "Familia modificada correctamente.");
+            Mostrar(ModoRol ? "Perfil modificado correctamente." : "Familia modificada correctamente.", lblMensajeExito, pnlExito);
         }
-        catch (Exception ex) { Mostrar(ex.Message); }
+        catch (Exception ex) { Mostrar(ex.Message, lblMensaje, pnlAlerta); }
     }
 
     protected void btnEliminar_Click(object sender, EventArgs e)
@@ -161,7 +161,7 @@ public partial class RolesFamilias : System.Web.UI.Page
         {
             if (string.IsNullOrEmpty(ddlRolesFamilias.SelectedValue))
             {
-                Mostrar("Seleccioná un perfil o familia del desplegable para eliminar.");
+                Mostrar("Seleccioná un perfil o familia del desplegable para eliminar.", lblMensaje, pnlAlerta);
                 return;
             }
 
@@ -175,9 +175,9 @@ public partial class RolesFamilias : System.Web.UI.Page
             LimpiarFormulario();
             RecargarTodo();
             AjustarModo();
-            Mostrar(ModoRol ? "Perfil eliminado correctamente." : "Familia eliminada correctamente.");
+            Mostrar(ModoRol ? "Perfil eliminado correctamente." : "Familia eliminada correctamente.", lblMensajeExito, pnlExito);
         }
-        catch (Exception ex) { Mostrar(ex.Message); }
+        catch (Exception ex) { Mostrar(ex.Message, lblMensaje, pnlAlerta); }
     }
     #endregion
 
@@ -190,14 +190,14 @@ public partial class RolesFamilias : System.Web.UI.Page
             TreeNode sel = twPermisosFamilias.SelectedNode;
             if (sel == null || string.IsNullOrEmpty(sel.Value))
             {
-                Mostrar("Seleccioná un permiso o familia válido del panel izquierdo.");
+                Mostrar("Seleccioná un permiso o familia válido del panel izquierdo.", lblMensaje, pnlAlerta);
                 return;
             }
 
             AccesoPermiso acceso = ResolverAcceso(sel.Value);
             if (acceso == null)
             {
-                Mostrar("No se pudo resolver el permiso/familia seleccionado.");
+                Mostrar("No se pudo resolver el permiso/familia seleccionado.", lblMensaje, pnlAlerta);
                 return;
             }
 
@@ -208,7 +208,7 @@ public partial class RolesFamilias : System.Web.UI.Page
                 
                 if (bllFamilia.VerificarPermisoFamiliaRepetida(enCurso, acceso))
                 {
-                    Mostrar("Ese permiso o familia ya está en la selección.");
+                    Mostrar("Ese permiso o familia ya está en la selección.", lblMensaje, pnlAlerta);
                     return;
                 }
 
@@ -235,9 +235,9 @@ public partial class RolesFamilias : System.Web.UI.Page
 
             CargarCatalogo();
             CargarPerfiles();
-            Mostrar("Permiso/familia asignado correctamente.");
+            Mostrar("Permiso/familia asignado correctamente.", lblMensajeExito, pnlExito);
         }
-        catch (Exception ex) { Mostrar(ex.Message); }
+        catch (Exception ex) { Mostrar(ex.Message, lblMensaje, pnlAlerta); }
     }
 
     protected void btnDesasignar_Click(object sender, EventArgs e)
@@ -248,7 +248,7 @@ public partial class RolesFamilias : System.Web.UI.Page
             TreeNode sel = twPermisosSeleccionados.SelectedNode;
             if (sel == null || string.IsNullOrEmpty(sel.Value))
             {
-                Mostrar("Seleccioná un permiso o familia del panel derecho.");
+                Mostrar("Seleccioná un permiso o familia del panel derecho.", lblMensaje, pnlAlerta);
                 return;
             }
 
@@ -256,14 +256,14 @@ public partial class RolesFamilias : System.Web.UI.Page
             // familia (nodos hijos) no se pueden quitar individualmente.
             if (sel.Depth > 0)
             {
-                Mostrar("No se puede quitar un permiso heredado de una familia. Quitá la familia completa.");
+                Mostrar("No se puede quitar un permiso heredado de una familia. Quitá la familia completa.", lblMensaje, pnlAlerta);
                 return;
             }
 
             AccesoPermiso acceso = ResolverAcceso(sel.Value);
             if (acceso == null)
             {
-                Mostrar("No se pudo resolver el permiso/familia seleccionado.");
+                Mostrar("No se pudo resolver el permiso/familia seleccionado.", lblMensaje, pnlAlerta);
                 return;
             }
 
@@ -293,9 +293,9 @@ public partial class RolesFamilias : System.Web.UI.Page
 
             CargarCatalogo();
             CargarPerfiles();
-            Mostrar("Permiso/familia quitado correctamente.");
+            Mostrar("Permiso/familia quitado correctamente.", lblMensajeExito, pnlExito);
         }
-        catch (Exception ex) { Mostrar(ex.Message); }
+        catch (Exception ex) { Mostrar(ex.Message, lblMensaje, pnlAlerta); }
     }
     #endregion
 
@@ -439,9 +439,9 @@ public partial class RolesFamilias : System.Web.UI.Page
             ddlRolesFamilias.SelectedIndex = 0;
     }
 
-    private void Mostrar(string mensaje)
+    private void Mostrar(string mensaje, Label lb, Panel pnl)
     {
-        lbMensaje.Text = mensaje;
-        pnlAlerta.Visible = true;
+        lb.Text = mensaje;
+        pnl.Visible = true;
     }
 }

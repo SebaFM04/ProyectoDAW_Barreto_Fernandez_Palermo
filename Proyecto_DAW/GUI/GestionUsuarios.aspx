@@ -26,11 +26,12 @@
                         <asp:RequiredFieldValidator ControlToValidate="txtApellidoAlta" ErrorMessage="Requerido" ValidationGroup="vgAlta" runat="server" ForeColor="Red"/><br />
 
                         <label>Rol</label>
-                        <asp:DropDownList ID="ddlRolAlta" runat="server" CssClass="input">
+                        <%--<asp:DropDownList ID="ddlRolAlta" runat="server" CssClass="input">
                             <asp:ListItem Text="Usuario" Value="usuario" />
                             <asp:ListItem Text="Admin" Value="admin" />
                             <asp:ListItem Text="Web Master" Value="webmaster" />
-                        </asp:DropDownList><br />
+                        </asp:DropDownList><br />--%>
+                        <asp:DropDownList ID="ddlRolAlta" runat="server" CssClass="input" /><br />
 
                         <label>Email</label>
                         <asp:TextBox ID="txtEmailAlta" runat="server" CssClass="input" />
@@ -130,12 +131,13 @@
                     <label>Nombre Usuario</label>
                     <asp:TextBox ID="txtNombreUsuario" runat="server" CssClass="input" />
                     <label>Rol</label>
-                    <asp:DropDownList ID="ddlRol" runat="server" CssClass="input">
+                    <%--<asp:DropDownList ID="ddlRol" runat="server" CssClass="input">
                         <asp:ListItem Text="admin" Value="admin" />
                         <asp:ListItem Text="adoptante" Value="adoptante" />
                         <asp:ListItem Text="empleado" Value="empleado" />
                         <asp:ListItem Text="webmaster" Value="webmaster" />
-                    </asp:DropDownList>
+                    </asp:DropDownList>--%>
+                    <asp:DropDownList ID="ddlRol" runat="server" CssClass="input" />
 
                     <label>Activo</label>
                     <asp:DropDownList ID="ddlActivo" runat="server" CssClass="input">

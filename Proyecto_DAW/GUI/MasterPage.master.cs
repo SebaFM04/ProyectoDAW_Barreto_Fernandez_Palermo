@@ -15,12 +15,12 @@ public partial class SiteMaster : System.Web.UI.MasterPage
     private static readonly Dictionary<string, string[]> PaginaPermisos =
         new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
     {
-        { "RegistroAnimales.aspx",              new[] { "ANIMAL_ALTA", "ANIMAL_MODIFICAR", "ANIMAL_BAJA" } },
+        { "RegistroAnimales.aspx",              new[] { "ANIMAL_ALTA", "ANIMAL_MODIFICAR", "ANIMAL_BAJA", "ANIMAL_EXPORTAR_XML", "ANIMAL_IMPORTAR_XML" } },
         { "GestionIntermediaVacunaAnimal.aspx", new[] { "GESTIONAR_VACUNAS", "ANIMAL_VACUNA_ALTA", "ANIMAL_VACUNA_MODIFICAR" } },
         { "Solicitudes.aspx",                   new[] { "SOLICITUD_ACEPTAR" } },
         { "Certificados.aspx",                  new[] { "CERTIFICADO_GENERAR", "CERTIFICADO_MODIFICAR", "CERTIFICADO_APLICAR", "CERTIFICADO_GENERAR_REPORTE" } },
         { "Adoptantes.aspx",                    new[] { "ADOPTANTE_ALTA", "ADOPTANTE_MODIFICAR", "ADOPTANTE_ACT_DESAC" } },
-        { "GestionUsuarios.aspx",               new[] { "USUARIO_NUEVO", "MODIFICAR_PASSWORD", "USUARIO_MODIFICAR", "USUARIO_DESBLOQUEAR" } },
+        { "GestionUsuarios.aspx",               new[] { "USUARIO_ALTA", "MODIFICAR_PASSWORD", "USUARIO_MODIFICAR", "USUARIO_DESBLOQUEAR" } },
         { "RolesFamilias.aspx",                 new[] { "ROLES_RB", "FAMILIAS_RB", "ROL_FAMILIA_ALTA", "ROL_FAMILIA_MODIFICAR", "ROL_FAMILIA_BAJA", "ROL_FAMILIA_ASIGNAR_PERMISO", "ROL_FAMILIA_DESASIGNAR_PERMISO" } },
         { "Bitacora.aspx",                      new[] { "BITACORA_APLICAR_FILTROS" } },
         { "BackupRestore.aspx",                 new[] { "REALIZAR_BACKUP", "REALIZAR_RESTORE" } },
@@ -32,6 +32,7 @@ public partial class SiteMaster : System.Web.UI.MasterPage
         bllBitacora = new bllBitacora();
 
         //BloquearAcceso();   // redirige según login/rol hardcodeados
+        ValidarAccesoUrl();   // guardia por URL: si no corresponde, redirige y corta acá
         ControlarLogin();   // visibilidad del menú
         AplicarPermisos();   // menú + controles de la página, según los permisos del rol
         //ControlarRoles(); //para hardcodeados 
@@ -161,6 +162,32 @@ public partial class SiteMaster : System.Web.UI.MasterPage
 
         Session["ClavesUsuario"] = claves.ToList();
         return claves;
+    }
+
+    private void ValidarAccesoUrl()
+    {
+        string paginaActual = System.IO.Path.GetFileName(Request.CurrentExecutionFilePath);
+
+        // Si no está en el mapa, es pública (MenuPrincipal, ListadoAnimales, ...) -> paso
+        if (!PaginaPermisos.ContainsKey(paginaActual))
+            return;
+
+        Usuario usuario = claseSession.Gestor.RetornarUsuarioSession();
+
+        // 1) No logueado -> a Login
+        if (usuario == null)
+        {
+            Response.Redirect("Login.aspx");
+            return;
+        }
+
+        // 2) Logueado pero sin permiso para esta página -> al menú
+        HashSet<string> claves = ObtenerClavesUsuario();
+        if (!PermisoHelper.TieneAccesoAPagina(paginaActual, claves, PaginaPermisos))
+        {
+            bllBitacora.Alta(usuario.nombreUsuario, "Seguridad","Intento de acceso sin permiso a " + paginaActual, 5);
+            Response.Redirect("MenuPrincipal.aspx");
+        }
     }
 
     private void ControlarLogin()

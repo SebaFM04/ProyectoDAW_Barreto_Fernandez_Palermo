@@ -17,19 +17,37 @@
             <%-- COLUMNA 1: permisos simples y familias disponibles --%>
             <div class="pf-columna">
                 <h3>Permisos y Familias</h3>
-                <asp:TreeView ID="twPermisosFamilias" runat="server" CssClass="pf-tree" ShowLines="true" />
+                <asp:TreeView ID="twPermisosFamilias" runat="server" CssClass="pf-tree" ShowLines="true">
+                    <NodeStyle ForeColor="#333333" />
+                    <SelectedNodeStyle
+                        BackColor="DarkOliveGreen"
+                        ForeColor="White"
+                        Font-Bold="true" />
+                </asp:TreeView>
             </div>
 
             <%-- COLUMNA 2: roles existentes con sus accesos --%>
             <div class="pf-columna">
                 <h3>Roles</h3>
-                <asp:TreeView ID="twRoles" runat="server" CssClass="pf-tree" ShowLines="true" />
+                <asp:TreeView ID="twRoles" runat="server" CssClass="pf-tree" ShowLines="true"> 
+                    <NodeStyle ForeColor="#333333" />
+                    <SelectedNodeStyle
+                        BackColor="DarkOliveGreen"
+                        ForeColor="White"
+                        Font-Bold="true" />
+                </asp:TreeView>
             </div>
 
             <%-- COLUMNA 3: accesos del rol/familia elegido, o para uno nuevo --%>
             <div class="pf-columna">
                 <h3>Permisos Seleccionados</h3>
-                <asp:TreeView ID="twPermisosSeleccionados" runat="server" CssClass="pf-tree" ShowLines="true" />
+                <asp:TreeView ID="twPermisosSeleccionados" runat="server" CssClass="pf-tree" ShowLines="true">
+                    <NodeStyle ForeColor="#333333" />
+                    <SelectedNodeStyle
+                        BackColor="DarkOliveGreen"
+                        ForeColor="White"
+                        Font-Bold="true" />
+                </asp:TreeView>
             </div>
 
             <div class="pf-acciones">
@@ -52,6 +70,13 @@
                 <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn" OnClick="btnModificar_Click" data-permiso="ROL_FAMILIA_MODIFICAR"/>
                 <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn" OnClick="btnEliminar_Click" data-permiso="ROL_FAMILIA_BAJA"/>
 
+                <asp:Panel ID="pnlAlerta" runat="server" Visible="false" CssClass="alert">
+                    <asp:Label ID="lblMensaje" runat="server" Text="" />
+                </asp:Panel>
+                <asp:Panel ID="pnlExito" runat="server" Visible="false" CssClass="exito">
+                    <asp:Label ID="lblMensajeExito" runat="server" Text="" />
+                </asp:Panel>
+
                 <hr />
 
                 <asp:Button ID="btnAsignar" runat="server" Text="Asignar" CssClass="btn" OnClick="btnAsignar_Click" data-permiso="ROL_FAMILIA_ASIGNAR_PERMISO"/>
@@ -60,18 +85,13 @@
                 <hr />
 
                 <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn secundario"
-                    OnClick="btnLimpiar_Click" CausesValidation="false" data-permiso="LIMPIAR"/>
+                    OnClick="btnLimpiar_Click" CausesValidation="false"/>
                 <asp:Button ID="btnSalir" runat="server" Text="Salir" CssClass="btn secundario"
-                    PostBackUrl="~/MenuPrincipal.aspx" CausesValidation="false" data-permiso="SALIR"/>
-
-                <asp:Panel ID="pnlAlerta" runat="server" Visible="false" CssClass="alert">
-                    <asp:Label ID="lbMensaje" runat="server" Text="" />
-                </asp:Panel>
-
+                    PostBackUrl="~/MenuPrincipal.aspx" CausesValidation="false"/>
             </div>
 
         </div>
 
     </div>
-
+    <script src="<%= ResolveUrl("~/Scripts/ScriptRolesFamilias.js") %>"></script>
 </asp:Content>
