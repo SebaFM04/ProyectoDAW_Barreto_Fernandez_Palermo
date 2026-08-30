@@ -38,19 +38,45 @@
     // el diccionario de traducciones del formulario actual (vía PageMethods,
     // que expone ScriptManager) y se pisa directo el texto visible de cada
     // elemento por su id.
-    aplicarTraducciones();
+    //
+    // PageMethods lo genera un <script> que el ScriptManager inyecta en la
+    // página, y ese script puede terminar de cargar DESPUÉS de
+    // DOMContentLoaded (confirmado con diagnóstico: en este proyecto
+    // "typeof PageMethods" da "undefined" en ese momento). En vez de asumir
+    // que ya está listo, se reintenta con un pequeño delay hasta que
+    // aparezca, con un tope de intentos para no reintentar para siempre si
+    // de verdad no está disponible (por ejemplo, EnablePageMethods mal
+    // configurado).
+    esperarPageMethodsYAplicarTraducciones();
 });
+
+function esperarPageMethodsYAplicarTraducciones() {
+    var intentosMaximos = 20;   // 20 x 100ms = hasta 2 segundos de espera
+    var intentoActual = 0;
+
+    function intentar() {
+        intentoActual++;
+
+        if (typeof PageMethods !== "undefined" && PageMethods.ObtenerTraducciones) {
+            aplicarTraducciones();
+            return;
+        }
+
+        if (intentoActual >= intentosMaximos) {
+            // PageMethods nunca apareció: se deja el texto que ya trae el
+            // HTML (fallback español), sin romper la página.
+            return;
+        }
+
+        setTimeout(intentar, 100);
+    }
+
+    intentar();
+}
 
 function aplicarTraducciones() {
     var nombreFormulario = document.body.getAttribute("data-formulario");
     if (!nombreFormulario) return;
-
-    // PageMethods lo genera automáticamente el <asp:ScriptManager
-    // EnablePageMethods="true"> agregado en MasterPage.master /
-    // MasterPageLogin.master, según cuál esté activa en esta página. Si por
-    // algún motivo el ScriptManager no llegó a cargar todavía, no rompe
-    // nada: se deja el texto que ya trae el HTML (fallback español).
-    if (typeof PageMethods === "undefined" || !PageMethods.ObtenerTraducciones) return;
 
     PageMethods.ObtenerTraducciones(nombreFormulario, function (resultadoJson) {
         var traducciones;
