@@ -94,6 +94,8 @@
     <Compile Include="dalRol.cs" />
     <Compile Include="dalUsuario.cs" />
     <Compile Include="dalVacuna.cs" />
+    <Compile Include="dalIdioma.cs" />
+    <Compile Include="dalTraduccion.cs" />
     <Compile Include="ParametroHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

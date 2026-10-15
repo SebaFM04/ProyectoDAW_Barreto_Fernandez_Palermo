@@ -12,8 +12,8 @@
             <!-- Encabezado -->
             <div class="login-card-header">
                 <div class="login-icon-circle">&#x1F43E;</div>
-                <h2 class="login-title">Bienvenido</h2>
-                <p class="login-subtitle">Ingresá tus credenciales para continuar</p>
+                <h2 class="login-title" runat="server" data-traduccion="pageLogin_titBienvenido">Bienvenido</h2>
+                <p class="login-subtitle" runat="server" data-traduccion="pageLogin_lblSubtitulo">Ingresá tus credenciales para continuar</p>
             </div>
 
             <!-- Cuerpo -->
@@ -26,13 +26,13 @@
 
                 <!-- Usuario -->
                 <div class="login-field">
-                    <label class="login-label">Nombre de usuario</label>
+                    <label class="login-label" runat="server" data-traduccion="pageLogin_lblNombreUsuario">Nombre de usuario</label>
                     <asp:TextBox ID="txtNombreUsuario" runat="server" CssClass="login-input" MaxLength="50" />
                 </div>
 
                 <!-- Password -->
                 <div class="login-field">
-                    <label class="login-label">Contraseña</label>
+                    <label class="login-label" runat="server" data-traduccion="pageLogin_lblContrasena">Contraseña</label>
 
                     <div class="login-pass-wrap">
                         <asp:TextBox
@@ -44,6 +44,7 @@
 
                         <button type="button"
                             class="login-btn-ojo toggle-password"
+                            runat="server" data-traduccion-title="pageLogin_btnMostrarContrasena"
                             title="Mostrar/ocultar contraseña">
                             👁
                         </button>
@@ -56,6 +57,7 @@
                     ID="btnIngresar"
                     runat="server"
                     Text="Ingresar al sistema"
+                    data-traduccion="pageLogin_btnIngresar"
                     CssClass="login-btn-primary"
                     OnClick="btnIngresar_Click" />
 

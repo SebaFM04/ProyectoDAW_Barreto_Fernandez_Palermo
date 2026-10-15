@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class RegistrarAdopcion : System.Web.UI.Page
+public partial class RegistrarAdopcion : PaginaBase
 {
     bllAnimal bllAnimal;
     bllAdoptante bllAdoptante;
@@ -62,12 +62,12 @@ public partial class RegistrarAdopcion : System.Web.UI.Page
         {
             if (ViewState["codigoAnimal"] == null)
             {
-                MostrarMensaje("Seleccione un animal de la lista.", true);
+                MostrarMensaje(Traducir("pageAdopcion_msgSeleccioneAnimal", "Seleccione un animal de la lista."), true);
                 return;
             }
             if (ViewState["dni"] == null)
             {
-                MostrarMensaje("Seleccione un adoptante de la lista.", true);
+                MostrarMensaje(Traducir("pageAdopcion_msgSeleccioneAdoptante", "Seleccione un adoptante de la lista."), true);
                 return;
             }
 
@@ -76,7 +76,7 @@ public partial class RegistrarAdopcion : System.Web.UI.Page
 
             bllCertificado.RegistrarAdopcion(dni, codigoAnimal);
 
-            MostrarMensaje("Adopción registrada exitosamente.", false);
+            MostrarMensaje(Traducir("pageAdopcion_msgAdopcionRegistrada", "Adopción registrada exitosamente."), false);
 
             ViewState["codigoAnimal"] = null;
             ViewState["dni"] = null;
@@ -86,7 +86,7 @@ public partial class RegistrarAdopcion : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            MostrarMensaje(ex.Message, true);
+            MostrarMensaje(MensajeError(ex), true);
         }
     }
 

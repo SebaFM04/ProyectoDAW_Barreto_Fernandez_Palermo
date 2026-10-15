@@ -7,7 +7,7 @@
 <asp:Content ID="MainContent" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <div class="page-container">
-    <h2 class="titulo">Gestión de Adoptantes</h2>
+    <h2 class="titulo" runat="server" data-traduccion="pageAdoptantes_titGestionAdoptantes">Gestión de Adoptantes</h2>
 
     <div class="layout-adopcion">
 
@@ -20,21 +20,21 @@
                 AutoGenerateSelectButton="true"
                 DataKeyNames="dni"
                 OnSelectedIndexChanged="gvAdoptantes_SelectedIndexChanged"
-                EmptyDataText="No hay adoptantes para mostrar">
+                EmptyDataText="No hay adoptantes para mostrar" data-traduccion-vacio="pageAdoptantes_msgGrillaVacia">
                 <Columns>
-                    <asp:BoundField DataField="dni" HeaderText="DNI" />
-                    <asp:BoundField DataField="nombre" HeaderText="Nombre" />
-                    <asp:BoundField DataField="apellido" HeaderText="Apellido" />
-                    <asp:BoundField DataField="telefono" HeaderText="Teléfono" />
-                    <asp:BoundField DataField="edad" HeaderText="Edad" />
-                    <asp:BoundField DataField="domicilio" HeaderText="Domicilio" />
-                    <asp:BoundField DataField="mascotas" HeaderText="Tiene mascotas" />
-                    <asp:BoundField DataField="activo" HeaderText="Activo" />
-                    <asp:TemplateField HeaderText="Certificados">
+                    <asp:BoundField DataField="dni" HeaderText="DNI" AccessibleHeaderText="pageAdoptantes_colDni" />
+                    <asp:BoundField DataField="nombre" HeaderText="Nombre" AccessibleHeaderText="pageAdoptantes_colNombre" />
+                    <asp:BoundField DataField="apellido" HeaderText="Apellido" AccessibleHeaderText="pageAdoptantes_colApellido" />
+                    <asp:BoundField DataField="telefono" HeaderText="Teléfono" AccessibleHeaderText="pageAdoptantes_colTelefono" />
+                    <asp:BoundField DataField="edad" HeaderText="Edad" AccessibleHeaderText="pageAdoptantes_colEdad" />
+                    <asp:BoundField DataField="domicilio" HeaderText="Domicilio" AccessibleHeaderText="pageAdoptantes_colDomicilio" />
+                    <asp:BoundField DataField="mascotas" HeaderText="Tiene mascotas" AccessibleHeaderText="pageAdoptantes_colTieneMascotas" />
+                    <asp:BoundField DataField="activo" HeaderText="Activo" AccessibleHeaderText="pageAdoptantes_colActivo" />
+                    <asp:TemplateField HeaderText="Certificados" AccessibleHeaderText="pageAdoptantes_colCertificados">
                         <ItemTemplate>
                             <asp:HyperLink runat="server" 
                                 NavigateUrl='<%# "Certificados.aspx?dni=" + Eval("dni") %>' 
-                                Text="Ver Certificados" 
+                                Text="Ver Certificados" data-traduccion="pageAdoptantes_lnkVerCertificados"
                                 CssClass="btn-link" />
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -44,33 +44,31 @@
             <%-- CAMPOS DEL FORMULARIO --%>
             <div class="fila-campos">
                 <div class="campo-grupo">
-                    <label>DNI:</label>
+                    <label runat="server" data-traduccion="pageAdoptantes_lblDni">DNI:</label>
                     <asp:TextBox ID="txtDni" runat="server" CssClass="input" />
                 </div>
                 <div class="campo-grupo">
-                    <label>Nombre:</label>
+                    <label runat="server" data-traduccion="pageAdoptantes_lblNombre">Nombre:</label>
                     <asp:TextBox ID="txtNombre" runat="server" CssClass="input" />
                 </div>
                 <div class="campo-grupo">
-                    <label>Apellido:</label>
+                    <label runat="server" data-traduccion="pageAdoptantes_lblApellido">Apellido:</label>
                     <asp:TextBox ID="txtApellido" runat="server" CssClass="input" />
                 </div>
                 <div class="campo-grupo">
-                    <label>Teléfono:</label>
+                    <label runat="server" data-traduccion="pageAdoptantes_lblTelefono">Teléfono:</label>
                     <asp:TextBox ID="txtTelefono" runat="server" CssClass="input" />
                 </div>
                 <div class="campo-grupo">
-                    <label>Edad:</label>
+                    <label runat="server" data-traduccion="pageAdoptantes_lblEdad">Edad:</label>
                     <asp:TextBox ID="txtEdad" runat="server" CssClass="input" />
                 </div>
                 <div class="campo-grupo">
-                    <label>Domicilio:</label>
+                    <label runat="server" data-traduccion="pageAdoptantes_lblDomicilio">Domicilio:</label>
                     <asp:TextBox ID="txtDomicilio" runat="server" CssClass="input" />
                 </div>
                 <div class="campo-grupo">
-                    <label>
-                        <asp:CheckBox ID="chkMascotas" runat="server" /> ¿Tiene mascotas?
-                    </label>
+                    <asp:CheckBox ID="chkMascotas" runat="server" Text=" ¿Tiene mascotas?" data-traduccion="pageAdoptantes_chkTieneMascotas" />
                 </div>
             </div>
 
@@ -82,14 +80,14 @@
 
         <%-- BOTONES --%>
         <div class="columna-botones">
-            <asp:Button ID="btnAlta" runat="server" Text="Alta" CssClass="btn" OnClick="btnAlta_Click" data-permiso="ADOPTANTE_ALTA"/>
-            <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn" OnClick="btnModificar_Click" data-permiso="ADOPTANTE_MODIFICAR"/>
-            <asp:Button ID="btnActivarDesactivar" runat="server" Text="Activar / Desactivar" CssClass="btn" OnClick="btnActivarDesactivar_Click" data-permiso="ADOPTANTE_ACT_DESAC"/>
+            <asp:Button ID="btnAlta" runat="server" Text="Alta" data-traduccion="pageAdoptantes_btnAlta" CssClass="btn" OnClick="btnAlta_Click" data-permiso="ADOPTANTE_ALTA"/>
+            <asp:Button ID="btnModificar" runat="server" Text="Modificar" data-traduccion="pageAdoptantes_btnModificar" CssClass="btn" OnClick="btnModificar_Click" data-permiso="ADOPTANTE_MODIFICAR"/>
+            <asp:Button ID="btnActivarDesactivar" runat="server" Text="Activar / Desactivar" data-traduccion="pageAdoptantes_btnActivarDesactivar" CssClass="btn" OnClick="btnActivarDesactivar_Click" data-permiso="ADOPTANTE_ACT_DESAC"/>
 
             <hr />
 
-            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-secundario" OnClientClick="limpiarFormulario(); ocultarAlerta(true); return false;"/>
-            <asp:Button ID="btnSalir" runat="server" Text="Salir" CssClass="btn btn-secundario" OnClientClick="salir(); return false;"/>
+            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" data-traduccion="pageAdoptantes_btnLimpiar" CssClass="btn btn-secundario" OnClientClick="limpiarFormulario(); ocultarAlerta(true); return false;"/>
+            <asp:Button ID="btnSalir" runat="server" Text="Salir" data-traduccion="pageAdoptantes_btnSalir" CssClass="btn btn-secundario" OnClientClick="salir(); return false;"/>
         </div>
 
     </div>

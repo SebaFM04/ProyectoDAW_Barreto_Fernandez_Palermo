@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class _Default : System.Web.UI.Page
+public partial class _Default : PaginaBase
 {
     bllBitacora bll;
 
@@ -55,7 +55,7 @@ public partial class _Default : System.Web.UI.Page
         // Módulo: siempre muestra todos (es el primero)
         var moduloActual = dlModulo.SelectedValue;
         dlModulo.Items.Clear();
-        dlModulo.Items.Add(new ListItem("-- Todos --", ""));
+        dlModulo.Items.Add(new ListItem(Traducir("pageBitacora_optTodos", "-- Todos --"), ""));
         foreach (var item in todos.Select(e => e.modulo).Distinct().OrderBy(x => x))
             dlModulo.Items.Add(new ListItem(item, item));
         if (!string.IsNullOrEmpty(moduloActual))
@@ -64,7 +64,7 @@ public partial class _Default : System.Web.UI.Page
         // Evento: filtrado por módulo seleccionado
         var eventoActual = dlEvento.SelectedValue;
         dlEvento.Items.Clear();
-        dlEvento.Items.Add(new ListItem("-- Todos --", ""));
+        dlEvento.Items.Add(new ListItem(Traducir("pageBitacora_optTodos", "-- Todos --"), ""));
         foreach (var item in paraEvento.Select(e => e.evento).Distinct().OrderBy(x => x))
             dlEvento.Items.Add(new ListItem(item, item));
         if (dlEvento.Items.FindByValue(eventoActual) != null)
@@ -73,7 +73,7 @@ public partial class _Default : System.Web.UI.Page
         // Criticidad: filtrado por módulo + evento seleccionados
         var criticidadActual = dlCriticidad.SelectedValue;
         dlCriticidad.Items.Clear();
-        dlCriticidad.Items.Add(new ListItem("-- Todos --", ""));
+        dlCriticidad.Items.Add(new ListItem(Traducir("pageBitacora_optTodos", "-- Todos --"), ""));
         foreach (var item in paraCriticidad.Select(e => e.criticidad).Distinct().OrderBy(x => x))
             dlCriticidad.Items.Add(new ListItem(item.ToString(), item.ToString()));
         if (dlCriticidad.Items.FindByValue(criticidadActual) != null)
@@ -156,7 +156,7 @@ public partial class _Default : System.Web.UI.Page
                 {
                     txtFechaInicio.Text = DateTime.Today.ToString("yyyy-MM-dd");
                     txtFechaFinal.Text = DateTime.Today.ToString("yyyy-MM-dd");
-                    throw new Exception("La fecha de inicio no puede ser mayor a la de fin");
+                    throw new Exception(Traducir("pageBitacora_msgFechaInicioMayor", "La fecha de inicio no puede ser mayor a la de fin"));
                 }
             }
 
@@ -164,7 +164,7 @@ public partial class _Default : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            lblMensajeError.Text = ex.Message;
+            lblMensajeError.Text = MensajeError(ex);
             pnlAlerta.CssClass = "alert alert-error";
             pnlAlerta.Visible = true;
         }

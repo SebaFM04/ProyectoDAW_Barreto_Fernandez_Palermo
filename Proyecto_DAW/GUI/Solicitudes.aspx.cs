@@ -3,7 +3,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BLL;
 
-public partial class Solicitudes : System.Web.UI.Page
+public partial class Solicitudes : PaginaBase
 {
     bllAnimal bllAnimal;
 

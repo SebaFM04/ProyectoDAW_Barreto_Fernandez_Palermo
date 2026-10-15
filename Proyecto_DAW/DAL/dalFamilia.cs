@@ -1,4 +1,5 @@
 ﻿using BE;
+using SERVICIOS;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -103,18 +104,28 @@ namespace DAL
             var pId = new Dictionary<string, object> { { "@id", idFamilia } };
 
             // 1) No se puede borrar si está asignada a algún Rol
-            string qRol = "SELECT COUNT(*) FROM Rol_Permiso WHERE ID_Permiso = @id";
-            if (Convert.ToInt32(dal.EjecutarEscalar(qRol, pId)) > 0)
-                throw new Exception("No se puede eliminar la familia porque está asignada a uno o más roles.");
+            if (EstaAsignadaARol(idFamilia))
+                throw new ExcepcionNegocio("dalFamilia_msgFamiliaAsignadaARol", "No se puede eliminar la familia porque está asignada a uno o más roles.");
 
             // 2) No se puede borrar si es hija de otra familia
-            string qHija = "SELECT COUNT(*) FROM Permiso_Detalle WHERE ID_PermisoHijo = @id";
-            if (Convert.ToInt32(dal.EjecutarEscalar(qHija, pId)) > 0)
-                throw new Exception("No se puede eliminar la familia porque está incluida en otra familia padre.");
+            if (EstaIncluidaEnOtraFamilia(idFamilia))
+                throw new ExcepcionNegocio("dalFamilia_msgFamiliaIncluidaEnOtra", "No se puede eliminar la familia porque está incluida en otra familia padre.");
 
             // 3) Borro sus vínculos con hijos y luego la familia
             dal.Query("DELETE FROM Permiso_Detalle WHERE ID_PermisoPadre = @id", pId);
             dal.Query("DELETE FROM Permiso WHERE ID = @id AND Tipo = 'C'", pId);
+        }
+
+        public bool EstaAsignadaARol(int idFamilia)
+        {
+            var pId = new Dictionary<string, object> { { "@id", idFamilia } };
+            return Convert.ToInt32(dal.EjecutarEscalar("SELECT COUNT(*) FROM Rol_Permiso WHERE ID_Permiso = @id", pId)) > 0;
+        }
+
+        public bool EstaIncluidaEnOtraFamilia(int idFamilia)
+        {
+            var pId = new Dictionary<string, object> { { "@id", idFamilia } };
+            return Convert.ToInt32(dal.EjecutarEscalar("SELECT COUNT(*) FROM Permiso_Detalle WHERE ID_PermisoHijo = @id", pId)) > 0;
         }
         #endregion
 

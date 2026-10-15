@@ -3,7 +3,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BLL;
 
-public partial class Certificados : System.Web.UI.Page
+public partial class Certificados : PaginaBase
 {
     bllCertificadoAdopcion bllCertificado;
 
@@ -25,13 +25,13 @@ public partial class Certificados : System.Web.UI.Page
         if (!string.IsNullOrEmpty(codigoAnimalParam) && int.TryParse(codigoAnimalParam, out int codigoAnimal))
         {
             gvCertificados.DataSource = bllCertificado.ObtenerCertificadosPorAnimal(codigoAnimal);
-            lbFiltroActivo.Text = "Mostrando certificados del animal seleccionado.";
+            lbFiltroActivo.Text = Traducir("pageCertificados_msgFiltroAnimal", "Mostrando certificados del animal seleccionado.");
             btnVerTodos.Visible = true;
         }
         else if (!string.IsNullOrEmpty(dniParam))
         {
             gvCertificados.DataSource = bllCertificado.ObtenerCertificadosPorAdoptante(dniParam);
-            lbFiltroActivo.Text = "Mostrando certificados del adoptante seleccionado.";
+            lbFiltroActivo.Text = Traducir("pageCertificados_msgFiltroAdoptante", "Mostrando certificados del adoptante seleccionado.");
             btnVerTodos.Visible = true;
         }
         else
@@ -52,11 +52,11 @@ public partial class Certificados : System.Web.UI.Page
             {
                 string codigo = e.CommandArgument.ToString();
                 bllCertificado.CancelarAdopcion(codigo);
-                MostrarMensaje("Adopción cancelada exitosamente. El animal fue reingresado al refugio.", false);
+                MostrarMensaje(Traducir("pageCertificados_msgAdopcionCancelada", "Adopción cancelada exitosamente. El animal fue reingresado al refugio."), false);
             }
             catch (Exception ex)
             {
-                MostrarMensaje(ex.Message, true);
+                MostrarMensaje(MensajeError(ex), true);
             }
 
             CargarGrilla();

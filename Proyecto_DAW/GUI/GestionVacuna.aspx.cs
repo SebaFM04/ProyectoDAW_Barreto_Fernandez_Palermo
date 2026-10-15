@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class GestionVacuna : System.Web.UI.Page
+public partial class GestionVacuna : PaginaBase
 {
     bllVacuna bllvacuna;
     bllDigitoVerificador bllDigitoVerificador;
@@ -44,12 +44,18 @@ public partial class GestionVacuna : System.Web.UI.Page
     protected void gvVacunas_SelectedIndexChanged(object sender, EventArgs e)
     {
         ViewState["CodigoVacuna"] = gvVacunas.DataKeys[gvVacunas.SelectedIndex].Value.ToString();
-        txtCodigo.Text = gvVacunas.SelectedRow.Cells[1].Text;
-        txtNombre.Text = gvVacunas.SelectedRow.Cells[2].Text;
+        txtCodigo.Text = TextoCelda(1);
+        txtNombre.Text = TextoCelda(2);
         string activo = gvVacunas.SelectedRow.Cells[3].Text;
         rbActivo.Checked = activo == "True" || activo == "1";
         rbInactivo.Checked = !rbActivo.Checked;
         DeshabilitarFormulario();
+    }
+
+    // La grilla codifica el texto en HTML ("Antirrábica" -> "Antirr&#225;bica", vacío -> "&nbsp;"): se decodifica
+    private string TextoCelda(int indice)
+    {
+        return HttpUtility.HtmlDecode(gvVacunas.SelectedRow.Cells[indice].Text).Replace('\u00A0', ' ').Trim();
     }
 
     protected void btnAlta_Click(object sender, EventArgs e)
@@ -68,7 +74,7 @@ public partial class GestionVacuna : System.Web.UI.Page
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "Por favor, seleccione una vacuna de la lista.";
+            lbMensaje.Text = Traducir("pageVacuna_msgSeleccioneVacuna", "Por favor, seleccione una vacuna de la lista.");
             return;
         }
         ViewState["Modo"] = "Modificar";
@@ -87,7 +93,7 @@ public partial class GestionVacuna : System.Web.UI.Page
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "Por favor, complete todos los campos.";
+            lbMensaje.Text = Traducir("pageVacuna_msgCompleteCampos", "Por favor, complete todos los campos.");
             return;
         }
 
@@ -96,13 +102,13 @@ public partial class GestionVacuna : System.Web.UI.Page
             if (modo == "Alta")
             {
                 bllvacuna.AltaVacuna(txtCodigo.Text.Trim(), txtNombre.Text.Trim());
-                lbMensaje.Text = "Vacuna registrada exitosamente.";
+                lbMensaje.Text = Traducir("pageVacuna_msgVacunaRegistrada", "Vacuna registrada exitosamente.");
             }
             else
             {
                 string codigoVacuna = ViewState["CodigoVacuna"].ToString();
                 bllvacuna.Modificar(codigoVacuna, txtNombre.Text.Trim(), rbActivo.Checked);
-                lbMensaje.Text = "Vacuna modificada exitosamente.";
+                lbMensaje.Text = Traducir("pageVacuna_msgVacunaModificada", "Vacuna modificada exitosamente.");
             }
 
             bllDigitoVerificador.CalcularDVVacuna();
@@ -116,7 +122,7 @@ public partial class GestionVacuna : System.Web.UI.Page
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "Error: " + ex.Message;
+            lbMensaje.Text = Traducir("pageVacuna_msgError", "Error: ") + MensajeError(ex);
         }
     }
 

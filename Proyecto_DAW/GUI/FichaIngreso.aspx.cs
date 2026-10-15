@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class FichaIngreso : System.Web.UI.Page
+public partial class FichaIngreso : PaginaBase
 {
     bllFichaDeIngreso bllFicha;
     bllAnimal bllAnimal;
@@ -41,7 +41,7 @@ public partial class FichaIngreso : System.Web.UI.Page
         }
 
         bool esReingreso = bllFicha.TieneFicha(codigoAnimal);
-        btnRegistrar.Text = esReingreso ? "Registrar reingreso" : "Registrar ingreso";
+        btnRegistrar.Text = esReingreso ? Traducir("pageFichaIngreso_btnRegistrarReingreso", "Registrar reingreso") : Traducir("pageFichaIngreso_btnRegistrarIngreso", "Registrar ingreso");
     }
 
     private void CargarHistorial()
@@ -69,12 +69,12 @@ public partial class FichaIngreso : System.Web.UI.Page
             if (bllFicha.TieneFicha(codigoAnimal))
             {
                 bllFicha.RegistrarReingreso(codigoAnimal, txtMotivo.Text);
-                MostrarMensaje("Reingreso registrado exitosamente.", false);
+                MostrarMensaje(Traducir("pageFichaIngreso_msgReingresoRegistrado", "Reingreso registrado exitosamente."), false);
             }
             else
             {
                 bllFicha.CrearFichaConPrimerIngreso(codigoAnimal, txtMotivo.Text);
-                MostrarMensaje("Ficha de ingreso creada exitosamente.", false);
+                MostrarMensaje(Traducir("pageFichaIngreso_msgFichaCreada", "Ficha de ingreso creada exitosamente."), false);
             }
 
             txtMotivo.Text = "";
@@ -82,7 +82,7 @@ public partial class FichaIngreso : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            MostrarMensaje(ex.Message, true);
+            MostrarMensaje(MensajeError(ex), true);
         }
     }
 

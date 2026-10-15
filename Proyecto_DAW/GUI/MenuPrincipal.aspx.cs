@@ -5,7 +5,7 @@ using System.Web.UI.WebControls;
 using BE;
 using BLL;
 
-public partial class Default2 : System.Web.UI.Page
+public partial class Default2 : PaginaBase
 {
     bllAnimal bllAnimal;
 
@@ -41,7 +41,7 @@ public partial class Default2 : System.Web.UI.Page
             .ToList();
 
         ddlRaza.Items.Clear();
-        ddlRaza.Items.Add(new ListItem("Todos", ""));
+        ddlRaza.Items.Add(new ListItem(Traducir("pageMenu_optTodos", "Todos"), ""));
         foreach (var raza in razas)
             ddlRaza.Items.Add(new ListItem(raza, raza));
     }
@@ -58,7 +58,7 @@ public partial class Default2 : System.Web.UI.Page
             .ToList();
 
         ddlEspecie.Items.Clear();
-        ddlEspecie.Items.Add(new ListItem("Todos", ""));
+        ddlEspecie.Items.Add(new ListItem(Traducir("pageMenu_optTodos", "Todos"), ""));
         foreach (var especie in especies)
             ddlEspecie.Items.Add(new ListItem(especie, especie));
 

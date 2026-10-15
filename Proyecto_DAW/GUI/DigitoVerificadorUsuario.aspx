@@ -7,9 +7,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div class="dv-page">
         <div class="dv-container">
-            <h2 class="dv-title">Página no disponible</h2>
+            <h2 class="dv-title" runat="server" data-traduccion="pageDVUsuario_titNoDisponible">Página no disponible</h2>
             <asp:Label ID="lblMensaje" runat="server"
                 Text="El sistema no se encuentra disponible en este momento. Intente más tarde."
+                data-traduccion="pageDVUsuario_lblMensaje"
                 CssClass="dv-label" />
         </div>
     </div>

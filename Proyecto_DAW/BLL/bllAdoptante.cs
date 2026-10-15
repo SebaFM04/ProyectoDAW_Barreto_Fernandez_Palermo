@@ -59,7 +59,7 @@ namespace BLL
             Adoptante adoptante = BuscarAdoptantePorDNI(dni);
             if (adoptante == null)
             {
-                throw new Exception("Adoptante no encontrado");
+                throw new ExcepcionNegocio("bllAdoptante_msgAdoptanteNoEncontrado", "Adoptante no encontrado");
             }
 
             //Invierte el valor actual del campo activo

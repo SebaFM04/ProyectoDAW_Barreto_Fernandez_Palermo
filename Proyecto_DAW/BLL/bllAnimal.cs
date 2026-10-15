@@ -29,7 +29,7 @@ namespace BLL
         public AccionSql ConstruirAccionMarcarAdoptado(string codigo)
         {
             Animal animal = BuscarAnimalPorCodigo(codigo);
-            if (animal == null) throw new Exception("No se encontró un animal con el código proporcionado.");
+            if (animal == null) throw new ExcepcionNegocio("bllAnimal_msgAnimalNoEncontrado", "No se encontró un animal con el código proporcionado.");
 
             animal.estadoAdopcion = "Adoptado";
             return dal.ConstruirAccionModificar(animal);
@@ -38,7 +38,7 @@ namespace BLL
         public AccionSql ConstruirAccionCambiarEstadoAdopcion(string codigo, string nuevoEstado)
         {
             Animal animal = BuscarAnimalPorCodigo(codigo);
-            if (animal == null) throw new Exception("No se encontró un animal con el código proporcionado.");
+            if (animal == null) throw new ExcepcionNegocio("bllAnimal_msgAnimalNoEncontrado", "No se encontró un animal con el código proporcionado.");
 
             animal.estadoAdopcion = nuevoEstado;
             return dal.ConstruirAccionModificar(animal);
@@ -46,12 +46,12 @@ namespace BLL
 
         public int AltaAnimal(string especie, string raza, string nombre, string tamano, string sexo, string estadoDeAdopcion, bool vivo)
         {
-            if (string.IsNullOrWhiteSpace(especie)) throw new Exception("Ingrese la especie");
-            if (string.IsNullOrWhiteSpace(raza)) throw new Exception("Ingrese la raza");
-            if (string.IsNullOrWhiteSpace(nombre)) throw new Exception("Ingrese el nombre");
-            if (string.IsNullOrWhiteSpace(tamano)) throw new Exception("Ingrese el tamaño");
-            if (string.IsNullOrWhiteSpace(sexo)) throw new Exception("Ingrese el sexo");
-            if (string.IsNullOrWhiteSpace(estadoDeAdopcion)) throw new Exception("Ingrese el estado");
+            if (string.IsNullOrWhiteSpace(especie)) throw new ExcepcionNegocio("bllAnimal_msgIngreseEspecie", "Ingrese la especie");
+            if (string.IsNullOrWhiteSpace(raza)) throw new ExcepcionNegocio("bllAnimal_msgIngreseRaza", "Ingrese la raza");
+            if (string.IsNullOrWhiteSpace(nombre)) throw new ExcepcionNegocio("bllAnimal_msgIngreseNombre", "Ingrese el nombre");
+            if (string.IsNullOrWhiteSpace(tamano)) throw new ExcepcionNegocio("bllAnimal_msgIngreseTamano", "Ingrese el tamaño");
+            if (string.IsNullOrWhiteSpace(sexo)) throw new ExcepcionNegocio("bllAnimal_msgIngreseSexo", "Ingrese el sexo");
+            if (string.IsNullOrWhiteSpace(estadoDeAdopcion)) throw new ExcepcionNegocio("bllAnimal_msgIngreseEstado", "Ingrese el estado");
 
             int codigoAnimal = dal.GenerarCodigoAnimalUnico();
             Animal animal = new Animal(codigoAnimal, especie, raza, nombre, tamano, sexo, estadoDeAdopcion, vivo);
@@ -69,16 +69,16 @@ namespace BLL
 
         public void Modificar(string codigo, string especie = null, string raza = null, string nombre = null, string tamano = null, string sexo = null, string estadoDeAdopcion = null, bool? vivo = null)
         {
-            if (string.IsNullOrWhiteSpace(especie)) throw new Exception("Ingrese la especie");
-            if (string.IsNullOrWhiteSpace(raza)) throw new Exception("Ingrese la raza");
-            if (string.IsNullOrWhiteSpace(nombre)) throw new Exception("Ingrese el nombre");
-            if (string.IsNullOrWhiteSpace(tamano)) throw new Exception("Ingrese el tamaño");
-            if (string.IsNullOrWhiteSpace(sexo)) throw new Exception("Ingrese el sexo");
-            if (string.IsNullOrWhiteSpace(estadoDeAdopcion)) throw new Exception("Ingrese el estado");
+            if (string.IsNullOrWhiteSpace(especie)) throw new ExcepcionNegocio("bllAnimal_msgIngreseEspecie", "Ingrese la especie");
+            if (string.IsNullOrWhiteSpace(raza)) throw new ExcepcionNegocio("bllAnimal_msgIngreseRaza", "Ingrese la raza");
+            if (string.IsNullOrWhiteSpace(nombre)) throw new ExcepcionNegocio("bllAnimal_msgIngreseNombre", "Ingrese el nombre");
+            if (string.IsNullOrWhiteSpace(tamano)) throw new ExcepcionNegocio("bllAnimal_msgIngreseTamano", "Ingrese el tamaño");
+            if (string.IsNullOrWhiteSpace(sexo)) throw new ExcepcionNegocio("bllAnimal_msgIngreseSexo", "Ingrese el sexo");
+            if (string.IsNullOrWhiteSpace(estadoDeAdopcion)) throw new ExcepcionNegocio("bllAnimal_msgIngreseEstado", "Ingrese el estado");
 
             Animal animal = BuscarAnimalPorCodigo(codigo);
 
-            if (animal == null) throw new Exception("No se encontró un animal con el código proporcionado.");
+            if (animal == null) throw new ExcepcionNegocio("bllAnimal_msgAnimalNoEncontrado", "No se encontró un animal con el código proporcionado.");
 
             animal.especie = especie;
             animal.raza = raza;
@@ -95,10 +95,10 @@ namespace BLL
 
         public void Baja(string codigo)
         {
-            if (VerificarAnimalAdoptado(codigo)) throw new Exception("No se puede borrar porque esta adoptado");
+            if (VerificarAnimalAdoptado(codigo)) throw new ExcepcionNegocio("bllAnimal_msgAnimalAdoptado", "No se puede borrar porque esta adoptado");
 
             if (bllFichaDeIngreso.TieneFicha(int.Parse(codigo))) // <- agregar este bloque
-                throw new Exception("No se puede borrar el animal porque tiene una ficha de ingreso con historial.");
+                throw new ExcepcionNegocio("bllAnimal_msgAnimalConFicha", "No se puede borrar el animal porque tiene una ficha de ingreso con historial.");
 
             dal.Baja(codigo);
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion animales", "Animal dado de baja", 2);
@@ -118,7 +118,7 @@ namespace BLL
         public void MarcarComoAdoptado(string codigo)
         {
             Animal animal = BuscarAnimalPorCodigo(codigo);
-            if (animal == null) throw new Exception("No se encontró un animal con el código proporcionado.");
+            if (animal == null) throw new ExcepcionNegocio("bllAnimal_msgAnimalNoEncontrado", "No se encontró un animal con el código proporcionado.");
 
             animal.estadoAdopcion = "Adoptado";
             dal.Modificar(animal);

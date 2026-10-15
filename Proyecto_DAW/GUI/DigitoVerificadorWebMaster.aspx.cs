@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class _Default : System.Web.UI.Page
+public partial class _Default : PaginaBase
 {
     bllDigitoVerificador bllDigitoVerificador;
     bllBackUpRestore bllBackUpRestore;
@@ -37,7 +37,7 @@ public partial class _Default : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            MostrarMensaje(ex.Message);
+            MostrarMensaje(MensajeError(ex));
         }
     }
 
@@ -67,10 +67,10 @@ public partial class _Default : System.Web.UI.Page
             bllDigitoVerificador.LimpiarAuditoria();
 
             claseSession.Gestor.UnsetUsuario();
-            string script = "mostrarPopup('Dígitos verificadores recalculados correctamente.', 'Login.aspx');";
+            string script = "mostrarPopup('" + Traducir("pageDVWebMaster_msgRecalculado", "Dígitos verificadores recalculados correctamente.").Replace("'", "\\'") + "', 'Login.aspx');";
             ClientScript.RegisterStartupScript(GetType(), "redir", script, true);
         }
-        catch (Exception ex) { MostrarMensaje(ex.Message); }
+        catch (Exception ex) { MostrarMensaje(MensajeError(ex)); }
     }
 
     protected void btnRestore_Click(object sender, EventArgs e)
@@ -79,7 +79,7 @@ public partial class _Default : System.Web.UI.Page
         {
             if (ddlBackups.SelectedItem == null || ddlBackups.SelectedValue == "")
             {
-                MostrarMensaje("Seleccione un backup de la lista.");
+                MostrarMensaje(Traducir("pageDVWebMaster_msgSeleccioneBackup", "Seleccione un backup de la lista."));
                 return;
             }
 
@@ -88,10 +88,10 @@ public partial class _Default : System.Web.UI.Page
             bllDigitoVerificador.LimpiarAuditoria();
             // Restore OK: cerramos sesión y volvemos al login
             claseSession.Gestor.UnsetUsuario();
-            string script = "mostrarPopup('Restore realizado correctamente.', 'Login.aspx');";
+            string script = "mostrarPopup('" + Traducir("pageDVWebMaster_msgRestoreRealizado", "Restore realizado correctamente.").Replace("'", "\\'") + "', 'Login.aspx');";
             ClientScript.RegisterStartupScript(GetType(), "redirRestore", script, true);
         }
-        catch (Exception ex) { MostrarMensaje(ex.Message); }
+        catch (Exception ex) { MostrarMensaje(MensajeError(ex)); }
     }
 
     // Reemplaza a MessageBox.Show

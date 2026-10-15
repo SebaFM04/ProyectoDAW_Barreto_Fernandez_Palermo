@@ -24,7 +24,11 @@
                 <div class="navbar-menu">
                     <ul class="nav navbar-nav">
                         <li>
-                            <asp:LinkButton ID="btnInicio" runat="server" OnClick="btnInicio_Click">Inicio</asp:LinkButton>
+                            <asp:LinkButton ID="btnInicio" runat="server" OnClick="btnInicio_Click" data-traduccion="masterLogin_menuInicio">Inicio</asp:LinkButton>
+                        </li>
+                        <li class="nav-idioma">
+                            <asp:DropDownList ID="ddlIdioma" runat="server" CssClass="select-idioma" AutoPostBack="true"
+                                OnSelectedIndexChanged="ddlIdioma_SelectedIndexChanged" data-traduccion-title="master_ddlIdioma" title="Idioma" />
                         </li>
                     </ul>
                 </div>

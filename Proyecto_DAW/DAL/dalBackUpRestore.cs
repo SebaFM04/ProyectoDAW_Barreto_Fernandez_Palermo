@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SERVICIOS;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -43,7 +44,7 @@ namespace DAL
             {
                 dal.RestaurarBaseDatos(ruta);
             }
-            catch (Exception ex) { throw new Exception("Error:" + ex.Message); }
+            catch (Exception ex) { throw new ExcepcionNegocio("dalBackUpRestore_msgErrorRestore", "Error: {0}", ex.Message); }
         }
 
         public List<string> ListarBackups(string carpeta)
@@ -56,10 +57,11 @@ namespace DAL
             }
             catch (UnauthorizedAccessException)
             {
-                throw new Exception(
-                    $"No se tienen permisos para leer la carpeta de backups configurada en SQL Server:\n{carpeta}\n\n" +
+                throw new ExcepcionNegocio("dalBackUpRestore_msgSinPermisoLectura",
+                    "No se tienen permisos para leer la carpeta de backups configurada en SQL Server:\n{0}\n\n" +
                     "Verificá que el BackupDirectory de SQL Server no apunte a una ruta protegida como 'Program Files'. " +
-                    "Se recomienda usar una carpeta como C:\\SQLBackups."
+                    "Se recomienda usar una carpeta como C:\\SQLBackups.",
+                    carpeta
                 );
             }
         }
@@ -75,10 +77,11 @@ namespace DAL
             }
             catch (UnauthorizedAccessException)
             {
-                throw new Exception(
-                    $"No se tienen permisos para acceder a la carpeta de backups configurada en SQL Server:\n{carpeta}\n\n" +
+                throw new ExcepcionNegocio("dalBackUpRestore_msgSinPermisoAcceso",
+                    "No se tienen permisos para acceder a la carpeta de backups configurada en SQL Server:\n{0}\n\n" +
                     "Verificá que el BackupDirectory de SQL Server no apunte a una ruta protegida como 'Program Files'. " +
-                    "Se recomienda usar una carpeta como C:\\SQLBackups."
+                    "Se recomienda usar una carpeta como C:\\SQLBackups.",
+                    carpeta
                 );
             }
         }

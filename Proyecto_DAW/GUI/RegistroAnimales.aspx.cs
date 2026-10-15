@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class RegistroAnimales : System.Web.UI.Page
+public partial class RegistroAnimales : PaginaBase
 {
     bllAnimal bllanimal;
     bllDigitoVerificador bllDigitoVerificador;
@@ -33,12 +33,27 @@ public partial class RegistroAnimales : System.Web.UI.Page
     {
         pnlAlerta.Visible = false;
         ViewState["codigoAnimal"] = gvAnimales.DataKeys[gvAnimales.SelectedIndex].Value.ToString();
-        txtEspecie.Text = gvAnimales.SelectedRow.Cells[2].Text;
-        txtRaza.Text = gvAnimales.SelectedRow.Cells[3].Text;
-        txtNombre.Text = gvAnimales.SelectedRow.Cells[4].Text;
-        ddlTamano.Text = gvAnimales.SelectedRow.Cells[5].Text;
-        ddlSexo.Text = gvAnimales.SelectedRow.Cells[6].Text;
-        ddlEstado.Text = gvAnimales.SelectedRow.Cells[7].Text;
+        txtEspecie.Text = TextoCelda(2);
+        txtRaza.Text = TextoCelda(3);
+        txtNombre.Text = TextoCelda(4);
+        Seleccionar(ddlTamano, TextoCelda(5));
+        Seleccionar(ddlSexo, TextoCelda(6));
+        Seleccionar(ddlEstado, TextoCelda(7));
+    }
+
+    // La grilla codifica el texto en HTML ("Pequeño" -> "Peque&#241;o", vacío -> "&nbsp;"): se decodifica
+    private string TextoCelda(int indice)
+    {
+        return HttpUtility.HtmlDecode(gvAnimales.SelectedRow.Cells[indice].Text).Replace('\u00A0', ' ').Trim();
+    }
+
+    // Si el valor no está en la lista no se rompe la página: queda la primera opción
+    private void Seleccionar(DropDownList ddl, string valor)
+    {
+        if (ddl.Items.FindByValue(valor) != null)
+            ddl.SelectedValue = valor;
+        else
+            ddl.SelectedIndex = 0;
     }
 
     private void MostrarMensaje(string mensaje, bool esError)
@@ -68,7 +83,7 @@ public partial class RegistroAnimales : System.Web.UI.Page
             //MostrarMensaje("Animal agregado exitosamente!", false);
             //ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
         }
-        catch (Exception ex) { MostrarMensaje(ex.Message, true); }
+        catch (Exception ex) { MostrarMensaje(MensajeError(ex), true); }
     }
 
     protected void btnModificar_Click(object sender, EventArgs e)
@@ -77,11 +92,11 @@ public partial class RegistroAnimales : System.Web.UI.Page
         {
             if (ViewState["codigoAnimal"] == null)
             {
-                MostrarMensaje("Por favor, seleccione un animal de la lista.", true);
+                MostrarMensaje(Traducir("pageAnimal_msgSeleccioneAnimal", "Por favor, seleccione un animal de la lista."), true);
                 return;
             }
 
-            var codigo = gvAnimales.SelectedRow.Cells[1].Text.ToString();
+            var codigo = TextoCelda(1);
             var especie = txtEspecie.Text.ToString();
             var raza = txtRaza.Text.ToString();
             var nombre = txtNombre.Text.ToString();
@@ -92,10 +107,10 @@ public partial class RegistroAnimales : System.Web.UI.Page
             bllanimal.Modificar(codigo, especie, raza, nombre, tamano, sexo, estadoAdopcion, true);
 
             CargarGrid();
-            MostrarMensaje("Animal modificado exitosamente!", false);
+            MostrarMensaje(Traducir("pageAnimal_msgAnimalModificado", "Animal modificado exitosamente!"), false);
             ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
         }
-        catch (Exception ex) { MostrarMensaje(ex.Message, true); }
+        catch (Exception ex) { MostrarMensaje(MensajeError(ex), true); }
     }
 
     protected void btnBaja_Click(object sender, EventArgs e)
@@ -104,17 +119,17 @@ public partial class RegistroAnimales : System.Web.UI.Page
         {
             if (ViewState["codigoAnimal"] == null)
             {
-                MostrarMensaje("Por favor, seleccione un animal de la lista.", true);
+                MostrarMensaje(Traducir("pageAnimal_msgSeleccioneAnimal", "Por favor, seleccione un animal de la lista."), true);
                 return;
             }
 
-            var codigo = gvAnimales.SelectedRow.Cells[1].Text.ToString();
+            var codigo = TextoCelda(1);
             bllanimal.Baja(codigo);
             CargarGrid();
-            MostrarMensaje("Animal borrado exitosamente!", false);
+            MostrarMensaje(Traducir("pageAnimal_msgAnimalBorrado", "Animal borrado exitosamente!"), false);
             ScriptManager.RegisterStartupScript(this, GetType(), "acciones", "limpiarFormulario(); ocultarAlerta();", true);
         }
-        catch (Exception ex) { MostrarMensaje(ex.Message, true); }
+        catch (Exception ex) { MostrarMensaje(MensajeError(ex), true); }
     }
 
     protected void btnExportar_Click(object sender, EventArgs e)
@@ -132,14 +147,14 @@ public partial class RegistroAnimales : System.Web.UI.Page
     {
         if (!fuImportar.HasFile)
         {
-            lbMensaje.Text = "Seleccioná un archivo XML primero.";
+            lbMensaje.Text = Traducir("pageAnimal_msgSeleccioneXML", "Seleccioná un archivo XML primero.");
             return;
         }
 
         string extension = Path.GetExtension(fuImportar.FileName).ToLower();
         if (extension != ".xml")
         {
-            lbMensajeXML.Text = "El archivo debe tener formato .xml";
+            lbMensajeXML.Text = Traducir("pageAnimal_msgFormatoXML", "El archivo debe tener formato .xml");
             return;
         }
 
