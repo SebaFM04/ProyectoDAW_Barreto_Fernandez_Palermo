@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class DigitoVerificadorUsuario : System.Web.UI.Page
+public partial class DigitoVerificadorUsuario : PaginaBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {

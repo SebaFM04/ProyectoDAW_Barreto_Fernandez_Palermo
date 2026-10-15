@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class FichaMedica : System.Web.UI.Page
+public partial class FichaMedica : PaginaBase
 {
     bllFichaMedica bllFichaMedica;
     bllAnimal bllAnimal;
@@ -67,7 +67,7 @@ public partial class FichaMedica : System.Web.UI.Page
         {
             bllFichaMedica.AltaFichaMedica(codigoAnimal, chkCastrado.Checked, txtDieta.Text, txtMedicamento.Text, txtObservaciones.Text);
 
-            MostrarMensaje("Ficha médica registrada exitosamente.", false);
+            MostrarMensaje(Traducir("pageFichaMedica_msgFichaRegistrada", "Ficha médica registrada exitosamente."), false);
 
             txtDieta.Text = "";
             txtMedicamento.Text = "";
@@ -78,7 +78,7 @@ public partial class FichaMedica : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            MostrarMensaje(ex.Message, true);
+            MostrarMensaje(MensajeError(ex), true);
         }
     }
 

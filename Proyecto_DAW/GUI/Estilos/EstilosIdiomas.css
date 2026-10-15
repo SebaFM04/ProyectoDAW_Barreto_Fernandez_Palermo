@@ -1,0 +1,67 @@
+/* Complementa EstilosVacunas.css (grillas, formularios y botones) */
+
+.idiomas-titulo {
+    color: #556B2F;
+    margin-bottom: 20px;
+}
+
+.espacio-arriba {
+    margin-top: 20px;
+}
+
+.botones-wrap {
+    flex-wrap: wrap;
+}
+
+.btn-rojo {
+    padding: 9px 30px;
+    background: #a33a2c;
+    color: white;
+    border: 1px solid #7b2a20;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.15s;
+}
+
+    .btn-rojo:hover {
+        background: #8c3125;
+    }
+
+/* Botones sin permiso (data-permiso los deshabilita) */
+.btn-verde:disabled,
+.btn-rojo:disabled,
+.btn-gris:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ESTADO DEL IDIOMA */
+.estado-activo {
+    color: #2d5a1b;
+    font-weight: 600;
+}
+
+.estado-baja {
+    color: #7b1c1c;
+    font-weight: 600;
+}
+
+/* TRADUCCIONES */
+.ayuda {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.tabla-traducciones .col-clave {
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    color: #555;
+    white-space: nowrap;
+}
+
+.txt-traduccion {
+    width: 100%;
+    min-width: 220px;
+}

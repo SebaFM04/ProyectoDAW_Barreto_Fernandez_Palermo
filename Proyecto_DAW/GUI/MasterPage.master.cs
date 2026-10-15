@@ -8,7 +8,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class SiteMaster : System.Web.UI.MasterPage
+// Patrón Observer: la MasterPage también es un observador; traduce la navbar (y todo lo que no es contenido de la página)
+public partial class SiteMaster : System.Web.UI.MasterPage, IObservadorIdioma
 {
     bllBitacora bllBitacora;
 
@@ -25,7 +26,18 @@ public partial class SiteMaster : System.Web.UI.MasterPage
         { "Bitacora.aspx",                      new[] { "BITACORA_APLICAR_FILTROS" } },
         { "BackupRestore.aspx",                 new[] { "REALIZAR_BACKUP", "REALIZAR_RESTORE" } },
         { "GestionVacuna.aspx",                 new[] { "VACUNA_ALTA", "VACUNA_MODIFICAR", "VACUNA_APLICAR" } },
+        { "GestionIdiomas.aspx",                new[] { "IDIOMA_ALTA", "IDIOMA_MODIFICAR", "IDIOMA_BAJA", "IDIOMA_REHABILITAR", "TRADUCCION_GESTIONAR" } },
     };
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        GestorIdioma.Actual.Suscribir(this);
+    }
+
+    protected void Page_Unload(object sender, EventArgs e)
+    {
+        GestorIdioma.Actual.Desuscribir(this);
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -35,7 +47,45 @@ public partial class SiteMaster : System.Web.UI.MasterPage
         ValidarAccesoUrl();   // guardia por URL: si no corresponde, redirige y corta acá
         ControlarLogin();   // visibilidad del menú
         AplicarPermisos();   // menú + controles de la página, según los permisos del rol
-        //ControlarRoles(); //para hardcodeados 
+        //ControlarRoles(); //para hardcodeados
+
+        if (!IsPostBack)
+            CargarIdiomas();
+    }
+
+    // Pública: GestionIdiomas la llama cuando se da de alta/baja un idioma
+    public void CargarIdiomas()
+    {
+        try
+        {
+            ddlIdioma.DataSource = new bllIdioma().RetornarIdiomas(soloActivos: true);
+            ddlIdioma.DataTextField = "Nombre";
+            ddlIdioma.DataValueField = "Codigo";
+            ddlIdioma.DataBind();
+            SeleccionarIdioma(IdiomaHelper.CodigoActual());
+        }
+        catch (System.Data.SqlClient.SqlException)
+        {
+            ddlIdioma.Visible = false;   // todavía no existen las tablas de idiomas
+        }
+    }
+
+    private void SeleccionarIdioma(string codigo)
+    {
+        if (codigo != null && ddlIdioma.Items.FindByValue(codigo) != null)
+            ddlIdioma.SelectedValue = codigo;
+    }
+
+    protected void ddlIdioma_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        // Cambia el estado del sujeto: notifica a la master y a la página en este mismo postback
+        IdiomaHelper.CambiarIdioma(ddlIdioma.SelectedValue);
+    }
+
+    public void ActualizarIdioma(Idioma idioma)
+    {
+        TraductorHelper.Traducir(this, idioma.Traducciones, excluir: ContentPlaceHolder1);
+        SeleccionarIdioma(idioma.Codigo);
     }
 
     //private void BloquearAcceso()

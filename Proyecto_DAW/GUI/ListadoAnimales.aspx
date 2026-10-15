@@ -7,7 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
     <section class="animals-section">
-        <h2 class="section-title">Animales Disponibles para la Adopcion</h2>
+        <h2 class="section-title" runat="server" data-traduccion="pageListadoAnimales_titAnimalesDisponibles">Animales Disponibles para la Adopcion</h2>
 
         <div class="animals-container">
 
@@ -15,33 +15,33 @@
             <aside class="filters-sidebar">
                 <div class="filter-header">
                     <span class="filter-icon">&#9663;</span>
-                    <span>Filtros</span>
+                    <span runat="server" data-traduccion="pageListadoAnimales_titFiltros">Filtros</span>
                 </div>
 
                 <div class="filter-group">
-                    <label class="filter-label">Especie</label>
+                    <label class="filter-label" runat="server" data-traduccion="pageListadoAnimales_lblEspecie">Especie</label>
                     <asp:DropDownList ID="ddlEspecie" runat="server" CssClass="filter-select"
                         AutoPostBack="true" OnSelectedIndexChanged="ddlEspecie_Changed">
-                        <asp:ListItem Value="">Todos</asp:ListItem>
+                        <asp:ListItem Value="" data-traduccion="pageListadoAnimales_optTodos">Todos</asp:ListItem>
 
                     </asp:DropDownList>
                 </div>
 
                 <div class="filter-group">
-                    <label class="filter-label">Raza</label>
+                    <label class="filter-label" runat="server" data-traduccion="pageListadoAnimales_lblRaza">Raza</label>
                     <asp:DropDownList ID="ddlRaza" runat="server" CssClass="filter-select"
                         AutoPostBack="true" OnSelectedIndexChanged="ddlRaza_Changed">
-                        <asp:ListItem Value="">Todos</asp:ListItem>
+                        <asp:ListItem Value="" data-traduccion="pageListadoAnimales_optTodos">Todos</asp:ListItem>
                     </asp:DropDownList>
                 </div>
 
                 <div class="filter-group">
-                    <label class="filter-label">Genero</label>
+                    <label class="filter-label" runat="server" data-traduccion="pageListadoAnimales_lblGenero">Genero</label>
                     <asp:DropDownList ID="ddlGenero" runat="server" CssClass="filter-select"
                         AutoPostBack="true" OnSelectedIndexChanged="Filtros_Changed">
-                        <asp:ListItem Value="">Todos</asp:ListItem>
-                        <asp:ListItem Value="Macho">Macho</asp:ListItem>
-                        <asp:ListItem Value="Hembra">Hembra</asp:ListItem>
+                        <asp:ListItem Value="" data-traduccion="pageListadoAnimales_optTodos">Todos</asp:ListItem>
+                        <asp:ListItem Value="Macho" data-traduccion="pageListadoAnimales_optMacho">Macho</asp:ListItem>
+                        <asp:ListItem Value="Hembra" data-traduccion="pageListadoAnimales_optHembra">Hembra</asp:ListItem>
                     </asp:DropDownList>
                 </div>
 
@@ -70,15 +70,15 @@
 
                                 <div class="animal-info">
                                     <div class="info-row">
-                                        <span class="info-label">Tamaño:</span>
+                                        <span class="info-label"><%# Traducir("pageListadoAnimales_lblTamano", "Tamaño:") %></span>
                                         <span class="info-val"><%# Eval("tamano") %></span>
                                     </div>
                                     <div class="info-row">
-                                        <span class="info-label">Genero:</span>
+                                        <span class="info-label"><%# Traducir("pageListadoAnimales_lblGenero2", "Genero:") %></span>
                                         <span class="info-val"><%# Eval("sexo") %></span>
                                     </div>
                                     <div class="info-row">
-                                        <span class="info-label">Estado:</span>
+                                        <span class="info-label"><%# Traducir("pageListadoAnimales_lblEstado", "Estado:") %></span>
                                         <span class="info-val"><%# Eval("estadoAdopcion") %></span>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                 </asp:Repeater>
 
                 <asp:Panel ID="pnlSinAnimales" runat="server" Visible="false" CssClass="sin-animales">
-                    <p>No hay animales disponibles con los filtros seleccionados.</p>
+                    <p runat="server" data-traduccion="pageListadoAnimales_msgSinAnimales">No hay animales disponibles con los filtros seleccionados.</p>
                 </asp:Panel>
 
             </div>

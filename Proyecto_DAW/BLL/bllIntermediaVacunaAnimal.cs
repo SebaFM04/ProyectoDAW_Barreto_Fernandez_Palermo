@@ -33,7 +33,7 @@ namespace BLL
             );
 
             if (tieneVigente)
-                throw new Exception("La fecha de aplicación debe ser mayor a la fecha de próxima aplicación de la vacuna ya registrada.");
+                throw new ExcepcionNegocio("bllIntermediaVacunaAnimal_msgFechaAplicacionInvalida", "La fecha de aplicación debe ser mayor a la fecha de próxima aplicación de la vacuna ya registrada.");
 
             IntermediaVacunaAnimal intermedia = new IntermediaVacunaAnimal(codigoVacuna, codigoAnimal, nombreVacuna, fechaAplicacion, fechaProximaAplicacion);
             dal.Alta(intermedia);
@@ -51,7 +51,7 @@ namespace BLL
             IntermediaVacunaAnimal intermedia = BuscarVacunaPorCodigo(codigo.ToString());
             if (intermedia == null)
             {
-                throw new Exception("No se encontró una intermedia con el código proporcionado.");
+                throw new ExcepcionNegocio("bllIntermediaVacunaAnimal_msgIntermediaNoEncontrada", "No se encontró una intermedia con el código proporcionado.");
             }
 
             if (fechaAplicacion != null) intermedia.fechaAplicacion = fechaAplicacion;

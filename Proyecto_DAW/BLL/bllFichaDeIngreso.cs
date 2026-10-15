@@ -38,7 +38,7 @@ namespace BLL
         public void CrearFichaConPrimerIngreso(int codigoAnimal, string motivo)
         {
             if (string.IsNullOrWhiteSpace(motivo))
-                throw new Exception("Debe indicar el motivo del ingreso.");
+                throw new ExcepcionNegocio("bllFichaDeIngreso_msgMotivoIngresoRequerido", "Debe indicar el motivo del ingreso.");
 
             int codigoFicha = dalFicha.GenerarCodigoFichaUnico();
             FichaDeIngreso ficha = new FichaDeIngreso(codigoFicha, codigoAnimal, DateTime.Now);
@@ -54,11 +54,11 @@ namespace BLL
         public void RegistrarReingreso(int codigoAnimal, string motivo)
         {
             if (string.IsNullOrWhiteSpace(motivo))
-                throw new Exception("Debe indicar el motivo del reingreso.");
+                throw new ExcepcionNegocio("bllFichaDeIngreso_msgMotivoReingresoRequerido", "Debe indicar el motivo del reingreso.");
 
             FichaDeIngreso ficha = ObtenerFichaPorAnimal(codigoAnimal);
             if (ficha == null)
-                throw new Exception("Este animal no tiene una ficha de ingreso creada.");
+                throw new ExcepcionNegocio("bllFichaDeIngreso_msgSinFichaIngreso", "Este animal no tiene una ficha de ingreso creada.");
 
             RegistrarEnHistorial(ficha.codigoFicha, motivo);
             bllBitacoraEvento.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Ficha de ingreso", "Ficha de ingreso redada de alta", 3);
@@ -68,11 +68,11 @@ namespace BLL
         public AccionSql ConstruirAccionReingreso(int codigoAnimal, string motivo)
         {
             if (string.IsNullOrWhiteSpace(motivo))
-                throw new Exception("Debe indicar el motivo del reingreso.");
+                throw new ExcepcionNegocio("bllFichaDeIngreso_msgMotivoReingresoRequerido", "Debe indicar el motivo del reingreso.");
 
             FichaDeIngreso ficha = ObtenerFichaPorAnimal(codigoAnimal);
             if (ficha == null)
-                throw new Exception("Este animal no tiene una ficha de ingreso creada.");
+                throw new ExcepcionNegocio("bllFichaDeIngreso_msgSinFichaIngreso", "Este animal no tiene una ficha de ingreso creada.");
 
             int codigoHistorial = dalHistorial.GenerarCodigoHistorialUnico();
             HistorialIngreso registro = new HistorialIngreso(codigoHistorial, ficha.codigoFicha, DateTime.Now, motivo);

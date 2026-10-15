@@ -41,15 +41,15 @@ namespace BLL
             nombre = (nombre ?? string.Empty).Trim();
  
             if (string.IsNullOrWhiteSpace(nombre))
-                throw new Exception("Debe ingresar un nombre para la familia.");
+                throw new ExcepcionNegocio("bllFamilia_msgNombreRequerido", "Debe ingresar un nombre para la familia.");
  
             if (hijos == null || hijos.Count == 0)
-                throw new Exception("No se puede crear una familia sin permisos. Seleccioná al menos un permiso o familia.");
+                throw new ExcepcionNegocio("bllFamilia_msgCrearSinPermisos", "No se puede crear una familia sin permisos. Seleccioná al menos un permiso o familia.");
  
             List<Familia> existentes = dal.ObtenerTodasLasFamilias().Cast<Familia>().ToList();
  
             if (existentes.Any(f => string.Equals(f.Nombre, nombre, StringComparison.OrdinalIgnoreCase)))
-                throw new Exception("La familia \"" + nombre + "\" ya existe.");
+                throw new ExcepcionNegocio("bllFamilia_msgFamiliaExistente", "La familia \"{0}\" ya existe.", nombre);
  
             dal.CrearFamilia(nombre, hijos);
             bitacora.Alta(LoginActual(), "Gestion perfiles/familias", "Familia creada", 3);
@@ -61,10 +61,10 @@ namespace BLL
             nombreNuevo = (nombreNuevo ?? string.Empty).Trim();
  
             if (string.IsNullOrWhiteSpace(nombreNuevo))
-                throw new Exception("Debe ingresar un nombre para modificar la familia.");
+                throw new ExcepcionNegocio("bllFamilia_msgNombreModificarRequerido", "Debe ingresar un nombre para modificar la familia.");
  
             if (dal.ObtenerFamiliaEspecifica(idFamilia) == null)
-                throw new Exception("Familia no encontrada.");
+                throw new ExcepcionNegocio("bllFamilia_msgFamiliaNoEncontrada", "Familia no encontrada.");
  
             dal.ModificarFamilia(idFamilia, nombreNuevo);
             bitacora.Alta(LoginActual(), "Gestion perfiles/familias", "Familia modificada", 3);
@@ -84,19 +84,19 @@ namespace BLL
         {
             Familia familia = dal.ObtenerFamiliaEspecifica(idFamilia);
             if (familia == null)
-                throw new Exception("Familia no encontrada.");
+                throw new ExcepcionNegocio("bllFamilia_msgFamiliaNoEncontrada", "Familia no encontrada.");
  
             if (VerificarPermisoFamiliaRepetida(familia.ObtenerHijos(), acceso))
-                throw new Exception("El permiso o familia ya está asignado a la familia.");
+                throw new ExcepcionNegocio("bllFamilia_msgAccesoYaAsignado", "El permiso o familia ya está asignado a la familia.");
             
             if (acceso is Familia hija)
             {
                 if (hija.ID == idFamilia)
-                    throw new Exception("Una familia no puede contenerse a sí misma.");
+                    throw new ExcepcionNegocio("bllFamilia_msgFamiliaSeContiene", "Una familia no puede contenerse a sí misma.");
  
                 Familia hijaCompleta = dal.ObtenerFamiliaEspecifica(hija.ID);
                 if (hijaCompleta != null && ContieneFamilia(hijaCompleta, idFamilia))
-                    throw new Exception("No se puede asignar la familia porque generaría un ciclo.");
+                    throw new ExcepcionNegocio("bllFamilia_msgFamiliaCiclo", "No se puede asignar la familia porque generaría un ciclo.");
             }
  
             dal.AsignarAccesoAFamilia(idFamilia, acceso);
@@ -108,10 +108,12 @@ namespace BLL
         {
             Familia familia = dal.ObtenerFamiliaEspecifica(idFamilia);
             if (familia == null)
-                throw new Exception("Familia no encontrada.");
+                throw new ExcepcionNegocio("bllFamilia_msgFamiliaNoEncontrada", "Familia no encontrada.");
  
-            if (familia.ObtenerHijos().Count <= 1)
-                throw new Exception("La familia debe tener al menos un permiso o familia. Si querés dejarla vacía, eliminá la familia.");
+            // Puede quedar vacía solo si está en uso (asignada a un rol o dentro de otra familia): ahí no se puede eliminar
+            bool enUso = dal.EstaAsignadaARol(idFamilia) || dal.EstaIncluidaEnOtraFamilia(idFamilia);
+            if (familia.ObtenerHijos().Count <= 1 && !enUso)
+                throw new ExcepcionNegocio("bllFamilia_msgFamiliaSinPermisos", "La familia debe tener al menos un permiso o familia. Si querés dejarla vacía, eliminá la familia.");
  
             dal.DesasignarAccesoAFamilia(idFamilia, acceso);
             bitacora.Alta(LoginActual(), "Gestion perfiles/familias", "Desasignacion de permiso/familia a familia", 5);

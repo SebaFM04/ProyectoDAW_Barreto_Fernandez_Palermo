@@ -1,4 +1,5 @@
 ﻿using BE;
+using SERVICIOS;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -69,13 +70,18 @@ namespace DAL
             var pId = new Dictionary<string, object> { { "@id", idRol } };
 
             // No se puede borrar si algún usuario tiene asignado este rol
-            string qUsuarios = "SELECT COUNT(*) FROM Usuario WHERE rol = @id";
-            if (Convert.ToInt32(dal.EjecutarEscalar(qUsuarios, pId)) > 0)
-                throw new Exception("No se puede eliminar el perfil porque está asignado a uno o más usuarios.");
+            if (ContarUsuarios(idRol) > 0)
+                throw new ExcepcionNegocio("dalRol_msgPerfilConUsuarios", "No se puede eliminar el perfil porque está asignado a uno o más usuarios.");
 
             // Primero borro las asignaciones de permisos, después el rol
             dal.Query("DELETE FROM Rol_Permiso WHERE ID_Rol = @id", pId);
             dal.Query("DELETE FROM Rol WHERE ID = @id", pId);
+        }
+
+        public int ContarUsuarios(int idRol)
+        {
+            var pId = new Dictionary<string, object> { { "@id", idRol } };
+            return Convert.ToInt32(dal.EjecutarEscalar("SELECT COUNT(*) FROM Usuario WHERE rol = @id", pId));
         }
         #endregion
 

@@ -33,8 +33,8 @@ namespace BLL
         public void CancelarAdopcion(string codigoCertificado)
         {
             CertificadoAdopcion certificado = dal.ObtenerPorCodigo(codigoCertificado);
-            if (certificado == null) throw new Exception("No se encontró el certificado indicado.");
-            if (!certificado.activo) throw new Exception("Este certificado ya fue cancelado anteriormente.");
+            if (certificado == null) throw new ExcepcionNegocio("bllCertificadoAdopcion_msgCertificadoNoEncontrado", "No se encontró el certificado indicado.");
+            if (!certificado.activo) throw new ExcepcionNegocio("bllCertificadoAdopcion_msgCertificadoYaCancelado", "Este certificado ya fue cancelado anteriormente.");
 
             AccionSql accionCancelarCertificado = dal.ConstruirAccionCancelar(codigoCertificado);
             AccionSql accionAnimalDisponible = bllAnimal.ConstruirAccionCambiarEstadoAdopcion(certificado.codigoAnimal.ToString(), "En Adopcion");
@@ -53,12 +53,12 @@ namespace BLL
         public void RegistrarAdopcion(string dni, int codigoAnimal)
         {
             Animal animal = bllAnimal.BuscarAnimalPorCodigo(codigoAnimal.ToString());
-            if (animal == null) throw new Exception("No se encontró el animal seleccionado.");
-            if (animal.estadoAdopcion == "Adoptado") throw new Exception("Este animal ya fue adoptado.");
+            if (animal == null) throw new ExcepcionNegocio("bllCertificadoAdopcion_msgAnimalNoEncontrado", "No se encontró el animal seleccionado.");
+            if (animal.estadoAdopcion == "Adoptado") throw new ExcepcionNegocio("bllCertificadoAdopcion_msgAnimalYaAdoptado", "Este animal ya fue adoptado.");
 
             Adoptante adoptante = bllAdoptante.BuscarAdoptantePorDNI(dni);
-            if (adoptante == null) throw new Exception("No se encontró el adoptante seleccionado.");
-            if (!adoptante.activo) throw new Exception("El adoptante seleccionado no está activo.");
+            if (adoptante == null) throw new ExcepcionNegocio("bllCertificadoAdopcion_msgAdoptanteNoEncontrado", "No se encontró el adoptante seleccionado.");
+            if (!adoptante.activo) throw new ExcepcionNegocio("bllCertificadoAdopcion_msgAdoptanteInactivo", "El adoptante seleccionado no está activo.");
 
             string codigo = dal.GenerarCodigoCertificadoUnico();
 

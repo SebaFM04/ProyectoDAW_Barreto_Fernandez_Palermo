@@ -92,6 +92,8 @@
     <Compile Include="bllRol.cs" />
     <Compile Include="bllUsuario.cs" />
     <Compile Include="bllVacuna.cs" />
+    <Compile Include="bllIdioma.cs" />
+    <Compile Include="bllTraduccion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

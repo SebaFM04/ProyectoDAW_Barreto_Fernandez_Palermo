@@ -36,16 +36,16 @@ namespace BLL
         {
             // Regla 1: el animal debe tener ficha de ingreso
             if (!bllFichaDeIngreso.TieneFicha(codigoAnimal))
-                throw new Exception("El animal debe tener una ficha de ingreso antes de poder crear una ficha médica.");
+                throw new ExcepcionNegocio("bllFichaMedica_msgSinFichaIngreso", "El animal debe tener una ficha de ingreso antes de poder crear una ficha médica.");
 
             // Regla 2: el animal no debe estar adoptado
             if (bllAnimal.VerificarAnimalAdoptado(codigoAnimal.ToString()))
-                throw new Exception("No se puede crear una ficha médica para un animal adoptado.");
+                throw new ExcepcionNegocio("bllFichaMedica_msgAnimalAdoptado", "No se puede crear una ficha médica para un animal adoptado.");
 
             // Regla 3: castrado es de una sola vía (true -> no puede volver a false)
             bool yaEstabaCastrado = YaEstaCastrado(codigoAnimal);
             if (yaEstabaCastrado && !castrado)
-                throw new Exception("El animal ya fue castrado anteriormente; este dato no se puede revertir.");
+                throw new ExcepcionNegocio("bllFichaMedica_msgYaCastrado", "El animal ya fue castrado anteriormente; este dato no se puede revertir.");
 
             int codigo = dal.GenerarCodigoFichaMedicaUnico();
             FichaMedica ficha = new FichaMedica(codigo, codigoAnimal, DateTime.Now, castrado, dieta, medicamento, observaciones);

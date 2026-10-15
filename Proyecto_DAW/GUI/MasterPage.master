@@ -34,59 +34,66 @@
                     <ul class="nav navbar-nav" runat="server" id="navMenu">
 
                         <li runat="server" id="liInicio">
-                            <a runat="server" href="~/MenuPrincipal.aspx">Inicio</a>
+                            <a runat="server" href="~/MenuPrincipal.aspx" data-traduccion="master_menuInicio">Inicio</a>
                         </li>
 
                         <%-- Animales --%>
                         <li class="dropdown" runat="server" id="liAnimales">
-                            <a href="#" class="dropdown-toggle">Animales</a>
+                            <a href="#" class="dropdown-toggle" runat="server" data-traduccion="master_menuAnimales">Animales</a>
                             <ul class="dropdown-menu">
-                                <li runat="server" id="liVerAnimales"><a runat="server" href="~/ListadoAnimales.aspx">Ver animales</a></li>
+                                <li runat="server" id="liVerAnimales"><a runat="server" href="~/ListadoAnimales.aspx" data-traduccion="master_menuVerAnimales">Ver animales</a></li>
 
                                 <li runat="server" id="liRegistrarAnimales" data-pagina="RegistroAnimales.aspx">
-                                    <a runat="server" href="~/RegistroAnimales.aspx">Registrar animales</a>
+                                    <a runat="server" href="~/RegistroAnimales.aspx" data-traduccion="master_menuRegistrarAnimales">Registrar animales</a>
                                 </li>
                                 <li runat="server" id="liGestionVacunas" data-pagina="GestionIntermediaVacunaAnimal.aspx">
-                                    <a runat="server" href="~/GestionIntermediaVacunaAnimal.aspx">Gestion Vacunas</a>
+                                    <a runat="server" href="~/GestionIntermediaVacunaAnimal.aspx" data-traduccion="master_menuGestionVacunas">Gestion Vacunas</a>
                                 </li>
                             </ul>
                         </li>
 
                         <%-- Adopciones --%>
                         <li class="dropdown" runat="server" id="liAdopciones">
-                            <a href="#" class="dropdown-toggle">Adopciones</a>
+                            <a href="#" class="dropdown-toggle" runat="server" data-traduccion="master_menuAdopciones">Adopciones</a>
                             <ul class="dropdown-menu">
-                                <li runat="server" data-pagina="Solicitudes.aspx"><a runat="server" href="~/Solicitudes.aspx">Solicitudes</a></li>
-                                <li runat="server" data-pagina="Certificados.aspx"><a runat="server" href="~/Certificados.aspx">Certificados</a></li>
-                                <li runat="server" data-pagina="Adoptantes.aspx"><a runat="server" href="~/Adoptantes.aspx">Adoptantes</a></li>
+                                <li runat="server" data-pagina="Solicitudes.aspx"><a runat="server" href="~/Solicitudes.aspx" data-traduccion="master_menuSolicitudes">Solicitudes</a></li>
+                                <li runat="server" data-pagina="Certificados.aspx"><a runat="server" href="~/Certificados.aspx" data-traduccion="master_menuCertificados">Certificados</a></li>
+                                <li runat="server" data-pagina="Adoptantes.aspx"><a runat="server" href="~/Adoptantes.aspx" data-traduccion="master_menuAdoptantes">Adoptantes</a></li>
                             </ul>
                         </li>
 
                         <!-- Administración -->
                         <li class="dropdown" runat="server" id="liAdministracion">
-                            <a href="#" class="dropdown-toggle">Administración</a>
+                            <a href="#" class="dropdown-toggle" runat="server" data-traduccion="master_menuAdministracion">Administración</a>
                             <ul class="dropdown-menu">
-                                <li runat="server" data-pagina="GestionUsuarios.aspx"><a runat="server" href="~/GestionUsuarios.aspx">Usuarios</a></li>
-                                <li runat="server" data-pagina="RolesFamilias.aspx"><a runat="server" href="~/RolesFamilias.aspx">Roles y Familias</a></li>
+                                <li runat="server" data-pagina="GestionUsuarios.aspx"><a runat="server" href="~/GestionUsuarios.aspx" data-traduccion="master_menuUsuarios">Usuarios</a></li>
+                                <li runat="server" data-pagina="RolesFamilias.aspx"><a runat="server" href="~/RolesFamilias.aspx" data-traduccion="master_menuRolesFamilias">Roles y Familias</a></li>
+                                <li runat="server" data-pagina="GestionIdiomas.aspx"><a runat="server" href="~/GestionIdiomas.aspx" data-traduccion="master_menuIdiomas">Idiomas</a></li>
                                 <li runat="server" id="liBitacora" data-pagina="Bitacora.aspx">
-                                    <asp:LinkButton ID="btnBitacora" runat="server" OnClick="btnBitacora_Click">Bitácora</asp:LinkButton>
+                                    <asp:LinkButton ID="btnBitacora" runat="server" OnClick="btnBitacora_Click" data-traduccion="master_menuBitacora">Bitácora</asp:LinkButton>
                                 </li>
                                 <li class="divider"></li>
                                 <li runat="server" id="liBackupRestore" data-pagina="BackupRestore.aspx">
                                     <asp:LinkButton 
-                                    runat="server" href="BackupRestore.aspx" OnClick="btnBackupRestore_Click">Backup &amp; Restore
+                                    runat="server" href="BackupRestore.aspx" OnClick="btnBackupRestore_Click" data-traduccion="master_menuBackupRestore">Backup &amp; Restore
                                         </asp:LinkButton>
                                 </li>
                             </ul>
                         </li>
 
+                        <!-- Idioma -->
+                        <li class="nav-idioma">
+                            <asp:DropDownList ID="ddlIdioma" runat="server" CssClass="select-idioma" AutoPostBack="true"
+                                OnSelectedIndexChanged="ddlIdioma_SelectedIndexChanged" data-traduccion-title="master_ddlIdioma" title="Idioma" />
+                        </li>
+
                         <!-- Login / Logout -->
                         <li runat="server" id="liLogin">
-                            <a runat="server" href="~/Login.aspx">Iniciar Sesión</a>
+                            <a runat="server" href="~/Login.aspx" data-traduccion="master_menuIniciarSesion">Iniciar Sesión</a>
                         </li>
 
                         <li runat="server" id="liLogout">
-                            <asp:LinkButton ID="btnCerrarSesion" runat="server" OnClick="btnCerrarSesion_Click">Cerrar Sesión</asp:LinkButton>
+                            <asp:LinkButton ID="btnCerrarSesion" runat="server" OnClick="btnCerrarSesion_Click" data-traduccion="master_menuCerrarSesion">Cerrar Sesión</asp:LinkButton>
                         </li>
 
                     </ul>

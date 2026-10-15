@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class _Default : System.Web.UI.Page
+public partial class _Default : PaginaBase
 {
     bllBackUpRestore bllBackupRestore;
 
@@ -38,7 +38,7 @@ public partial class _Default : System.Web.UI.Page
             string resultado = bllBackupRestore.Backup();
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "login-alert login-alert-success";
-            lblMensajeError.Text = "Back up realizado con éxito en: " + resultado;
+            lblMensajeError.Text = Traducir("pageBackup_msgBackupRealizado", "Back up realizado con éxito en: ") + resultado;
 
             CargarBackups();   // refresca la lista para que aparezca el nuevo .bak
         }
@@ -46,7 +46,7 @@ public partial class _Default : System.Web.UI.Page
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "login-alert login-alert-error";
-            lblMensajeError.Text = ex.Message;
+            lblMensajeError.Text = MensajeError(ex);
         }
     }
 
@@ -58,7 +58,7 @@ public partial class _Default : System.Web.UI.Page
             {
                 pnlAlerta.Visible = true;
                 pnlAlerta.CssClass = "login-alert login-alert-error";
-                lblMensajeError.Text = "Seleccione un archivo .bak";
+                lblMensajeError.Text = Traducir("pageBackup_msgSeleccioneBackup", "Seleccione un archivo .bak");
                 return;
             }
 
@@ -67,13 +67,13 @@ public partial class _Default : System.Web.UI.Page
 
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "login-alert login-alert-success";
-            lblMensajeError.Text = "Restore realizado con éxito";
+            lblMensajeError.Text = Traducir("pageBackup_msgRestoreRealizado", "Restore realizado con éxito");
         }
         catch (Exception ex)
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "login-alert login-alert-error";
-            lblMensajeError.Text = ex.Message;
+            lblMensajeError.Text = MensajeError(ex);
         }
     }
 }

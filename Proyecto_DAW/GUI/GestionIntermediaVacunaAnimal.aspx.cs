@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class GestionIntermediaVacunaAnimal : System.Web.UI.Page
+public partial class GestionIntermediaVacunaAnimal : PaginaBase
 {
     bllIntermediaVacunaAnimal bllIntermedia;
     bllVacuna bllvacuna;
@@ -50,14 +50,14 @@ public partial class GestionIntermediaVacunaAnimal : System.Web.UI.Page
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "Por favor, seleccione una vacuna de la lista.";
+            lbMensaje.Text = Traducir("pageVacunaAnimal_msgSeleccioneVacuna", "Por favor, seleccione una vacuna de la lista.");
             return;
         }
         if (ViewState["CodigoAnimal"] == null)
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "Por favor, seleccione un animal de la lista.";
+            lbMensaje.Text = Traducir("pageVacunaAnimal_msgSeleccioneAnimal", "Por favor, seleccione un animal de la lista.");
             return;
         }
 
@@ -76,14 +76,14 @@ public partial class GestionIntermediaVacunaAnimal : System.Web.UI.Page
 
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-exito";
-            lbMensaje.Text = "Vacuna asignada exitosamente.";
+            lbMensaje.Text = Traducir("pageVacunaAnimal_msgVacunaAsignada", "Vacuna asignada exitosamente.");
             CargarGrillaIntermedia();
         }
         catch (Exception ex)
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "Error: " + ex.Message;
+            lbMensaje.Text = Traducir("pageVacunaAnimal_msgError", "Error: ") + MensajeError(ex);
         }
     }
 
@@ -96,7 +96,7 @@ public partial class GestionIntermediaVacunaAnimal : System.Web.UI.Page
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "Por favor, seleccione un registro de la lista para modificar.";
+            lbMensaje.Text = Traducir("pageVacunaAnimal_msgSeleccioneRegistro", "Por favor, seleccione un registro de la lista para modificar.");
             return;
         }
 
@@ -110,7 +110,7 @@ public partial class GestionIntermediaVacunaAnimal : System.Web.UI.Page
 
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-exito";
-            lbMensaje.Text = "Fechas modificadas exitosamente.";
+            lbMensaje.Text = Traducir("pageVacunaAnimal_msgFechasModificadas", "Fechas modificadas exitosamente.");
 
             ViewState["CodigoIntermedia"] = null; 
             CargarGrillaIntermedia();
@@ -119,7 +119,7 @@ public partial class GestionIntermediaVacunaAnimal : System.Web.UI.Page
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "Error: " + ex.Message;
+            lbMensaje.Text = Traducir("pageVacunaAnimal_msgError", "Error: ") + MensajeError(ex);
         }
     }
 
@@ -147,7 +147,7 @@ public partial class GestionIntermediaVacunaAnimal : System.Web.UI.Page
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "Por favor, complete todos los campos.";
+            lbMensaje.Text = Traducir("pageVacunaAnimal_msgCompleteCampos", "Por favor, complete todos los campos.");
             return false;
         }
 
@@ -158,7 +158,7 @@ public partial class GestionIntermediaVacunaAnimal : System.Web.UI.Page
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "La fecha de aplicación debe ser menor a la próxima aplicación.";
+            lbMensaje.Text = Traducir("pageVacunaAnimal_msgFechaMenor", "La fecha de aplicación debe ser menor a la próxima aplicación.");
             return false;
         }
         return true;
@@ -173,14 +173,14 @@ public partial class GestionIntermediaVacunaAnimal : System.Web.UI.Page
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "La fecha de aplicación no es válida.";
+            lbMensaje.Text = Traducir("pageVacunaAnimal_msgFechaInvalida", "La fecha de aplicación no es válida.");
             return false;
         }
         if (!DateTime.TryParse(txtFechaAplicacionProxima.Text, out fechaProxima))
         {
             pnlAlerta.Visible = true;
             pnlAlerta.CssClass = "alert alert-error";
-            lbMensaje.Text = "La fecha próxima de aplicación no es válida.";
+            lbMensaje.Text = Traducir("pageVacunaAnimal_msgFechaProximaInvalida", "La fecha próxima de aplicación no es válida.");
             return false;
         }
         return true;

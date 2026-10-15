@@ -30,10 +30,10 @@ namespace BLL
         public void Alta(string dni, string nombre, string apellido, string rol, string email, string contraseña, string domicilio = "")
         {
             if (dal.ValidarDni(dni))
-                throw new Exception("Ya existe un usuario con ese DNI.");
+                throw new ExcepcionNegocio("bllUsuario_msgDniExistente", "Ya existe un usuario con ese DNI.");
 
             if (!EsValida(contraseña))
-                throw new Exception("Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n");
+                throw new ExcepcionNegocio("bllUsuario_msgContrasenaInvalida", "Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n");
 
             string nombreUsuario = dni + nombre;
             string contraseñaHasheada = HashearContraseña(contraseña);
@@ -41,6 +41,18 @@ namespace BLL
             dal.Alta(nuevoUsuario);
             RecalcularDigitoUsuario();
             bllBitacora.Alta(claseSession.Gestor.RetornarUsuarioSession().nombreUsuario, "Gestion usuarios", "Usuario dado de alta", 1);
+        }
+
+        // Guarda el idioma elegido por el usuario (Usuario.lenguaje = Idioma.Codigo)
+        public void CambiarIdioma(Usuario usuario, string codigoIdioma)
+        {
+            if (usuario == null || usuario.lenguaje == codigoIdioma)
+                return;
+
+            usuario.lenguaje = codigoIdioma;
+            dal.Modificar(usuario);
+            RecalcularDigitoUsuario();
+            bllBitacora.Alta(usuario.nombreUsuario, "Usuario", "Cambio de idioma a " + codigoIdioma, 1);
         }
 
         public bool VerificarContraseñaNoSeaDNIyApellido(string contraseña)
@@ -91,7 +103,7 @@ namespace BLL
         {
             Usuario usuario = BuscarUsuarioPorDNI(dni);
             if (usuario == null)
-                throw new Exception("Usuario no encontrado.");
+                throw new ExcepcionNegocio("bllUsuario_msgUsuarioNoEncontrado", "Usuario no encontrado.");
             usuario.nombre = nombre;
             usuario.nombreUsuario = nombreUsuario;
             usuario.apellido = apellido;
@@ -146,7 +158,7 @@ namespace BLL
         {
             Usuario usuario = BuscarUsuarioPorDNI(dni);
             if (usuario == null)
-                throw new Exception("Usuario no encontrado.");
+                throw new ExcepcionNegocio("bllUsuario_msgUsuarioNoEncontrado", "Usuario no encontrado.");
 
             if (!usuario.bloqueo)
                 return false;
@@ -191,7 +203,7 @@ namespace BLL
             }
             else
             {
-                throw new Exception("Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n");
+                throw new ExcepcionNegocio("bllUsuario_msgContrasenaInvalida", "Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n");
             }
         }
 
@@ -214,10 +226,10 @@ namespace BLL
         {
             Usuario usuario = BuscarUsuarioPorDNI(dni);
             if (usuario == null)
-                throw new Exception("Usuario no encontrado.");
+                throw new ExcepcionNegocio("bllUsuario_msgUsuarioNoEncontrado", "Usuario no encontrado.");
 
             if (!EsValida(nuevaContraseña))
-                throw new Exception("Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n");
+                throw new ExcepcionNegocio("bllUsuario_msgContrasenaInvalida", "Contraseña NO cumple con las reglas del sistema. Tener al menos 8 caracteres.\r\nIncluir letras minúsculas y mayúsculas.\r\nContener al menos un carácter especial.\r\n");
 
             usuario.contraseña = HashearContraseña(nuevaContraseña);
             dal.Modificar(usuario);
