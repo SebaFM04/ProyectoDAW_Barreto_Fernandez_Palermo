@@ -247,29 +247,3 @@ El script completo de la base es **`NUEVO_SCRIPT_OBSERVER.sql`** (reemplaza a `s
 7. Rehabilitar un idioma: solo funciona con Web Master.
 8. Con el sitio en inglés, provocar un error de la BLL (por ejemplo, eliminar un rol con usuarios): el mensaje sale en inglés.
 
-✻ Sautéed for 2m 10s · done jueves, 12:12
-
-> Unable to render rich display
-
-  Parse error on line 21:
-  ...tring } #Traducir(clave, por
-  ---------------------^
-  Expecting 'EOF', 'acc_title', 'acc_descr', 'acc_descr_multiline_value', 'NAMESPACE', 'ANNOTATION_START', 'CLASS', 'MEMBER', 'SEPARATOR', 'NOTE_FOR', 'NOTE', 'CLASSDEF', 'ALPHA',
-| Rol "Normal" sin salida: no se podía vaciar ni eliminar | Regla de "al menos un permiso" + no se puede eliminar un rol con usuarios | Un rol o familia **en uso** puede quedar vacío |
-| Error y éxito visibles a la vez en RolesFamilias | El panel de éxito no se ocultaba | Se muestra un solo panel por vez |
-| Opción del selector de idioma ilegible | Fondo transparente en el `<select>` | Fondo sólido y opciones con fondo blanco |
-
----
-
-## 📁 Archivos nuevos
-
-| Capa | Archivos |
-|---|---|
-| BE | `Idioma.cs`, `Etiqueta.cs`, `Traduccion.cs` |
-| DAL | `dalIdioma.cs`, `dalTraduccion.cs` |
-| BLL | `bllIdioma.cs`, `bllTraduccion.cs` |
-| SERVICIOS | `ISujetoIdioma.cs`, `IObservadorIdioma.cs`, `GestorIdioma.cs`, `TraductorHelper.cs`, `ExcepcionNegocio.cs` |
-| GUI | `App_Code/PaginaBase.cs`, `App_Code/IdiomaHelper.cs`, `GestionIdiomas.aspx(.cs)`, `Estilos/EstilosIdiomas.css` |
-| BD | `NUEVO_SCRIPT_OBSERVER.sql` |
-
----
