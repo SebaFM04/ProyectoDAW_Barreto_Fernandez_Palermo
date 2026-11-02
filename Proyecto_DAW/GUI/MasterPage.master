@@ -42,6 +42,7 @@
                             <a href="#" class="dropdown-toggle" runat="server" data-traduccion="master_menuAnimales">Animales</a>
                             <ul class="dropdown-menu">
                                 <li runat="server" id="liVerAnimales"><a runat="server" href="~/ListadoAnimales.aspx" data-traduccion="master_menuVerAnimales">Ver animales</a></li>
+                                <li runat="server" id="liServicioWeb"><a runat="server" href="~/ServicioWebAnimales.aspx" data-traduccion="master_menuServicioWeb">Servicio Web (JSON)</a></li>
 
                                 <li runat="server" id="liRegistrarAnimales" data-pagina="RegistroAnimales.aspx">
                                     <a runat="server" href="~/RegistroAnimales.aspx" data-traduccion="master_menuRegistrarAnimales">Registrar animales</a>

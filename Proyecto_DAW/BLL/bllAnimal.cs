@@ -95,6 +95,8 @@ namespace BLL
 
         public void Baja(string codigo)
         {
+            if (!ValidarExistenciaAnimal(codigo)) throw new ExcepcionNegocio("bllAnimal_msgAnimalNoEncontrado", "No se encontró un animal con el código proporcionado.");
+
             if (VerificarAnimalAdoptado(codigo)) throw new ExcepcionNegocio("bllAnimal_msgAnimalAdoptado", "No se puede borrar porque esta adoptado");
 
             if (bllFichaDeIngreso.TieneFicha(int.Parse(codigo))) // <- agregar este bloque

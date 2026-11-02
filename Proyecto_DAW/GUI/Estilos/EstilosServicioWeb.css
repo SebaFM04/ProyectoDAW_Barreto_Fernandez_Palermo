@@ -1,0 +1,130 @@
+/* ================================================
+   SERVICIO WEB - Refugio Del Oeste
+   Página que consume el endpoint GET api/animales
+   ================================================ */
+
+.servicio-section {
+    padding: 2rem 2rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.servicio-titulo {
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #222;
+    margin: 0 0 0.8rem 0;
+}
+
+.servicio-desc {
+    text-align: center;
+    color: #444;
+    margin: 0 auto 1.5rem;
+    max-width: 760px;
+    line-height: 1.6;
+}
+
+.servicio-panel {
+    border: 2px solid #3a7d44;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 1rem;
+}
+
+.servicio-fila {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 6px 0;
+}
+
+.metodo {
+    background-color: #4B5E26;
+    color: #D4B86A;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.endpoint {
+    font-family: Consolas, monospace;
+    color: #222;
+    min-width: 200px;
+}
+
+.servicio-input {
+    width: 110px;
+    padding: 8px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+}
+
+.btn {
+    padding: 10px;
+    background-color: darkolivegreen;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: olive;
+}
+
+.servicio-estado {
+    font-family: Consolas, monospace;
+    font-size: 0.9rem;
+    color: #3a7d44;
+    min-height: 1.2em;
+}
+
+.servicio-estado.error {
+    color: #b02a2a;
+}
+
+/* TABLA */
+.servicio-tabla-contenedor {
+    overflow-x: auto;
+}
+
+.grid {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.grid th {
+    background-color: darkolivegreen;
+    color: white;
+    padding: 10px;
+}
+
+.grid td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+/* JSON CRUDO */
+.servicio-subtitulo {
+    color: darkolivegreen;
+    margin: 2rem 0 0.6rem;
+}
+
+.servicio-json {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 15px;
+    border-radius: 6px;
+    max-height: 360px;
+    overflow: auto;
+    font-size: 0.85rem;
+    white-space: pre;
+}
+
+.oculto {
+    display: none;
+}

@@ -20,6 +20,7 @@ public partial class SiteMaster : System.Web.UI.MasterPage, IObservadorIdioma
         { "GestionIntermediaVacunaAnimal.aspx", new[] { "GESTIONAR_VACUNAS", "ANIMAL_VACUNA_ALTA", "ANIMAL_VACUNA_MODIFICAR" } },
         { "Solicitudes.aspx",                   new[] { "SOLICITUD_ACEPTAR" } },
         { "Certificados.aspx",                  new[] { "CERTIFICADO_GENERAR", "CERTIFICADO_MODIFICAR", "CERTIFICADO_APLICAR", "CERTIFICADO_GENERAR_REPORTE" } },
+        { "RegistrarAdopcion.aspx",             new[] { "CERTIFICADO_GENERAR" } },
         { "Adoptantes.aspx",                    new[] { "ADOPTANTE_ALTA", "ADOPTANTE_MODIFICAR", "ADOPTANTE_ACT_DESAC" } },
         { "GestionUsuarios.aspx",               new[] { "USUARIO_ALTA", "MODIFICAR_PASSWORD", "USUARIO_MODIFICAR", "USUARIO_DESBLOQUEAR" } },
         { "RolesFamilias.aspx",                 new[] { "ROLES_RB", "FAMILIAS_RB", "ROL_FAMILIA_ALTA", "ROL_FAMILIA_MODIFICAR", "ROL_FAMILIA_BAJA", "ROL_FAMILIA_ASIGNAR_PERMISO", "ROL_FAMILIA_DESASIGNAR_PERMISO" } },
@@ -195,23 +196,7 @@ public partial class SiteMaster : System.Web.UI.MasterPage, IObservadorIdioma
 
     public HashSet<string> ObtenerClavesUsuario()
     {
-        Usuario usuario = claseSession.Gestor.RetornarUsuarioSession();
-        if (usuario == null)
-            return new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-
-        List<string> cacheadas = Session["ClavesUsuario"] as List<string>;
-        if (cacheadas != null)
-            return new HashSet<string>(cacheadas, StringComparer.OrdinalIgnoreCase);
-
-        bllRol bllRol = new bllRol();
-        Rol rol = bllRol.ObtenerRoles().FirstOrDefault(r => r.Nombre == usuario.rol);
-
-        HashSet<string> claves = (rol == null)
-            ? new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-            : PermisoHelper.ObtenerClaves(bllRol.ObtenerAccesosPorRol(rol.ID));
-
-        Session["ClavesUsuario"] = claves.ToList();
-        return claves;
+        return PermisoSesion.ObtenerClavesUsuario();
     }
 
     private void ValidarAccesoUrl()

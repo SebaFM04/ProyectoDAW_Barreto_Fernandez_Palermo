@@ -3,6 +3,7 @@ using BLL;
 using SERVICIOS;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Http;
 
 public class AnimalesApiController : ApiController
@@ -19,8 +20,9 @@ public class AnimalesApiController : ApiController
     }
 
     // GET api/animales/5
+    // {codigo:int}: un código no numérico da 404 en vez de llegar a la BD y devolver un 500
     [HttpGet]
-    [Route("api/animales/{codigo}")]
+    [Route("api/animales/{codigo:int}")]
     public IHttpActionResult GetPorCodigo(string codigo)
     {
         Animal animal = _bll.BuscarAnimalPorCodigo(codigo);
@@ -33,8 +35,9 @@ public class AnimalesApiController : ApiController
     [Route("api/animales")]
     public IHttpActionResult Post([FromBody] Animal nuevo)
     {
-        if (!claseSession.Gestor.Session())
-            return Unauthorized();
+        IHttpActionResult rechazo = ValidarAcceso("ANIMAL_ALTA");
+        if (rechazo != null) return rechazo;
+        if (nuevo == null) return BadRequest("Falta el animal en el cuerpo del request");
 
         try
         {
@@ -50,11 +53,12 @@ public class AnimalesApiController : ApiController
 
     // PUT api/animales/5
     [HttpPut]
-    [Route("api/animales/{codigo}")]
+    [Route("api/animales/{codigo:int}")]
     public IHttpActionResult Put(string codigo, [FromBody] Animal datos)
     {
-        if (!claseSession.Gestor.Session())
-            return Unauthorized();
+        IHttpActionResult rechazo = ValidarAcceso("ANIMAL_MODIFICAR");
+        if (rechazo != null) return rechazo;
+        if (datos == null) return BadRequest("Falta el animal en el cuerpo del request");
 
         try
         {
@@ -70,11 +74,11 @@ public class AnimalesApiController : ApiController
 
     // DELETE api/animales/5
     [HttpDelete]
-    [Route("api/animales/{codigo}")]
+    [Route("api/animales/{codigo:int}")]
     public IHttpActionResult Delete(string codigo)
     {
-        if (!claseSession.Gestor.Session())
-            return Unauthorized();
+        IHttpActionResult rechazo = ValidarAcceso("ANIMAL_BAJA");
+        if (rechazo != null) return rechazo;
 
         try
         {
@@ -85,5 +89,18 @@ public class AnimalesApiController : ApiController
         {
             return BadRequest(ex.Message);
         }
+    }
+
+    // Mismo permiso que pide el botón equivalente en RegistroAnimales.aspx (data-permiso).
+    // Sin sesión -> 401; logueado pero sin ese permiso -> 403. Devuelve null si puede seguir.
+    private IHttpActionResult ValidarAcceso(string permiso)
+    {
+        if (!claseSession.Gestor.Session())
+            return Unauthorized();
+
+        if (!PermisoSesion.TienePermiso(permiso))
+            return StatusCode(HttpStatusCode.Forbidden);
+
+        return null;
     }
 }
